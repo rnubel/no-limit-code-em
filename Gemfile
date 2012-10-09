@@ -32,7 +32,7 @@ gem 'jquery-rails'
 # gem 'ruby-debug'
 
 group :test do
-  gem 'rspec'
+  gem 'rspec-rails'
   gem 'mocha'
   gem 'cucumber'
 end
