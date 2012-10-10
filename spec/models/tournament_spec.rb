@@ -7,10 +7,9 @@ describe Tournament do
   end
 
   it "should have many players" do
+    t = Tournament.create
+    t.players.push(FactoryGirl.create(:player))
 
-  end
-
-  it "should have many tables" do
-
+    t.players.size.should == 1
   end
 end
