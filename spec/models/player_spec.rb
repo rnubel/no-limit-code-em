@@ -9,4 +9,9 @@ describe Player do
 
     p.tournaments.reload.first.should == t
   end
+
+  it "should require a name and a key" do
+    p = Player.create
+    p.valid?.should be_false
+  end
 end
