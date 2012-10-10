@@ -9,8 +9,10 @@ FactoryGirl.define do
   end
 
   factory :table do
+    tournament
   end
 
   factory :round do
+    table
   end
 end
