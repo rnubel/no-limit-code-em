@@ -3,7 +3,7 @@ class CreateSeatings < ActiveRecord::Migration
     create_table :seatings do |t|
       t.integer :player_id
       t.integer :table_id
-      t.boolean :active
+      t.boolean :active, default: true
 
       t.timestamps
     end

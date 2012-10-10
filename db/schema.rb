@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -38,7 +39,7 @@ ActiveRecord::Schema.define(:version => 20121009234748) do
   create_table "seatings", :force => true do |t|
     t.integer  "player_id"
     t.integer  "table_id"
-    t.boolean  "active"
+    t.boolean  "active",     :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
