@@ -31,8 +31,14 @@ gem 'jquery-rails'
 # To use debugger
 # gem 'ruby-debug'
 
+group :development, :test do
+  gem 'guard'
+  gem 'guard-rspec'
+end
+
 group :test do
   gem 'rspec-rails'
   gem 'mocha'
   gem 'cucumber'
+  gem 'factory_girl'
 end
