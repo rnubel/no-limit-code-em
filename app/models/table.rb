@@ -19,29 +19,19 @@ class Table < ActiveRecord::Base
 
   def next_round!
     raise "Not enough players to play!" if active_players.size <= 1
-    self.rounds.create(player_order: player_order_for_new_round)
+    self.rounds.create(players: self.active_players, dealer: dealer_for_new_round)
   end
 
   def current_round
     self.rounds.order("id DESC").first
   end
 
-  # Players are always sitting in order of their ID. However,
-  # the dealer rotates between rounds.
-  def player_order_for_new_round
-    # Current round is still the old round.
-    active_player_ids = active_players.map(&:id)
-    if current_round
-      old_dealer_id = current_round.player_order.split(" ").first.to_i
-      # First, try to find someone later in the order.
-      dealer_id = active_player_ids.find { |x| x > old_dealer_id } || 
-                # Fall back to the first player.
-                active_player_ids.first
+  def dealer_for_new_round
+    if r = current_round
+      active_players.find { |p| p.id > r.dealer_id } ||
+       active_players.first
     else
-      dealer_id = active_player_ids.first
+      active_players.first
     end
-
-    # Yee
-    active_player_ids.partition{ |x| x >= dealer_id }.flatten.join(" ")
   end
 end

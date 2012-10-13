@@ -16,4 +16,26 @@ describe Round do
       subject.ante.should == 100
     end
   end
+
+  it "has an ordered list of players" do
+    3.times do 
+      subject.players << FactoryGirl.create(:player)
+    end
+
+    subject.dealer = subject.players.second
+
+    subject.ordered_players.should == [
+      subject.players.second, subject.players.last, subject.players.first
+    ]
+  end
+
+  it "records actions" do
+    pending
+  end
+
+  describe "its current status" do
+    it "simulates all actions via PokerTable" do
+      pending
+    end
+  end
 end

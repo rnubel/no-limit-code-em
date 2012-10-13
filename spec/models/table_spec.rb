@@ -34,9 +34,12 @@ describe Table do
       subject.current_round.should == subject.rounds.last
     end
 
-    it "tells the round the order of players" do
-      subject.current_round.player_order.should == 
-        subject.players.map(&:id).join(" ")
+    it "tells the round the dealer" do
+      subject.current_round.dealer.should == subject.players.first
+    end
+    
+    it "tells the round the players in the round" do
+      subject.current_round.players.should == subject.players
     end
   end
 
@@ -44,31 +47,32 @@ describe Table do
     let(:subject) { FactoryGirl.create :table }
     before :each do
       2.times { subject.players << FactoryGirl.create(:player) }
-      @id1 = subject.players.first.id
-      @id2 = subject.players.last.id
+      @p1 = subject.players.first
+      @p2 = subject.players.last
+      @p3 = FactoryGirl.create :player
+
       subject.start_play!
     end
 
     it "rotates dealer when no players leave or join" do
-      subject.current_round.player_order.should == "#{@id1} #{@id2}"
+      subject.current_round.ordered_players.should == [@p1, @p2]
       subject.next_round!
-      subject.current_round.player_order.should == "#{@id2} #{@id1}"
+      subject.current_round.ordered_players.should == [@p2, @p1]
       subject.next_round!
-      subject.current_round.player_order.should == "#{@id1} #{@id2}"
+      subject.current_round.ordered_players.should == [@p1, @p2]
     end
 
     it "handles when a player joins or leaves" do
-      subject.current_round.player_order.should == "#{@id1} #{@id2}"
-      subject.players << FactoryGirl.create(:player)
-      @id3 = subject.players.last.id
+      subject.current_round.ordered_players.should == [@p1, @p2]
+      subject.players << @p3
 
       subject.next_round!
-      subject.current_round.player_order.should == "#{@id2} #{@id3} #{@id1}"
+      subject.current_round.ordered_players.should == [@p2, @p3, @p1]
 
       subject.players.first.unseat!
 
       subject.next_round!
-      subject.current_round.player_order.should == "#{@id3} #{@id2}"
+      subject.current_round.ordered_players.should == [@p3, @p2]
     end
   end
 end
