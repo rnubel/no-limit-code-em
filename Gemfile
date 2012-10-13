@@ -6,8 +6,11 @@ gem 'rails', '3.1.3'
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
 gem 'pg'
-
 gem 'json'
+
+gem 'poker_table', '0.0.1', :git => 'git://git.cashnetusa.com/rnubel/poker_table'
+
+gem 'figgy'
 
 # Gems used only for assets and not required
 # in production environments by default.
