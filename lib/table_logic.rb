@@ -8,8 +8,9 @@ module TableLogic
       self.each_with_index
           .group_by { |(p, i)| i % num_tables }
           .each do |table_num, list|
-        yielder << list.map(&:first)
+        yielder << list.map(&:first)        
       end
+      self
     end
 
     block_given? ? e.each(&block) : e

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe TableLogic do
-  context "when included into an Enumerable" do
+  context "when included into Array" do
     before(:all) { Array.send :include, TableLogic }
 
     describe "#each_in_tables" do
