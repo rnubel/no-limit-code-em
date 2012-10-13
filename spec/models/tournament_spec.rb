@@ -13,29 +13,36 @@ describe Tournament do
     t.players.size.should == 1
   end
 
-  context "when starting" do
-    let(:tournament) { Tournament.create open: true }
+  subject { Tournament.create open: true }
 
-    before :each do
-      5.times do
-        tournament.players << FactoryGirl.create(:player)
+  before :each do
+    subject.stubs(:table_size).returns(4)
+
+    5.times do
+      subject.players << FactoryGirl.create(:player)
+    end
+  end
+
+  context "when started" do
+    before { subject.start! }
+
+    it { should_not be_open }
+
+    describe "table seating with 4 players per table" do
+      it { should have(2).tables }
+      
+      it "seats players evenly" do
+        subject.tables[0].should have(3).active_players
+        subject.tables[1].should have(2).active_players
       end
-
-      tournament.start! table_size: 4
-    end
-
-    it "should close itself" do
-      tournament.open?.should be_false
-    end
-
-    it "should create tables to seat players evenly" do
-      tournament.tables.size.should == 2
-      tournament.tables.first.players.size.should == 3
-      tournament.tables.last.players.size.should == 2
     end
   end
 
   context "when redistributing" do
-   
+    before { subject.start!
+             subject.players.first.unseat!
+             subject.balance_tables! }
+
+    pending { should have(1).tables }
   end
 end

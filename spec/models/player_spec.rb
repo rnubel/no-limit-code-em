@@ -30,4 +30,21 @@ describe Player do
       Player.standing.all.size.should == 2
     end
   end
+
+  context "when seated" do
+    subject { FactoryGirl.create(:player) }
+
+    before { subject.tables << FactoryGirl.create(:table) }
+
+    specify { subject.table.should_not be_nil }
+  end
+
+  context "when being unseated" do
+    subject { FactoryGirl.create(:player) }
+    
+    before { subject.tables << FactoryGirl.create(:table) 
+             subject.unseat! }
+
+    specify { subject.table.should be_nil }
+  end
 end
