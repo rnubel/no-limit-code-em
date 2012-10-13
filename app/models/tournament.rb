@@ -25,6 +25,10 @@ class Tournament < ActiveRecord::Base
   def balance_tables!
   end
 
+  def current_ante
+    20
+  end
+
   def table_size
     6 # TODO: Figgy
   end

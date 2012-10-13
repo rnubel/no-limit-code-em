@@ -52,4 +52,10 @@ describe Tournament do
 
     pending { should have(1).tables }
   end
+
+  describe "#current_ante" do
+    it "is fixed at 20 FIXME" do
+      subject.current_ante.should == 20 
+    end
+  end
 end
