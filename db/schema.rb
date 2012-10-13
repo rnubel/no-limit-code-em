@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(:version => 20121009234748) do
   create_table "rounds", :force => true do |t|
     t.integer  "table_id"
     t.boolean  "playing"
-    t.integer  "dealer_id"
+    t.string   "player_order"
     t.string   "deck"
     t.datetime "created_at"
     t.datetime "updated_at"

@@ -36,6 +36,13 @@ describe Tournament do
         subject.tables[1].should have(2).active_players
       end
     end
+    
+    it "starts play at each table" do
+      subject.tables.each { |t|
+        t.should be_playing
+        t.should have(1).round
+      }
+    end
   end
 
   context "when redistributing" do

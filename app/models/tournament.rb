@@ -5,15 +5,18 @@ class Tournament < ActiveRecord::Base
 
   def start!
     self.open = false
+    self.save! # Disallow anyone coming in before we start seating.
+               # It is possible that someone will still get missed,
+               # but reseating should pick them up.
 
     create_initial_seatings!
-
-    self.save!
+    
+    tables.each { |t| t.start_play! }
   end
 
   # Create new tables for any players not seated.
   def create_initial_seatings!
-    Player.standing.each_in_tables(table_size) do |players_at_table|
+    players.standing.each_in_tables(table_size) do |players_at_table|
       self.tables.create( players: players_at_table )
     end
   end
