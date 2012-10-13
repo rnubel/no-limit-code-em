@@ -1,36 +1,28 @@
 class Tournament < ActiveRecord::Base
-  DEFAULT_TABLE_SIZE = 6
-
   has_and_belongs_to_many :players, :join_table => 'registrations'
   
   has_many :tables
 
-  def start!(options={})
+  def start!
     self.open = false
 
-    create_initial_seatings!(options)
+    create_initial_seatings!
 
     self.save!
   end
 
   # Create new tables for any players not seated.
-  def creat_initial_seatings!(options={})
-    players_to_seat = players.standing.all
-    table_size = options[:table_size] || DEFAULT_TABLE_SIZE
+  def create_initial_seatings!
+    Player.standing.each_in_tables(table_size) do |players_at_table|
+      self.tables.create( players: players_at_table )
+    end
+  end
 
-    num_tables = (players_to_seat.size.to_f / table_size).ceil
-    num_big_tables = players_to_seat.size % num_tables
-    big_table = (players_to_seat.size.to_f / num_tables).ceil
-    small_table = (players_to_seat.size.to_f / num_tables).floor
-    
-    new_tables = num_tables.times.collect do
-      self.tables.create 
-    end
- 
-    new_tables.each_with_index do |table, i|
-      (i < num_big_tables ? big_table : small_table).times do 
-        table.players.push(players_to_seat.pop)
-      end
-    end
+  # Merge mergeable tables.
+  def balance_tables!
+  end
+
+  def table_size
+    6 # TODO: Figgy
   end
 end
