@@ -1,8 +1,10 @@
 class Player < ActiveRecord::Base
-  has_and_belongs_to_many :tournaments, join_table: 'registrations'
-  has_and_belongs_to_many :tables,      join_table: 'seatings'
   has_many :registrations
   has_many :seatings
+  has_many :round_players
+  has_many :tournaments, :through => :registrations
+  has_many :tables,      :through => :seatings
+  has_many :rounds,      :through => :round_players
 
   validates_presence_of :name, :key
 
@@ -20,6 +22,22 @@ class Player < ActiveRecord::Base
   
   def table
     current_seating && current_seating.table
+  end
+
+  def stack(tournament, round=nil)
+    raise "Cannot get stack without tournament reference." unless tournament
+    q = self.round_players.joins(:table)
+            .where(:tables => 
+                { :tournament_id => tournament.id })
+    if round
+      q = q.where("round_id <= #{round.id}")
+    end
+
+    initial_stack = tournament.registrations
+                    .where(:player_id => self.id)
+                    .first.purse
+
+    initial_stack + q.sum(:stack_change)
   end
 
   # Unseat this player from their current table.

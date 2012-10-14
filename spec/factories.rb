@@ -6,6 +6,19 @@ FactoryGirl.define do
   factory :player do
     key             "asdfasdfasdfsdf"
     sequence(:name) { |n| "Bill#{n}" }
+
+    trait :registered do
+      after_create do |p|
+        p.registrations << FactoryGirl.create(:registration, :player => p)
+      end
+    end
+  end
+
+  factory :registration do
+    player
+    tournament
+    purse 100
+    current_stack 100
   end
 
   factory :table do
@@ -14,6 +27,7 @@ FactoryGirl.define do
 
   factory :round do
     table
+    playing true
   end
 
   factory :action do

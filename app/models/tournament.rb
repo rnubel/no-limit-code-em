@@ -1,7 +1,7 @@
 class Tournament < ActiveRecord::Base
-  has_and_belongs_to_many :players, :join_table => 'registrations'
   has_many :registrations
-  
+  has_many :players, 
+           :through => :registrations
   has_many :tables
 
   def start!
@@ -13,6 +13,12 @@ class Tournament < ActiveRecord::Base
     create_initial_seatings!
     
     tables.each { |t| t.start_play! }
+  end
+
+  def register_player!(player, purse)
+    registrations.create!(player: player,
+                          purse: purse,
+                          current_stack: purse)
   end
 
   # Create new tables for any players not seated.

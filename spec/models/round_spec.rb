@@ -5,7 +5,10 @@ describe Round do
 
   before {
     3.times do 
-      subject.players << FactoryGirl.create(:player)
+      p = FactoryGirl.create(:player)
+      subject.tournament.register_player!(p,100)
+      subject.players << p
+      subject.save
     end
 
     subject.dealer = subject.players.second
@@ -30,21 +33,27 @@ describe Round do
   end
 
   it "records actions" do
-    subject.record_action! player: subject.players.first,
+    subject.record_action! player: subject.players.second,
                            action: "bet",
-                           amount: 100
+                           amount: 1
 
     subject.should have(1).action
+  end
+
+  it "validates actions" do
+    PokerTable.any_instance.expects(:valid_action?).returns false
+
+    expect {
+     subject.record_action!(player: subject.players.first,
+                            action: "asdfasdff")}.to raise_error
+
+    subject.should have(0).actions
   end
 
   describe "its state" do
     describe "initial state" do
       it "knows the player list" do
-        subject.initial_state.players.should == [
-          { id: subject.players[1].id, stack: 0 },
-          { id: subject.players[2].id, stack: 0 },
-          { id: subject.players[0].id, stack: 0 },
-        ]
+        subject.initial_state.should have(3).players
       end
     end
 
@@ -52,6 +61,22 @@ describe Round do
       PokerTable.any_instance.expects(:simulate!)
 
       subject.state
+    end
+  end
+
+  describe "when being closed" do
+    it "should update its round_players with their stack change" do
+      PokerTable.any_instance.expects(:stack_changes).returns({
+        subject.players[0].id => -10,
+        subject.players[1].id => -10,
+        subject.players[2].id => 20,
+      })
+
+      subject.close!
+
+      @p1 = subject.players.first
+      subject.round_players.where(:player_id => @p1.id).first.
+        stack_change.should == -10
     end
   end
 end

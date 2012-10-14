@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121014002943) do
+ActiveRecord::Schema.define(:version => 20121014201539) do
 
   create_table "actions", :force => true do |t|
     t.string   "action"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(:version => 20121014002943) do
     t.string   "key"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "lock_version", :default => 0
   end
 
   create_table "registrations", :force => true do |t|
@@ -36,12 +37,14 @@ ActiveRecord::Schema.define(:version => 20121014002943) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "purse"
+    t.integer  "current_stack"
   end
 
   create_table "round_players", :force => true do |t|
     t.integer "player_id"
     t.integer "round_id"
     t.integer "initial_stack"
+    t.integer "stack_change"
   end
 
   create_table "rounds", :force => true do |t|
@@ -53,6 +56,7 @@ ActiveRecord::Schema.define(:version => 20121014002943) do
     t.datetime "updated_at"
     t.integer  "ante"
     t.integer  "dealer_id"
+    t.integer  "lock_version", :default => 0
   end
 
   create_table "seatings", :force => true do |t|
@@ -69,12 +73,14 @@ ActiveRecord::Schema.define(:version => 20121014002943) do
     t.string   "seat_order"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "lock_version",  :default => 0
   end
 
   create_table "tournaments", :force => true do |t|
     t.boolean  "open"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "lock_version", :default => 0
   end
 
 end

@@ -8,7 +8,7 @@ gem 'rails', '3.1.3'
 gem 'pg'
 gem 'json'
 
-gem 'poker_table', '0.0.1', :git => 'git://git.cashnetusa.com/rnubel/poker_table'
+gem 'poker_table', '0.0.2', :git => 'git://git.cashnetusa.com/rnubel/poker_table'
 
 gem 'figgy'
 
@@ -37,6 +37,7 @@ gem 'jquery-rails'
 group :development, :test do
   gem 'guard'
   gem 'guard-rspec'
+  gem 'pry'
 end
 
 group :test do

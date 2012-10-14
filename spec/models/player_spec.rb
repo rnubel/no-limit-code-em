@@ -47,4 +47,48 @@ describe Player do
 
     specify { subject.table.should be_nil }
   end
+
+  describe "stack" do
+    let!(:player) {
+      FactoryGirl.create(:player, :registered)
+    }
+
+    let(:t) { player.tournaments.first }
+    let(:table) { player.tables.create(:tournament => t) }
+
+    it "starts out at an initial value" do
+      player.stack(t).should == player.registrations.first.purse
+    end
+
+    context "after one round" do
+      before {
+        table.rounds.create(:playing => false, :players => [player])
+        rp = player.reload.round_players.first
+        rp.stack_change = 10; rp.save!
+      }
+
+      it "reflects the changed stack" do
+        player.stack(t).should == 110
+      end
+    end
+
+    context "after two rounds" do
+      before {
+        table.rounds.create(:playing => false, :players => [player])
+        rp = player.reload.round_players.first
+        rp.stack_change = 10; rp.save!
+        table.rounds.create(:playing => false, :players => [player])
+        rp = player.reload.round_players.last
+        rp.stack_change = -30; rp.save!
+      }
+
+      it "reflects the changed stack" do
+        player.stack(t).should == 80
+      end
+
+      it "should be able to go back in time" do
+        player.stack(t, player.rounds.first).should == 110
+      end
+    end
+  end
 end

@@ -2,14 +2,17 @@ require 'spec_helper'
 
 describe Table do
   describe "seating" do
-    before { 
-      @table = FactoryGirl.build :table
-      @table.players << FactoryGirl.build(:player)
-      @table.players << FactoryGirl.build(:player)
-      @table.save
+    subject { 
+      tournament = FactoryGirl.create :tournament
+      @table = FactoryGirl.create :table, :tournament => tournament
+      2.times do
+        p = FactoryGirl.create :player
+        tournament.register_player!(p, 100)
+        @table.players << p
+        @table.save
+      end
+      @table
     }
-
-    subject { @table }
 
     it { should have(2).active_players }
 
@@ -22,8 +25,6 @@ describe Table do
   end
 
   context "when starting play" do
-    subject { FactoryGirl.create :table }
-    before { 2.times { subject.players << FactoryGirl.create(:player) }}
     before { subject.start_play! }
 
     it { should be_playing }
@@ -48,8 +49,6 @@ describe Table do
   end
 
   context "when changing rounds" do
-    subject { FactoryGirl.create :table }
-    before { 2.times { subject.players << FactoryGirl.create(:player) }}
     before { subject.start_play! }
     before { subject.next_round! }
 
@@ -59,9 +58,7 @@ describe Table do
   end
 
   context "when rotating dealer order" do
-    let(:subject) { FactoryGirl.create :table }
     before :each do
-      2.times { subject.players << FactoryGirl.create(:player) }
       @p1 = subject.players.first
       @p2 = subject.players.last
       @p3 = FactoryGirl.create :player
