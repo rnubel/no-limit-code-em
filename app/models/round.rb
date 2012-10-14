@@ -21,6 +21,11 @@ class Round < ActiveRecord::Base
     self.ante ||= self.table.tournament.current_ante # TODO: timing issue?
   end
 
+  def close!
+    self.playing = false
+    self.save!
+  end
+
   def ordered_players
     self.players.partition { |p| p.id >= self.dealer_id }.flatten
   end

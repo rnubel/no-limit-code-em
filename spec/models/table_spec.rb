@@ -34,12 +34,27 @@ describe Table do
       subject.current_round.should == subject.rounds.last
     end
 
+    it "sets the round as playing" do
+      subject.current_round.should be_playing
+    end
+
     it "tells the round the dealer" do
       subject.current_round.dealer.should == subject.players.first
     end
     
     it "tells the round the players in the round" do
       subject.current_round.players.should == subject.players
+    end
+  end
+
+  context "when changing rounds" do
+    subject { FactoryGirl.create :table }
+    before { 2.times { subject.players << FactoryGirl.create(:player) }}
+    before { subject.start_play! }
+    before { subject.next_round! }
+
+    it "sets the old round to not be playing" do
+      subject.rounds.first.should_not be_playing
     end
   end
 

@@ -18,8 +18,12 @@ class Table < ActiveRecord::Base
   end
 
   def next_round!
+    self.current_round && self.current_round.close!
+
     raise "Not enough players to play!" if active_players.size <= 1
-    self.rounds.create(players: self.active_players, dealer: dealer_for_new_round)
+    self.rounds.create( players: self.active_players, 
+                        dealer: dealer_for_new_round,
+                        playing: true)
   end
 
   def current_round
