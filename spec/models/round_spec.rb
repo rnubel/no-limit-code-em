@@ -1,8 +1,16 @@
 require 'spec_helper'
 
 describe Round do
-  subject { FactoryGirl.create(:round) }
-  
+  subject { FactoryGirl.create(:round)  }
+
+  before {
+    3.times do 
+      subject.players << FactoryGirl.create(:player)
+    end
+
+    subject.dealer = subject.players.second
+  }
+
   describe "its deck" do
     it "should have 52 cards" do
       subject.deck.split(" ").size.should == 52
@@ -10,32 +18,40 @@ describe Round do
   end
 
   describe "its ante" do
-    it "is set by a call to table.tournament.current_ante on creation" do
-      Tournament.any_instance.expects(:current_ante).returns(100)
-
-      subject.ante.should == 100
+    it "is set" do
+      subject.ante.should_not be_nil
     end
   end
 
   it "has an ordered list of players" do
-    3.times do 
-      subject.players << FactoryGirl.create(:player)
-    end
-
-    subject.dealer = subject.players.second
-
     subject.ordered_players.should == [
       subject.players.second, subject.players.last, subject.players.first
     ]
   end
 
   it "records actions" do
-    pending
+    subject.record_action! player: subject.players.first,
+                           action: "bet",
+                           amount: 100
+
+    subject.should have(1).action
   end
 
-  describe "its current status" do
+  describe "its state" do
+    describe "initial state" do
+      it "knows the player list" do
+        subject.initial_state.players.should == [
+          { id: subject.players[1].id, stack: 0 },
+          { id: subject.players[2].id, stack: 0 },
+          { id: subject.players[0].id, stack: 0 },
+        ]
+      end
+    end
+
     it "simulates all actions via PokerTable" do
-      pending
+      PokerTable.any_instance.expects(:simulate!)
+
+      subject.state
     end
   end
 end

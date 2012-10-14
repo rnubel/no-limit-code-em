@@ -1,6 +1,7 @@
 class Player < ActiveRecord::Base
   has_and_belongs_to_many :tournaments, join_table: 'registrations'
   has_and_belongs_to_many :tables,      join_table: 'seatings'
+  has_many :registrations
   has_many :seatings
 
   validates_presence_of :name, :key

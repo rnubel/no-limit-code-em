@@ -15,4 +15,11 @@ FactoryGirl.define do
   factory :round do
     table
   end
+
+  factory :action do
+    action "bet"
+    amount 10
+    player
+    round
+  end
 end

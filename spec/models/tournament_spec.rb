@@ -1,16 +1,17 @@
 require 'spec_helper'
 
 describe Tournament do
-  it "should be open or closed" do
+  it "is open or closed" do
     Tournament.create(open: true).open?.should be_true
     Tournament.create(open: false).open?.should be_false
   end
 
-  it "should have many players" do
+  it "allows players to register with a set purse amount" do
     t = Tournament.create
-    t.players.push(FactoryGirl.create(:player))
+    t.registrations.create(player: FactoryGirl.create(:player), purse: 100)
 
     t.players.size.should == 1
+    t.players.first.registrations.first.purse.should == 100
   end
 
   subject { Tournament.create open: true }
