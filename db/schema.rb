@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121013235658) do
+ActiveRecord::Schema.define(:version => 20121014002943) do
 
   create_table "actions", :force => true do |t|
     t.string   "action"
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(:version => 20121013235658) do
   create_table "round_players", :force => true do |t|
     t.integer "player_id"
     t.integer "round_id"
+    t.integer "initial_stack"
   end
 
   create_table "rounds", :force => true do |t|
