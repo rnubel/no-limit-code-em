@@ -26,6 +26,14 @@ class Table < ActiveRecord::Base
                         playing: true)
   end
 
+  def take_action!(action_params)
+     self.current_round.record_action!(action_params)
+  end
+
+  def can_take_action?(action_params)
+    (r = self.current_round) && r.valid_action?(action_params)
+  end
+
   def current_round
     self.rounds.order("id DESC").first
   end

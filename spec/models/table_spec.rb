@@ -49,6 +49,25 @@ describe Table do
     end
   end
 
+  context "when taking actions from players" do
+    let(:action)  {
+      { player: subject.players.first,
+        action: "bet",
+        amount: 100 }
+    }
+    before { subject.start_play! }
+
+    it "can check if an action is valid" do
+      Round.any_instance.expects(:valid_action?) 
+      subject.can_take_action? action
+    end
+
+    it "should delegate to current_round" do
+      Round.any_instance.expects(:record_action!) 
+      subject.take_action! action
+    end
+  end
+
   context "when changing rounds" do
     before { subject.start_play!
              subject.next_round! }
