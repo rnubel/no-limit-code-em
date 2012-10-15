@@ -50,8 +50,8 @@ describe Table do
   end
 
   context "when changing rounds" do
-    before { subject.start_play! }
-    before { subject.next_round! }
+    before { subject.start_play!
+             subject.next_round! }
 
     it "sets the old round to not be playing" do
       subject.rounds.first.should_not be_playing

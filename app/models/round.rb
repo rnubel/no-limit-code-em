@@ -56,6 +56,10 @@ class Round < ActiveRecord::Base
     state.valid_action? action.to_hash
   end
 
+  def over?
+    state.round == 'showdown'
+  end
+
   def state
     s = initial_state
     s.simulate! action_list

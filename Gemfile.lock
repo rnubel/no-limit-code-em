@@ -1,8 +1,8 @@
 GIT
   remote: git://git.cashnetusa.com/rnubel/poker_table
-  revision: a7eeb78fe0a37dbab1d6f3b297d8a1b97cef60d0
+  revision: 036e38ea4159bb82cdeddc9d61e4774f45836408
   specs:
-    poker_table (0.0.2)
+    poker_table (0.0.4)
       ruby-poker
 
 GEM
@@ -167,7 +167,7 @@ DEPENDENCIES
   json
   mocha
   pg
-  poker_table (= 0.0.2)!
+  poker_table (= 0.0.4)!
   pry
   rails (= 3.1.3)
   rspec-rails

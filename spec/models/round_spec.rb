@@ -63,7 +63,20 @@ describe Round do
 
       subject.state
     end
+
+    it "indicates when the round is not over" do
+      subject.over?.should be_false
+    end
+
+    it "indicates when the round is over" do
+      subject.ordered_players.first(2).each do |p|
+        subject.record_action! player: p, action: "fold"
+      end
+
+      subject.should be_over
+    end
   end
+
 
   describe "when being closed" do
     it "should update its round_players with their stack change" do
