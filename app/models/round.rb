@@ -70,7 +70,7 @@ class Round < ActiveRecord::Base
 
   def player_list
     ordered_players.collect do |p|
-      { id: p.id, stack: p.stack(self.tournament, self) }
+      { id: p.id, stack: p.stack(self) }
     end
   end
 

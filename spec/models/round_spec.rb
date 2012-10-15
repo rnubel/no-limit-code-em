@@ -32,7 +32,8 @@ describe Round do
     ]
   end
 
-  it "records actions" do
+  it "records valid actions" do
+    PokerTable.any_instance.expects(:valid_action?).returns true
     subject.record_action! player: subject.players.second,
                            action: "bet",
                            amount: 1
@@ -40,7 +41,7 @@ describe Round do
     subject.should have(1).action
   end
 
-  it "validates actions" do
+  it "rejects invalid actions" do
     PokerTable.any_instance.expects(:valid_action?).returns false
 
     expect {

@@ -1,8 +1,7 @@
 class Player < ActiveRecord::Base
-  has_many :registrations
   has_many :seatings
   has_many :round_players
-  has_many :tournaments, :through => :registrations
+  belongs_to :tournament
   has_many :tables,      :through => :seatings
   has_many :rounds,      :through => :round_players
 
@@ -24,18 +23,12 @@ class Player < ActiveRecord::Base
     current_seating && current_seating.table
   end
 
-  def stack(tournament, round=nil)
-    raise "Cannot get stack without tournament reference." unless tournament
-    q = self.round_players.joins(:table)
-            .where(:tables => 
-                { :tournament_id => tournament.id })
+  def stack(round=nil)
+    raise "Cannot get stack -- player not registered" unless tournament
+    q = self.round_players
     if round
       q = q.where("round_id <= #{round.id}")
     end
-
-    initial_stack = tournament.registrations
-                    .where(:player_id => self.id)
-                    .first.purse
 
     initial_stack + q.sum(:stack_change)
   end

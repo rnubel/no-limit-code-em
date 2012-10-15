@@ -1,19 +1,20 @@
 require 'spec_helper'
 
 describe Table do
-  describe "seating" do
-    subject { 
-      tournament = FactoryGirl.create :tournament
-      @table = FactoryGirl.create :table, :tournament => tournament
-      2.times do
-        p = FactoryGirl.create :player
-        tournament.register_player!(p, 100)
-        @table.players << p
-        @table.save
-      end
-      @table
-    }
+  subject { 
+    table = FactoryGirl.create :table
+  }
 
+  before {
+    2.times do
+      subject.players <<  FactoryGirl.create(:player, 
+                              :tournament => subject.tournament,
+                              :initial_stack => 100)
+    end
+    subject.save!
+  }
+
+  describe "seating" do
     it { should have(2).active_players }
 
     context "when one player leaves" do
@@ -61,7 +62,7 @@ describe Table do
     before :each do
       @p1 = subject.players.first
       @p2 = subject.players.last
-      @p3 = FactoryGirl.create :player
+      @p3 = FactoryGirl.create :player, :tournament => subject.tournament
 
       subject.start_play!
     end

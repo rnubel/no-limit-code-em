@@ -2,12 +2,10 @@ require 'spec_helper'
 
 describe Player do
   it "should be able to register in a tournament" do
-    p = FactoryGirl.create :player
     t = Tournament.create
-    
-    Registration.create(player: p, tournament: t)
+    p = FactoryGirl.create :player, :tournament => t
 
-    p.tournaments.reload.first.should == t
+    p.tournament.should == t
   end
 
   it "should require a name and a key" do
@@ -53,11 +51,10 @@ describe Player do
       FactoryGirl.create(:player, :registered)
     }
 
-    let(:t) { player.tournaments.first }
-    let(:table) { player.tables.create(:tournament => t) }
+    let(:table) { player.tables.create(:tournament => player.tournament) }
 
     it "starts out at an initial value" do
-      player.stack(t).should == player.registrations.first.purse
+      player.stack.should == player.initial_stack
     end
 
     context "after one round" do
@@ -68,7 +65,7 @@ describe Player do
       }
 
       it "reflects the changed stack" do
-        player.stack(t).should == 110
+        player.stack.should == 110
       end
     end
 
@@ -83,11 +80,11 @@ describe Player do
       }
 
       it "reflects the changed stack" do
-        player.stack(t).should == 80
+        player.stack.should == 80
       end
 
       it "should be able to go back in time" do
-        player.stack(t, player.rounds.first).should == 110
+        player.stack(player.rounds.first).should == 110
       end
     end
   end

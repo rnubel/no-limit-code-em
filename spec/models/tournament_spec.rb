@@ -11,8 +11,7 @@ describe Tournament do
     t.register_player!(FactoryGirl.create(:player), 100)
 
     t.players.size.should == 1
-    t.players.first.registrations.first.purse.should == 100
-    t.players.first.registrations.first.current_stack.should == 100
+    t.players.first.initial_stack.should == 100
   end
 
   subject { Tournament.create open: true }

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121014201539) do
+ActiveRecord::Schema.define(:version => 20121015042637) do
 
   create_table "actions", :force => true do |t|
     t.string   "action"
@@ -28,7 +28,9 @@ ActiveRecord::Schema.define(:version => 20121014201539) do
     t.string   "key"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "lock_version", :default => 0
+    t.integer  "lock_version",  :default => 0
+    t.integer  "tournament_id"
+    t.integer  "initial_stack"
   end
 
   create_table "registrations", :force => true do |t|
