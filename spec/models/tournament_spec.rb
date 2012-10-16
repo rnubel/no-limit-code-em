@@ -6,6 +6,10 @@ describe Tournament do
     Tournament.create(open: false).open?.should be_false
   end
 
+  it "starts out as not playing" do
+    Tournament.create(open: true).should_not be_playing
+  end
+
   it "allows players to register" do
     t = Tournament.create
     t.register_player!(FactoryGirl.create(:player))
@@ -27,6 +31,7 @@ describe Tournament do
     before { subject.start! }
 
     it { should_not be_open }
+    it { should be_playing }
 
     describe "table seating with 4 players per table" do
       it { should have(2).tables }

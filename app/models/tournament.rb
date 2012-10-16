@@ -4,9 +4,11 @@ class Tournament < ActiveRecord::Base
   has_many :tables
 
   scope :open, where(:open => true)
+  scope :playing, where(:playing => true)
 
   def start!
     self.open = false
+    self.playing = true
     self.save! # Disallow anyone coming in before we start seating.
                # It is possible that someone will still get missed,
                # but reseating should pick them up.
@@ -15,6 +17,11 @@ class Tournament < ActiveRecord::Base
     create_initial_seatings!
     
     tables.each { |t| t.start_play! }
+  end
+
+  def end!
+    self.playing = false
+    self.save!
   end
 
   def register_player!(player)

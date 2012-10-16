@@ -12,6 +12,8 @@ gem 'poker_table', '0.0.5', :git => 'git://git.cashnetusa.com/rnubel/poker_table
 
 gem 'figgy'
 
+gem 'httparty'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

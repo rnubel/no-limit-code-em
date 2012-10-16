@@ -30,7 +30,7 @@ class Player < ActiveRecord::Base
       q = q.where("round_id <= #{round.id}")
     end
 
-    initial_stack + q.sum(:stack_change)
+    (initial_stack || 0) + q.sum(:stack_change)
   end
 
   # Unseat this player from their current table.
