@@ -3,6 +3,8 @@ class Tournament < ActiveRecord::Base
   has_many :players
   has_many :tables
 
+  scope :open, where(:open => true)
+
   def start!
     self.open = false
     self.save! # Disallow anyone coming in before we start seating.
