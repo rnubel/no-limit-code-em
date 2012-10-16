@@ -20,7 +20,12 @@ module Api
 
     # GET /api/players/key
     def show
-
+      if @player = Player.find_by_key(params[:id])
+        render :json => { :name =>  @player.name,
+                          :key =>   @player.key   }
+      else
+        render_not_found "No player registered with that key."
+      end
     end
   end
 end
