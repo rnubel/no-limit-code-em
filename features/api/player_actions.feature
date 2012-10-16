@@ -26,7 +26,7 @@ Feature: Player actions in a tournament
          "your_turn": true }
       """
 
-  Scenario: Posting the first action
+  Scenario: Posting a fold
     Given a tournament is open
     And 2 players are registered
     And the tournament starts
@@ -39,4 +39,19 @@ Feature: Player actions in a tournament
          "stack": {{@player.stack}}}
       """
     And the table's first round should be over
+
+  Scenario: Posting a bet
+    Given a tournament is open
+    And 2 players are registered
+    And the tournament starts
+    When I am the dealer
+    When I POST to "/api/players/{{@player.key}}/action" with:
+      | action_name | bet |
+      | amount      | 25  |
+    Then the JSON response should include:
+      """
+        {"name":  "{{@player.name}}",
+         "stack": {{@player.stack}}}
+      """
+    And the table's first round should not be over
 

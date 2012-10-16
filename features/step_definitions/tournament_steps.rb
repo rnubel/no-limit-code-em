@@ -23,3 +23,7 @@ end
 Then /^the table's first round should be over/ do
   @tournament.tables.first.rounds.first.should be_over
 end
+
+Then /^the table's first round should not be over/ do
+  @tournament.tables.first.rounds.first.should_not be_over
+end
