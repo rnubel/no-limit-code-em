@@ -11,6 +11,7 @@ class Tournament < ActiveRecord::Base
                # It is possible that someone will still get missed,
                # but reseating should pick them up.
 
+    hand_out_chips!
     create_initial_seatings!
     
     tables.each { |t| t.start_play! }
@@ -19,6 +20,12 @@ class Tournament < ActiveRecord::Base
   def register_player!(player)
     self.players << player
     player.save!
+  end
+
+  def hand_out_chips!
+    self.players.each do |p|
+      p.initial_stack = AppConfig.tournament.initial_stack
+    end
   end
 
   # Create new tables for any players not seated.
@@ -37,6 +44,6 @@ class Tournament < ActiveRecord::Base
   end
 
   def table_size
-    6 # TODO: Figgy
+    AppConfig.tournament.table_size
   end
 end

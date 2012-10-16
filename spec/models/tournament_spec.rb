@@ -43,6 +43,12 @@ describe Tournament do
         t.should have(1).round
       }
     end
+
+    it "gives each player a given stack" do
+      subject.players.each do |p| 
+        p.initial_stack.should == AppConfig.tournament.initial_stack
+      end
+    end
   end
 
   context "when redistributing" do
