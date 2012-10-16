@@ -7,6 +7,12 @@ namespace :tournament do
     puts "Tournament #{t.inspect} has opened for registration."
   end
 
+  task :stats => :environment do
+    t = Tournament.last
+
+    puts t.players.inspect
+  end
+
   task :start => :environment do
     raise "No tournament found to start!" unless Tournament.open.first
 
