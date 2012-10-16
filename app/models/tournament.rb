@@ -16,8 +16,7 @@ class Tournament < ActiveRecord::Base
     tables.each { |t| t.start_play! }
   end
 
-  def register_player!(player, purse)
-    player.initial_stack = purse
+  def register_player!(player)
     self.players << player
     player.save!
   end

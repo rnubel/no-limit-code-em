@@ -6,12 +6,11 @@ describe Tournament do
     Tournament.create(open: false).open?.should be_false
   end
 
-  it "allows players to register with a set purse amount" do
+  it "allows players to register" do
     t = Tournament.create
-    t.register_player!(FactoryGirl.create(:player), 100)
+    t.register_player!(FactoryGirl.create(:player))
 
     t.players.size.should == 1
-    t.players.first.initial_stack.should == 100
   end
 
   subject { Tournament.create open: true }

@@ -5,8 +5,7 @@ describe Round do
 
   before {
     3.times do 
-      p = FactoryGirl.create(:player)
-      subject.tournament.register_player!(p,100)
+      p = FactoryGirl.create(:player, :registered, :tournament => subject.tournament)
       subject.players << p
       subject.save
     end
