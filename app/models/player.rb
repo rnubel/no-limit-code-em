@@ -50,6 +50,18 @@ class Player < ActiveRecord::Base
     table.valid_action? action_params.merge(:player => self) 
   end
 
+  def current_game_state
+    table && (r = table.current_round) && r.state
+  end
+
+  def current_player_state
+    (s = current_game_state) && s.players.find { |p| p[:id] == self.id }    
+  end
+
+  def hand
+    (p = current_player_state) && p[:hand]
+  end
+
   def my_turn?
     !!(table && (table.current_player == self))
   end

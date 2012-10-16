@@ -45,7 +45,7 @@ class Round < ActiveRecord::Base
   def take_action!(params)
     raise "Round already closed!" unless playing?
     if valid_action?(params)
-      action = self.actions.build params
+      action = self.actions.build action_params(params)
       action.save!
     else
       raise "Action #{params} not valid on current state!"
@@ -73,6 +73,15 @@ class Round < ActiveRecord::Base
     players.find(state.current_player[:id])
   end
 
+  def betting_round
+    state.round
+  end
+
+  def action_params(params)
+    params[:cards] = params[:cards].join(" ") if params[:cards]
+    params
+  end
+
   def initial_state
     PokerTable.new players: player_list,
                    ante:    ante,
@@ -90,7 +99,7 @@ class Round < ActiveRecord::Base
       { player_id: a.player_id,
         action: a.action, 
         amount: a.amount,
-        cards: a.cards }
+        cards: a.cards && a.cards.split(" ") }
     end
   end
 end

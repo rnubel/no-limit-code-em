@@ -20,10 +20,19 @@ When /I am the dealer/ do
   @player = @tournament.tables.first.current_round.dealer
 end
 
+When /I am not the dealer/ do
+  @player = @tournament.tables.first.current_round.ordered_players.last
+end
+
 Then /^the table's first round should be over/ do
   @tournament.tables.first.rounds.first.should be_over
 end
 
 Then /^the table's first round should not be over/ do
   @tournament.tables.first.rounds.first.should_not be_over
+end
+
+
+Then /the table's first round should be in the "(.*)" betting round/ do |round|
+  @tournament.tables.first.rounds.first.betting_round.should == round
 end

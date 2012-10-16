@@ -45,6 +45,11 @@ describe Round do
     subject.should have(1).action
   end
 
+  it "records replacements" do
+    subject.expects(:valid_action?).returns true
+    subject.take_action!(player: subject.players.first, action: "replace", cards: ["AS", "5H"])
+  end
+
   it "rejects invalid actions" do
     PokerTable.any_instance.expects(:valid_action?).returns false
 
@@ -82,6 +87,10 @@ describe Round do
     
     it "knows the current player" do
       subject.current_player.should == subject.players.second
+    end
+
+    it "knows the betting round" do
+      subject.betting_round.should == 'deal'
     end
   end
 

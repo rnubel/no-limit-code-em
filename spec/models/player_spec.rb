@@ -56,6 +56,14 @@ describe Player do
       it "can check if an action can be taken" do
         subject.valid_action?(action:"fold").should be_true
       end
+
+      it "can check its current game state" do
+        subject.current_game_state.should be_a PokerTable
+      end
+      
+      its(:current_player_state) {
+        should have_key(:hand)
+      }
     end
   end
 
@@ -66,6 +74,7 @@ describe Player do
              subject.unseat! }
 
     specify { subject.table.should be_nil }
+    specify { subject.current_game_state.should be_nil }
   end
 
   describe "stack" do

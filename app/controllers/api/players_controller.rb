@@ -29,11 +29,16 @@ module Api
 
     # POST /api/players/:key/action
     def action
+      return render_bad_request "Amount must be a positive integer if passed" if 
+        params[:amount] && (params[:amount].to_i < 0)
+
       @player = Player.find_by_key(params[:id])
 
       action_params = { :action => params[:action_name], 
-                        :amount => params[:amount], 
-                        :cards => params[:cards] }
+                        :amount => params[:amount] && params[:amount].to_i, 
+                        :cards =>  cards_value(params[:cards]) }
+
+      puts action_params.inspect
 
       if not @player
         render_not_found "No player registered with that key."
@@ -54,6 +59,14 @@ module Api
         :stack => player.stack,
         :your_turn => player.my_turn?
       }
+    end
+
+    def cards_value(param)
+      if param.is_a? String
+        param.split(" ")
+      else
+        param
+      end
     end
   end
 end
