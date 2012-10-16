@@ -41,8 +41,9 @@ group :development, :test do
 end
 
 group :test do
+  gem 'database_cleaner'
   gem 'rspec-rails'
   gem 'mocha'
-  gem 'cucumber'
+  gem 'cucumber-rails'
   gem 'factory_girl'
 end
