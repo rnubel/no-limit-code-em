@@ -42,21 +42,21 @@ class Round < ActiveRecord::Base
       .flatten
   end
 
-  def record_action!(params)
+  def take_action!(params)
     raise "Round already closed!" unless playing?
-
-    action = self.actions.build params
-
-    if valid_action?(action)
+    if valid_action?(params)
+      action = self.actions.build params
       action.save!
     else
-      self.actions.reload
-      raise "Action #{action.to_hash} not valid on current state!"
+      raise "Action #{params} not valid on current state!"
     end
   end
 
-  def valid_action?(action)
-    state.valid_action? action.to_hash
+  def valid_action?(action_params)
+    action_hash = action_params
+                    .except(:player)
+                    .merge(:player_id => action_params[:player].id)
+    state.valid_action? action_hash
   end
 
   def over?

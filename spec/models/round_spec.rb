@@ -32,9 +32,14 @@ describe Round do
     ]
   end
 
+  it "can validate actions" do
+    subject.valid_action?(player: subject.players.second,
+                          action: "fold").should be_true
+  end
+
   it "records valid actions" do
     PokerTable.any_instance.expects(:valid_action?).returns true
-    subject.record_action! player: subject.players.second,
+    subject.take_action! player: subject.players.second,
                            action: "bet",
                            amount: 1
 
@@ -45,7 +50,7 @@ describe Round do
     PokerTable.any_instance.expects(:valid_action?).returns false
 
     expect {
-     subject.record_action!(player: subject.players.first,
+     subject.take_action!(player: subject.players.first,
                             action: "asdfasdff")}.to raise_error
 
     subject.should have(0).actions
@@ -70,7 +75,7 @@ describe Round do
 
     it "indicates when the round is over" do
       subject.ordered_players.first(2).each do |p|
-        subject.record_action! player: p, action: "fold"
+        subject.take_action! player: p, action: "fold"
       end
 
       subject.should be_over

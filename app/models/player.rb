@@ -40,4 +40,13 @@ class Player < ActiveRecord::Base
     s.active = false;
     s.save!
   end
+
+  # Have this player attempt to take the given action.
+  def take_action!(action_params)
+    table.take_action! action_params.merge(:player => self) 
+  end
+
+  def valid_action?(action_params)
+    table.valid_action? action_params.merge(:player => self) 
+  end
 end

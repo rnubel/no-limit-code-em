@@ -27,10 +27,10 @@ class Table < ActiveRecord::Base
   end
 
   def take_action!(action_params)
-     self.current_round.record_action!(action_params)
+     self.current_round.take_action!(action_params)
   end
 
-  def can_take_action?(action_params)
+  def valid_action?(action_params)
     (r = self.current_round) && r.valid_action?(action_params)
   end
 

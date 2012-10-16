@@ -59,11 +59,11 @@ describe Table do
 
     it "can check if an action is valid" do
       Round.any_instance.expects(:valid_action?) 
-      subject.can_take_action? action
+      subject.valid_action? action
     end
 
     it "should delegate to current_round" do
-      Round.any_instance.expects(:record_action!) 
+      Round.any_instance.expects(:take_action!) 
       subject.take_action! action
     end
   end
@@ -99,6 +99,7 @@ describe Table do
       subject.players << @p3
 
       subject.next_round!
+      subject.current_round.dealer.should == @p2
       subject.current_round.ordered_players.should == [@p2, @p3, @p1]
 
       subject.players.first.unseat!

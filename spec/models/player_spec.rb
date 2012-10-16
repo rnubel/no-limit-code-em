@@ -30,11 +30,33 @@ describe Player do
   end
 
   context "when seated" do
-    subject { FactoryGirl.create(:player) }
+    subject { FactoryGirl.create(:player, :registered) }
 
-    before { subject.tables << FactoryGirl.create(:table) }
+    before { FactoryGirl.create(:table, 
+              :players => [subject,
+                           FactoryGirl.create(:player, :registered, 
+                                              :tournament => subject.tournament)
+                          ]) }
 
     specify { subject.table.should_not be_nil }
+
+    context "when a round hasn't been started" do
+      it "can't take actions" do
+        subject.valid_action?(action:"fold").should be_false
+      end
+    end
+
+    context "when a round has started" do
+      before { subject.tables.first.start_play! }
+
+      it "can take actions" do
+        subject.take_action!(action:"fold")
+      end
+
+      it "can check if an action can be taken" do
+        subject.valid_action?(action:"fold").should be_true
+      end
+    end
   end
 
   context "when being unseated" do
