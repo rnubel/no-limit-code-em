@@ -8,7 +8,7 @@ class Player < ActiveRecord::Base
   validates_presence_of :name, :key
 
   def self.standing
-    joins("LEFT JOIN seatings ON seatings.player_id = players.id AND seatings.active = true").where("seatings.id IS NULL")
+    joins("LEFT JOIN seatings ON seatings.player_id = players.id AND seatings.active").where("seatings.id IS NULL")
   end
  
   def current_seating
@@ -56,6 +56,10 @@ class Player < ActiveRecord::Base
 
   def current_player_state
     (s = current_game_state) && s.players.find { |p| p[:id] == self.id }    
+  end
+  
+  def current_stack
+    current_player_state[:stack]
   end
 
   def hand
