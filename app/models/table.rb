@@ -41,6 +41,11 @@ class Table < ActiveRecord::Base
     self.rounds.order("id DESC").first
   end
 
+  def current_player
+    r = self.current_round
+    r && r.current_player 
+  end
+
   def dealer_for_new_round
     if r = current_round
       active_players.find { |p| p.id > r.dealer_id } ||

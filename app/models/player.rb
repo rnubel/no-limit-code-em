@@ -49,4 +49,8 @@ class Player < ActiveRecord::Base
   def valid_action?(action_params)
     table.valid_action? action_params.merge(:player => self) 
   end
+
+  def my_turn?
+    !!(table && (table.current_player == self))
+  end
 end

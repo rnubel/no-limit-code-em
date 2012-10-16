@@ -110,4 +110,19 @@ describe Player do
       end
     end
   end
+
+  describe "#my_turn?" do
+    subject { FactoryGirl.create(:player, :registered) }
+
+    it "is never the player's turn when they don't have a table" do
+      subject.my_turn?.should == false
+    end
+
+    it "is the player's turn when the table says it is" do
+      subject.tables.create!(:tournament => subject.tournament)
+      Table.any_instance.expects(:current_player).returns(subject)
+
+      subject.should be_my_turn
+    end
+  end
 end

@@ -79,6 +79,10 @@ describe Round do
 
       subject.should be_over
     end
+    
+    it "knows the current player" do
+      subject.current_player.should == subject.players.second
+    end
   end
 
 

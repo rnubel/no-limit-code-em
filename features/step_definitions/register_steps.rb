@@ -11,4 +11,9 @@ Then /^a new player should be registered for that tournament$/ do
   @player = @tournament.players.last
 end
  
+Given /^a player is registered$/ do
+  @tournament.players << FactoryGirl.build(:player)
+  @tournament.save!
+  @player = @tournament.players.last
+end
 

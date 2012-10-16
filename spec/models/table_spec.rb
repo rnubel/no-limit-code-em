@@ -57,6 +57,10 @@ describe Table do
     }
     before { subject.start_play! }
 
+    it "knows the current player" do
+      subject.current_player.should == subject.players.first 
+    end
+
     it "can check if an action is valid" do
       Round.any_instance.expects(:valid_action?) 
       subject.valid_action? action

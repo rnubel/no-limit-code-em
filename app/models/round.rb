@@ -69,6 +69,10 @@ class Round < ActiveRecord::Base
     s
   end
 
+  def current_player
+    players.find(state.current_player[:id])
+  end
+
   def initial_state
     PokerTable.new players: player_list,
                    ante:    ante,
