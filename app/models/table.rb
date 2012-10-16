@@ -27,7 +27,10 @@ class Table < ActiveRecord::Base
   end
 
   def take_action!(action_params)
-     self.current_round.take_action!(action_params)
+     r = self.current_round
+     r.take_action!(action_params)
+
+     next_round! if r.over?
   end
 
   def valid_action?(action_params)
