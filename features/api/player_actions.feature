@@ -26,3 +26,17 @@ Feature: Player actions in a tournament
          "your_turn": true }
       """
 
+  Scenario: Posting the first action
+    Given a tournament is open
+    And 2 players are registered
+    And the tournament starts
+    When I am the dealer
+    When I POST to "/api/players/{{@player.key}}/action" with:
+      | action_name | fold |
+    Then the JSON response should include:
+      """
+        {"name":  "{{@player.name}}",
+         "stack": {{@player.stack}}}
+      """
+    And the table's first round should be over
+

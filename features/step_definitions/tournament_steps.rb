@@ -19,3 +19,7 @@ end
 When /I am the dealer/ do
   @player = @tournament.tables.first.current_round.dealer
 end
+
+Then /^the table's first round should be over/ do
+  @tournament.tables.first.rounds.first.should be_over
+end
