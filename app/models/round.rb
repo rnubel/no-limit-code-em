@@ -36,7 +36,10 @@ class Round < ActiveRecord::Base
   end
 
   def ordered_players
-    self.players.partition { |p| p.id >= self.dealer_id }.flatten
+    self.players
+      .partition { |p| p.id >= self.dealer_id }
+      .map { |list| list.sort_by(&:id) }
+      .flatten
   end
 
   def record_action!(params)
