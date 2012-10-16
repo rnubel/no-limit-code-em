@@ -25,6 +25,7 @@ class Tournament < ActiveRecord::Base
   def hand_out_chips!
     self.players.each do |p|
       p.initial_stack = AppConfig.tournament.initial_stack
+      p.save!
     end
   end
 

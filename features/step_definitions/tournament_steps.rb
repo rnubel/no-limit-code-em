@@ -16,3 +16,6 @@ Then /^(\d+) table.? should have (\d+) players$/ do |n, p|
   @tournament.tables.select { |t| t.players.count == p.to_i }.size.should == n.to_i
 end
 
+When /I am the dealer/ do
+  @player = @tournament.tables.first.current_round.dealer
+end

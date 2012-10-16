@@ -12,3 +12,17 @@ Feature: Player actions in a tournament
          "stack": {{@player.stack}},
          "your_turn": false }
       """
+
+  Scenario: Status when a tournament has started
+    Given a tournament is open
+    And 2 players are registered
+    And the tournament starts
+    When I am the dealer
+    When I GET from "/api/players/{{@player.key}}"
+    Then the JSON response should include:
+      """
+        {"name":  "{{@player.name}}",
+         "stack": {{@player.stack}},
+         "your_turn": true }
+      """
+

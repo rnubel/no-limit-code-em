@@ -71,3 +71,6 @@ Given /this feature is not implemented/ do
   pending
 end
 
+Given /I pry/ do
+  binding.pry
+end

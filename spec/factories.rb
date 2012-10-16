@@ -4,7 +4,7 @@ FactoryGirl.define do
   end
 
   factory :player do
-    key             "asdfasdfasdfsdf"
+    sequence(:key)  { |n| "asdfasdf#{n}asdf#{n+100}" }
     sequence(:name) { |n| "Bill#{n}" }
     initial_stack 0
 
