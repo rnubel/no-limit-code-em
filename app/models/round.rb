@@ -64,9 +64,15 @@ class Round < ActiveRecord::Base
   end
 
   def state
-    s = initial_state
-    s.simulate! action_list
-    s
+    @state_cache ||= {}
+
+    if @state_cache[actions.count]
+      @state_cache[actions.count]
+    else
+      s = initial_state
+      s.simulate! action_list
+      @state_cache[actions.count] = s
+    end
   end
 
   def current_player
