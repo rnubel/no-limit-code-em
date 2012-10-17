@@ -13,6 +13,11 @@ describe Player do
     p.valid?.should be_false
   end
 
+  it "is created with a set stack by default" do
+    p = Player.create
+    p.initial_stack.should == AppConfig.tournament.initial_stack
+  end
+
   describe "::standing" do
     it "should find players with no active seatings" do
       p1 = FactoryGirl.create(:player)
@@ -79,7 +84,7 @@ describe Player do
 
   describe "stack" do
     let!(:player) {
-      FactoryGirl.create(:player, :registered)
+      FactoryGirl.create(:player, :registered, :initial_stack => 100)
     }
 
     let(:table) { player.tables.create(:tournament => player.tournament) }

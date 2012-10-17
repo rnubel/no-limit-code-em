@@ -39,26 +39,26 @@ describe PlayerPresenter do
         subject.players_at_table
           .should == [ { :player_name => player.name, 
                          :stack => player.current_stack,
-                         :current_bet => nil,
+                         :current_bet => @table.current_round.ante,
                          :actions => antes},
                        { :player_name => player2.name, 
                          :stack => player2.current_stack,
-                         :current_bet => nil,
+                         :current_bet => @table.current_round.ante,
                          :actions => antes}
                      ]
       end
 
       it "knows the latest bet" do
-        player.take_action! action: "bet", amount: "1"
+        player.take_action! action: "bet", amount: "50"
 
         subject.players_at_table
           .should == [ { :player_name => player.name, 
                          :stack => player.current_stack,
-                         :current_bet => 1,
-                         :actions => antes + [{:action => "bet", :amount => 1}]},
+                         :current_bet => 50,
+                         :actions => antes + [{:action => "bet", :amount => 50}]},
                        { :player_name => player2.name, 
                          :stack => player2.current_stack,
-                         :current_bet => nil,
+                         :current_bet => @table.current_round.ante,
                          :actions => antes}
                      ]
       end

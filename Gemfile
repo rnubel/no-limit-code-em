@@ -8,7 +8,7 @@ gem 'rails', '3.1.3'
 gem 'pg'
 gem 'json'
 
-gem 'poker_table', '0.0.8', :git => 'git://git.cashnetusa.com/rnubel/poker_table'
+gem 'poker_table', '0.0.9', :git => 'git://git.cashnetusa.com/rnubel/poker_table'
 
 gem 'figgy'
 gem 'sqlite3'

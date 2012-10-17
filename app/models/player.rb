@@ -5,6 +5,9 @@ class Player < ActiveRecord::Base
   has_many :tables,      :through => :seatings
   has_many :rounds,      :through => :round_players
 
+  after_initialize :buy_in
+  attr_accessible :initial_stack, :name, :key
+
   validates_presence_of :name, :key
 
   scope :ordered, order("id ASC")
@@ -12,7 +15,11 @@ class Player < ActiveRecord::Base
   def self.standing
     joins("LEFT JOIN seatings ON seatings.player_id = players.id AND seatings.active").where("seatings.id IS NULL")
   end
- 
+
+  def buy_in
+    self.initial_stack ||= AppConfig.tournament.initial_stack
+  end
+
   def current_seating
     active_seatings = seatings.active
     # Assert a sanity check.

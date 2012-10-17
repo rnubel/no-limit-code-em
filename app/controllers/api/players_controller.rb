@@ -8,9 +8,8 @@ module Api
       tournament = Tournament.open.last
 
       if tournament
-        @player = tournament.players.create name: params[:name],
-                                            key: SecureRandom.uuid
-
+        @player = tournament.players.create! name: params[:name],
+                                             key: SecureRandom.uuid
         render :json => { :name =>  @player.name,
                           :key =>   @player.key   }
       else

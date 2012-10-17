@@ -13,7 +13,7 @@ class Tournament < ActiveRecord::Base
                # It is possible that someone will still get missed,
                # but reseating should pick them up.
 
-    hand_out_chips!
+    #hand_out_chips!
     create_initial_seatings!
     
     tables.each { |t| t.start_play! }

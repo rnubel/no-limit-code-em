@@ -7,6 +7,16 @@ Given /^(\d+) players are at a table$/ do |n|
   @round = @table.current_round
 end
 
+Given /^(\d+) players are at a table with initial stacks \[(.*)\]$/ do |n, stack_list|
+  stacks = stack_list.split(", ")
+  n.to_i.times do |i|
+    FactoryGirl.create(:player, :tournament => @tournament, :initial_stack => stacks[i])
+  end
+  @tournament.start!
+  @table = @tournament.tables.first
+  @round = @table.current_round
+end
+
 When /^player (\d+) bets (\d+)$/ do |id, amount|
   @player = @table.players[id.to_i-1]
   @player.take_action!(:action => "bet", :amount => amount.to_i)
@@ -19,7 +29,7 @@ end
 
 Then /^player (\d+) wins the round$/ do |id|
   @player = @table.players[id.to_i-1]
-  @player.round_players.first.stack_change.should > 0
+  @table.rounds.first.winners.should == [@player]
 end
 
 Then /^player (\d+) cannot bet (-?\d+)$/ do |id, amount|

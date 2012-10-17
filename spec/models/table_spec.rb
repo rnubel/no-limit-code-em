@@ -73,7 +73,7 @@ describe Table do
 
     it "moves to the next round if that action ended the round" do
       Round.any_instance.expects(:take_action!) 
-      Round.any_instance.expects(:over?).returns(true)
+      Round.any_instance.stubs(:over?).returns(true)
       subject.take_action! action
       subject.should have(2).rounds  
     end

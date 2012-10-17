@@ -33,6 +33,12 @@ class Table < ActiveRecord::Base
                           dealer: dealer_for_new_round,
                           playing: true)
     end
+    
+    # In some cases, the round will already be over. Check for that.
+    if current_round.over?
+      current_round.close!
+      stop!
+    end
   end
 
   def stop!
