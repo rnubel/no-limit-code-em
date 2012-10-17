@@ -39,7 +39,7 @@ class Tournament < ActiveRecord::Base
   # Create new tables for any players not seated.
   def create_initial_seatings!
     players.standing.each_in_tables(table_size) do |players_at_table|
-      self.tables.create( players: players_at_table )
+      self.tables.create( players: players_at_table.sort_by(&:id) )   # Sort for testing purposes only.
     end
   end
 

@@ -34,7 +34,7 @@ end
 
 When /^player (\d+) goes all in$/ do |id|
   @player = @table.players[id.to_i-1]
-   @player.take_action!(:action => "bet", :amount => @player.current_stack)
+  @player.take_action!(:action => "bet", :amount => @player.current_stack)
 end
 
 When /^all players replace no cards$/ do
