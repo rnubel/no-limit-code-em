@@ -65,7 +65,7 @@ class Player < ActiveRecord::Base
 
   def current_game_state(property = nil)
     s = (r = self.round) && r.state
-    property ? s && s[property] : s
+    property ? s && s.send(property) : s
   end
 
   def current_player_state(property = nil)

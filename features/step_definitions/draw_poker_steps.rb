@@ -29,7 +29,7 @@ end
 
 Then /^player (\d+) wins the round$/ do |id|
   @player = @table.players[id.to_i-1]
-  @table.rounds.first.winners.should == [@player]
+  @table.rounds.order("id ASC").first.winners.should == [@player]
 end
 
 Then /^player (\d+) cannot bet (-?\d+)$/ do |id, amount|
