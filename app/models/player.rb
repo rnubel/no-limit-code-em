@@ -59,9 +59,13 @@ class Player < ActiveRecord::Base
     table.valid_action? action_params.merge(:player => self) 
   end
 
-  def current_game_state
-    r = table && table.current_round
-    r && r.state
+  def round
+    table && table.current_round
+  end
+
+  def current_game_state(property = nil)
+    s = (r = self.round) && r.state
+    property ? s && s[property] : s
   end
 
   def current_player_state(property = nil)

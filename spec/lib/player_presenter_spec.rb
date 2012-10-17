@@ -7,9 +7,38 @@ describe PlayerPresenter do
     let(:player){ FactoryGirl.create(:player, :registered) }
 
     it "has the needed keys" do
-      subject.to_json.keys.should =~ [:name, :stack, :your_turn, :players_at_table]
+      subject.to_json.keys.should =~ [:name, :initial_stack, :your_turn, :players_at_table, :hand, :betting_phase, :table_id, :round_id, :round_history]
     end
   }
+
+  describe "#hand" do
+    subject { PlayerPresenter.new(player) }
+    let(:player){ FactoryGirl.create(:player, :registered) }
+    
+    it "handles nils" do
+      subject.hand.should == ""
+    end
+
+    it "handles actual cards" do
+      player.stubs(:current_player_state).with(:hand).returns("AS AS AS AS AS")
+      subject.hand.should == "AS AS AS AS AS"
+    end
+  end
+
+  describe "#round_history" do
+    subject { PlayerPresenter.new(player) }
+    let(:player){ FactoryGirl.create(:player, :registered) }
+
+    before { player.round_players.create(:round => FactoryGirl.create(:round), :stack_change => 10)}
+
+    it "shows round history" do
+      subject.round_history.should == [{
+        :round_id => player.round_players.first.round_id,
+        :table_id => player.round_players.first.round.table_id,
+        :stack_change => 10
+      }]
+    end
+  end
 
   describe "#players_at_table" do
     subject { PlayerPresenter.new(player) }
@@ -38,11 +67,11 @@ describe PlayerPresenter do
       it "has basic stats" do
         subject.players_at_table
           .should == [ { :player_name => player.name, 
-                         :stack => player.current_stack,
+                         :initial_stack => player.current_stack,
                          :current_bet => @table.current_round.ante,
                          :actions => antes},
                        { :player_name => player2.name, 
-                         :stack => player2.current_stack,
+                         :initial_stack => player2.current_stack,
                          :current_bet => @table.current_round.ante,
                          :actions => antes}
                      ]
@@ -53,11 +82,11 @@ describe PlayerPresenter do
 
         subject.players_at_table
           .should == [ { :player_name => player.name, 
-                         :stack => player.current_stack,
+                         :initial_stack => player.current_stack,
                          :current_bet => 50,
                          :actions => antes + [{:action => "bet", :amount => 50}]},
                        { :player_name => player2.name, 
-                         :stack => player2.current_stack,
+                         :initial_stack => player2.current_stack,
                          :current_bet => @table.current_round.ante,
                          :actions => antes}
                      ]
