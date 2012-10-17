@@ -33,6 +33,9 @@ namespace :bot do
     while true
       puts b.status
 
+      b.action(:action_name => "bet", :amount => 0)
+      b.action(:action_name => "replace", :cards => "")
+
       sleep 1
     end
   end
