@@ -35,6 +35,18 @@ class Round < ActiveRecord::Base
     end
   end
 
+  def losers
+    raise "Round not over!" if self.playing
+
+    state.losers.map { |loser_hash| self.players.find(loser_hash[:player_id]) }
+  end
+
+  def winners
+    raise "Round not over!" if self.playing
+
+    state.winners.map { |winner_hash| self.players.find(winner_hash[:player_id]) } 
+  end
+
   def ordered_players
     self.players
       .partition { |p| p.id >= self.dealer_id }

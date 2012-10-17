@@ -96,7 +96,7 @@ describe Round do
 
 
   describe "when being closed" do
-    it "should update its round_players with their stack change" do
+    it "updates its round_players with their stack change" do
       PokerTable.any_instance.expects(:stack_changes).returns({
         subject.players[0].id => -10,
         subject.players[1].id => -10,
@@ -108,6 +108,24 @@ describe Round do
       @p1 = subject.players.first
       subject.round_players.where(:player_id => @p1.id).first.
         stack_change.should == -10
+    end
+
+    it "provides a list of winners" do
+      PokerTable.any_instance.expects(:winners).returns [
+        { :player_id => subject.players.second.id, :winnings => 20 }
+      ]
+
+      subject.close!
+      subject.winners.should == [subject.players.second]
+    end
+
+    it "provides a list of kicked players to be removed" do
+      PokerTable.any_instance.expects(:losers).returns [
+        { :player_id => subject.players.first.id }
+      ]
+
+      subject.close!
+      subject.losers.should == [subject.players.first]
     end
   end
 end
