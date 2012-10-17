@@ -7,6 +7,8 @@ class Player < ActiveRecord::Base
 
   validates_presence_of :name, :key
 
+  scope :ordered, order("id ASC")
+
   def self.standing
     joins("LEFT JOIN seatings ON seatings.player_id = players.id AND seatings.active").where("seatings.id IS NULL")
   end
@@ -51,19 +53,29 @@ class Player < ActiveRecord::Base
   end
 
   def current_game_state
-    table && (r = table.current_round) && r.state
+    r = table && table.current_round
+    r && r.state
   end
 
-  def current_player_state
-    (s = current_game_state) && s.players.find { |p| p[:id] == self.id }    
+  def current_player_state(property = nil)
+    ps = (s = current_game_state) && s.players.find { |p| p[:id] == self.id }
+    ps && (property ? ps[property] : ps)
   end
   
   def current_stack
-    current_player_state[:stack]
+    current_player_state(:stack)
+  end
+
+  def current_bet
+    current_player_state(:latest_bet)
   end
 
   def hand
-    (p = current_player_state) && p[:hand]
+    current_player_state(:hand)
+  end
+
+  def actions_in_current_round
+    current_game_state.log.select { |l| l[:player_id] == self.id }
   end
 
   def my_turn?

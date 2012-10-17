@@ -54,11 +54,7 @@ module Api
     private
     # TODO: move to presenter
     def status(player)
-      {
-        :name => player.name,
-        :stack => player.stack,
-        :your_turn => player.my_turn?
-      }
+      PlayerPresenter.new(player).to_json
     end
 
     def cards_value(param)
