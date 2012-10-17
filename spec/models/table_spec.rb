@@ -9,7 +9,7 @@ describe Table do
     2.times do
       subject.players <<  FactoryGirl.create(:player, 
                               :tournament => subject.tournament,
-                              :initial_stack => 100)
+                              :initial_stack => 1000)
     end
     subject.save!
   }
@@ -80,11 +80,28 @@ describe Table do
   end
 
   context "when changing rounds" do
-    before { subject.start_play!
-             subject.next_round! }
+    before { subject.start_play! }
+            
+            
+    context "when play can continue" do
+      before { subject.next_round! }
 
-    it "sets the old round to not be playing" do
-      subject.rounds.first.should_not be_playing
+      it "sets the old round to not be playing" do
+        subject.rounds.first.should_not be_playing
+      end
+    end
+
+    context "when play should stop" do
+      before { Round.any_instance.expects(:losers).returns([subject.players.first]) }
+      before { subject.next_round! }
+      
+      it "unseats any players who lost" do
+        subject.active_players.should == [subject.players.last]
+      end
+
+      it "should not open a new round" do
+        subject.should have(1).round
+      end
     end
   end
 
@@ -92,7 +109,7 @@ describe Table do
     before :each do
       @p1 = subject.players.first
       @p2 = subject.players.last
-      @p3 = FactoryGirl.create :player, :tournament => subject.tournament
+      @p3 = FactoryGirl.create :player, :tournament => subject.tournament, :initial_stack => 1000
 
       subject.start_play!
     end
