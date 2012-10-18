@@ -9,7 +9,7 @@ Feature: Player actions in a tournament
     Then the JSON response should include:
       """
         {"name":  "{{@player.name}}",
-         "initial_stack": null,
+         "initial_stack": {{@player.stack}},
          "your_turn": false }
       """
 
@@ -22,7 +22,7 @@ Feature: Player actions in a tournament
     Then the JSON response should include:
       """
         {"name":  "{{@player.name}}",
-         "initial_stack": {{@player.current_stack}},
+         "initial_stack": {{@player.stack}},
          "your_turn": true }
       """
 
@@ -36,7 +36,7 @@ Feature: Player actions in a tournament
     Then the JSON response should include:
       """
         {"name":  "{{@player.name}}",
-         "initial_stack": {{@player.current_stack}}}
+         "initial_stack": {{@player.stack}}}
       """
     And the table's first round should be over
 
@@ -51,7 +51,7 @@ Feature: Player actions in a tournament
     Then the JSON response should include:
       """
         {"name":  "{{@player.name}}",
-         "initial_stack": {{@player.current_stack}}}
+         "initial_stack": {{@player.stack}}}
       """
     And the table's first round should not be over
 

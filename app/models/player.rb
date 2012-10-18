@@ -27,7 +27,7 @@ class Player < ActiveRecord::Base
     # Assert a sanity check.
     raise "Player is seated at more than one table!" if active_seatings.size > 1
 
-    active_seatings.first
+    @current_seating = active_seatings.first
   end
   
   def table
@@ -35,7 +35,7 @@ class Player < ActiveRecord::Base
   end
 
   def stack(round=nil)
-    raise "Cannot get stack -- player not registered" unless tournament
+    raise "Cannot get stack -- player not registered" unless tournament_id
     q = self.round_players
     if round
       q = q.where("round_id <= #{round.id}")

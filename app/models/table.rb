@@ -18,7 +18,7 @@ class Table < ActiveRecord::Base
   end
 
   def next_round!
-    if old_round = self.current_round
+    if old_round = current_round
       old_round.close!
 
       # Kick out losers.
@@ -32,6 +32,7 @@ class Table < ActiveRecord::Base
       self.rounds.create( players: self.active_players, 
                           dealer: dealer_for_new_round,
                           playing: true)
+      @current_round = nil
     end
     
     # In some cases, the round will already be over. Check for that.
@@ -58,7 +59,7 @@ class Table < ActiveRecord::Base
   end
 
   def current_round
-    self.rounds.order("id DESC").first
+    @current_round ||= self.rounds.order("id DESC").first
   end
 
   def current_player
