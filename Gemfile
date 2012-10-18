@@ -9,7 +9,7 @@ gem 'pg'
 gem 'json'
 gem 'thin'
 
-gem 'poker_table', '0.1.1', :git => 'git://git.cashnetusa.com/rnubel/poker_table'
+gem 'poker_table', '0.1.3', :git => 'git://git.cashnetusa.com/rnubel/poker_table'
 
 gem 'figgy'
 gem 'sqlite3'

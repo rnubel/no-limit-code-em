@@ -82,7 +82,7 @@ class Player < ActiveRecord::Base
   end
 
   def current_bet
-    current_player_state(:latest_bet)
+    current_player_state(:current_bet)
   end
 
   def hand

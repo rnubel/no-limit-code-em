@@ -18,6 +18,7 @@ FactoryGirl.define do
 
   factory :round do
     table
+    ante 20
     playing true
   end
 

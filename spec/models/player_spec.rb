@@ -135,6 +135,7 @@ describe Player do
     it "is the player's turn when the table says it is" do
       subject.tables.create!(:tournament => subject.tournament)
       Table.any_instance.expects(:current_player).returns(subject)
+      Table.any_instance.expects(:playing).returns(true)
 
       subject.should be_my_turn
     end

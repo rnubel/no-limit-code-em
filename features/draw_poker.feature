@@ -19,14 +19,14 @@ Feature: Action steps
     When 2 players are at a table
     Then player 1 cannot bet 1
   
-@wip
   Scenario: Going all in
-    When 2 players are at a table
+    When 2 players are at a table with initial stacks [50, 100]
     Given the deck favors player 1
     When player 1 goes all in
     And player 2 goes all in
     And all players replace no cards
-    Then player 1 wins the round
+    Then player 1 should win 100
+    And player 2 should win 50
   
   Scenario: 2 players split the pot at a simple table
     When 2 players are at a table
@@ -34,7 +34,7 @@ Feature: Action steps
     When player 1 bets 100
     And player 2 bets 100
     And all players replace no cards
-    And player 1 bets 110
+    And player 1 bets 100
     And player 2 bets 150
     And player 1 bets 150
     Then player 1 and player 2 split the pot
@@ -53,4 +53,7 @@ Feature: Action steps
 
   Scenario: A player cannot meet the ante
     When 2 players are at a table with initial stacks [5, 25]
-    Then player 2 wins the round
+    Given the deck favors player 1
+    When player 2 goes all in
+    And all players replace no cards
+    Then player 1 wins the round

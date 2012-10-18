@@ -67,11 +67,11 @@ describe PlayerPresenter do
       it "has basic stats" do
         subject.players_at_table
           .should == [ { :player_name => player.name, 
-                         :initial_stack => player.current_stack,
+                         :initial_stack => player.stack,
                          :current_bet => @table.current_round.ante,
                          :actions => antes},
                        { :player_name => player2.name, 
-                         :initial_stack => player2.current_stack,
+                         :initial_stack => player2.stack,
                          :current_bet => @table.current_round.ante,
                          :actions => antes}
                      ]
@@ -82,11 +82,11 @@ describe PlayerPresenter do
 
         subject.players_at_table
           .should == [ { :player_name => player.name, 
-                         :initial_stack => player.current_stack,
+                         :initial_stack => player.stack,
                          :current_bet => 50,
                          :actions => antes + [{:action => "bet", :amount => 50}]},
                        { :player_name => player2.name, 
-                         :initial_stack => player2.current_stack,
+                         :initial_stack => player2.stack,
                          :current_bet => @table.current_round.ante,
                          :actions => antes}
                      ]
