@@ -8,8 +8,11 @@ class PlayerPresenter
   def to_json
     {
       :name => @player.name,
-      :initial_stack => @player.current_stack,
+      :initial_stack => @player.stack,
       :your_turn => @player.my_turn?,
+      :current_bet => @player.current_bet,
+      :minimum_bet => @player.current_game_state(:minimum_bet),
+      :maximum_bet => @player.stack,
       :hand => hand,
       :betting_phase => betting_phase,
       :players_at_table => players_at_table,

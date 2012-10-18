@@ -7,7 +7,7 @@ describe PlayerPresenter do
     let(:player){ FactoryGirl.create(:player, :registered) }
 
     it "has the needed keys" do
-      subject.to_json.keys.should =~ [:name, :initial_stack, :your_turn, :players_at_table, :hand, :betting_phase, :table_id, :round_id, :round_history]
+      subject.to_json.keys.should =~ [:name, :initial_stack, :your_turn, :players_at_table, :hand, :betting_phase, :table_id, :round_id, :round_history, :minimum_bet, :current_bet, :maximum_bet]
     end
   }
 
@@ -91,6 +91,33 @@ describe PlayerPresenter do
                          :actions => antes}
                      ]
       end
+    end
+  end
+
+  describe "bet variables" do
+    let(:player){ FactoryGirl.create(:player, :registered) }
+    let(:player2) { FactoryGirl.create(:player, :registered,
+                      :tournament => player.tournament ) }
+
+    before {
+      @table = FactoryGirl.create(:table, :tournament => player.tournament) 
+      @table.players = [player, player2]
+      @table.save!
+      @table.start_play!
+    }
+
+    it "knows the current bet" do
+      subject.to_json[:current_bet].should == @table.current_round.ante      
+    end
+
+    it "knows the minimum bet" do
+      subject.to_json[:minimum_bet].should == @table.current_round.ante      
+      player.take_action! action: "bet", amount: @table.current_round.ante + 1
+      subject.to_json[:minimum_bet].should == @table.current_round.ante + 1
+    end
+
+    it "knows the maximum bet" do
+      subject.to_json[:maximum_bet].should == player.initial_stack
     end
   end
 end
