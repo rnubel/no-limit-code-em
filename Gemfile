@@ -9,7 +9,7 @@ gem 'pg'
 gem 'json'
 gem 'thin'
 
-gem 'poker_table', '0.1.3', :git => 'git://git.cashnetusa.com/rnubel/poker_table'
+gem 'poker_table', '0.1.4', :git => 'git://git.cashnetusa.com/rnubel/poker_table'
 
 gem 'figgy'
 gem 'sqlite3'
@@ -27,7 +27,9 @@ group :assets do
 end
 
 gem 'jquery-rails'
-
+gem 'bootstrap-sass'
+gem 'haml'
+gem 'google-buttons-sass'
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
