@@ -32,9 +32,9 @@ namespace :bot do
     while true
       puts (s = b.status)
 
-      if s[:your_turn]
-        if s[:betting_phase] == 'deal' || s[:betting_phase] == 'draw'
-          b.action(:action_name => "bet", :amount => s[:minimum_bet])
+      if s["your_turn"]
+        if s["betting_phase"] == 'deal' || s["betting_phase"] == 'post_draw'
+          b.action(:action_name => "bet", :amount => rand(10) < 6 ? s["minimum_bet"] : rand(s["minimum_bet"]..s["maximum_bet"]))
         else
           b.action(:action_name => "replace", :cards => "")
         end
