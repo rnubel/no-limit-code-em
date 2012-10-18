@@ -7,6 +7,7 @@ gem 'rails', '3.1.3'
 
 gem 'pg'
 gem 'json'
+gem 'thin'
 
 gem 'poker_table', '0.1.0', :git => 'git://git.cashnetusa.com/rnubel/poker_table'
 
