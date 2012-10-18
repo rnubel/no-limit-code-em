@@ -21,6 +21,8 @@ class Player < ActiveRecord::Base
   end
 
   def current_seating
+    return @current_seating if @current_seating # Clear this when a player leaves their table.
+
     active_seatings = seatings.active
     # Assert a sanity check.
     raise "Player is seated at more than one table!" if active_seatings.size > 1
@@ -29,7 +31,7 @@ class Player < ActiveRecord::Base
   end
   
   def table
-    current_seating && current_seating.table
+    (s = current_seating) && s.table
   end
 
   def stack(round=nil)
@@ -48,6 +50,8 @@ class Player < ActiveRecord::Base
     s = current_seating
     s.active = false;
     s.save!
+
+    @current_seating = nil
   end
 
   # Have this player attempt to take the given action.

@@ -17,7 +17,6 @@ class Bot
 
   def status
     response = self.class.get("/api/players/#{key}")
-    puts response
   end
 
   def action(params)
