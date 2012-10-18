@@ -44,7 +44,7 @@ class PlayerPresenter
     if player.table
       player.table.players.ordered.collect do |p|
         { :player_name => p.name,
-          :initial_stack => p.current_stack,
+          :initial_stack => p.stack,
           :current_bet => p.current_bet,
           # These are the *actual* actions as seen by
           # PokerTable for this player. It may be different

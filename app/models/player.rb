@@ -94,6 +94,6 @@ class Player < ActiveRecord::Base
   end
 
   def my_turn?
-    !!(table && (table.current_player == self))
+    !!(table && table.playing && table.current_player == self)
   end
 end
