@@ -29,7 +29,12 @@ end
 
 Then /^player (\d+) wins the round$/ do |id|
   @player = @table.players[id.to_i-1]
-  @table.rounds.order("id ASC").first.winners.should == [@player]
+  @table.rounds.order("id ASC").first.winners.keys.should == [@player]
+end
+
+Then /^player (\d+) wins (\d+)$/ do |id, amount|
+  @player = @table.players[id.to_i-1]
+  @table.rounds.order("id ASC").first.winners[@player].should == amount.to_i
 end
 
 Then /^player (\d+) cannot bet (-?\d+)$/ do |id, amount|
@@ -44,7 +49,7 @@ end
 
 When /^player (\d+) goes all in$/ do |id|
   @player = @table.players[id.to_i-1]
-  @player.take_action!(:action => "bet", :amount => @player.current_stack)
+  @player.take_action!(:action => "bet", :amount => @player.initial_stack)
 end
 
 When /^all players replace no cards$/ do

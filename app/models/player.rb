@@ -38,7 +38,7 @@ class Player < ActiveRecord::Base
     raise "Cannot get stack -- player not registered" unless tournament_id
     q = self.round_players
     if round
-      q = q.where("round_id <= #{round.id}")
+      q = q.where("round_id < #{round.id}")
     end
 
     (initial_stack || 0) + q.sum(:stack_change)
@@ -64,7 +64,7 @@ class Player < ActiveRecord::Base
   end
 
   def round
-    table && table.current_round
+    (rp = round_players.includes(:round).last) && rp.round
   end
 
   def current_game_state(property = nil)

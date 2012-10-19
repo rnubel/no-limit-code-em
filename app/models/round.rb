@@ -44,7 +44,7 @@ class Round < ActiveRecord::Base
   def winners
     raise "Round not over!" if self.playing
 
-    state.winners.map { |winner_hash| self.players.find(winner_hash[:player_id]) } 
+    state.winners.reduce({}) { |h, winner_hash| h[self.players.find(winner_hash[:player_id])] = winner_hash[:winnings] ; h} 
   end
 
   def ordered_players
@@ -76,14 +76,9 @@ class Round < ActiveRecord::Base
   end
 
   def state
-    @state_cache ||= {}
-
-    if @state_cache[actions.count]
-      @state_cache[actions.count]
-    else
+    Rails.cache.fetch("round/#{id}/state/#{actions.count}") do
       s = initial_state
       s.simulate! action_list
-      @state_cache[actions.count] = s
     end
   end
 

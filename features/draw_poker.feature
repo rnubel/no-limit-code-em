@@ -25,8 +25,8 @@ Feature: Action steps
     When player 1 goes all in
     And player 2 goes all in
     And all players replace no cards
-    Then player 1 should win 100
-    And player 2 should win 50
+    Then player 1 wins 100
+    And player 2 wins 50
   
   Scenario: 2 players split the pot at a simple table
     When 2 players are at a table
@@ -56,4 +56,5 @@ Feature: Action steps
     Given the deck favors player 1
     When player 2 goes all in
     And all players replace no cards
-    Then player 1 wins the round
+    Then player 1 wins 10
+    And player 2 wins 20
