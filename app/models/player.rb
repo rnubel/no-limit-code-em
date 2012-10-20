@@ -17,6 +17,10 @@ class Player < ActiveRecord::Base
     joins("LEFT JOIN seatings ON seatings.player_id = players.id AND seatings.active").where("seatings.id IS NULL")
   end
 
+  def actions
+    Action.where(:player_id => self.id)
+  end
+
   def buy_in
     self.initial_stack ||= AppConfig.tournament.initial_stack
   end

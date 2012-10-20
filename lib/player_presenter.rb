@@ -18,7 +18,8 @@ class PlayerPresenter
       :players_at_table => players_at_table,
       :table_id => @player.table && @player.table.id,
       :round_id => @player.round && @player.round.id,
-      :round_history => round_history
+      :round_history => round_history,
+      :lost_at => @player.lost_at
     }
   end
 

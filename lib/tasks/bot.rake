@@ -35,7 +35,7 @@ class Bot
 
       if s["your_turn"]
         if s["betting_phase"] == 'deal' || s["betting_phase"] == 'post_draw'
-          action(:action_name => "bet", :amount => rand(10) < 5 ? s["minimum_bet"] : rand(s["minimum_bet"]..s["maximum_bet"]))
+          action(:action_name => "bet", :amount => rand(10) < 9 ? s["minimum_bet"] : rand(s["minimum_bet"]..s["maximum_bet"]))
         else
           action(:action_name => "replace", :cards => "")
         end

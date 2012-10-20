@@ -38,22 +38,17 @@ class Tournament < ActiveRecord::Base
 
   # Create new tables for any players not seated.
   def create_seatings!
-    players.standing.each_in_tables(table_size) do |players_at_table|
+    players.playing.standing.each_in_tables(table_size) do |players_at_table|
       self.tables.create( players: players_at_table.sort_by(&:id) )   # Sort for testing purposes only.
     end
   end
 
   # Reseat any players who stood up because they expected to be reseated.
   def balance_tables!
-    open_tables = self.tables.playing.reduce({}) { |h, t|
-      h.merge(t.id => t.open_seats)
-    }
-
-    players.standing.each do |player|
-      if table = open_tables.find { |tid, n| n > 0 }
-        table_id = table.first
-        open_tables[table_id] -= 1
-        player.seatings.create(:table_id => table_id)
+    open_tables = self.tables.playing
+    players.playing.standing.each do |player|
+      if new_table = open_tables.find { |t| t.open_seats >= 1 }
+        new_table.players << player
       end
     end
 
