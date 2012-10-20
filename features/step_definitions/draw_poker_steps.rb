@@ -63,6 +63,16 @@ Given /^the deck favors player 1$/ do
   @round.save
 end
 
+Given /^the deck favors player 2$/ do
+  @round.deck = "Ac 5d 2c 3d 3c 9s 4c 8h 5c Kh".split(" ").reverse.join(" ")
+  @round.save
+end
+
+Then /^player (\d+) is unseated/ do |id|
+  @player = @table.players[id.to_i-1]
+  @player.seatings.first.should_not be_active
+end
+
 Given /^the deck favors both players$/ do
   @round.deck = "Ac Ad 2c 2d 3c 3d 4c 4d 5c 5d"
   @round.save
