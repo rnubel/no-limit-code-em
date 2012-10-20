@@ -1,10 +1,14 @@
 def print_tables(tables)
   puts "-----------------------------------------------"
-  puts tables.collect { |t|
-    t.active_players.map { |p| "#{p.id} (#{p.stack})" }
-  }.map { |pids|
-    pids.join(" ")
-  }.map { |pls| "[#{pls}]" }
+  tables.each do |t|
+    pls = t.active_players
+            .map { |p| "#{p.id} (#{p.stack})" }
+            .join(" ")
+
+    puts "[  #{pls}  ]"
+    puts "latest round:"
+    puts t.rounds.last.state.log
+  end
 end
 
 namespace :tournament do
