@@ -43,12 +43,17 @@ class Tournament < ActiveRecord::Base
     end
   end
 
-  # Merge mergeable tables.
+  # Reseat any players who stood up because they expected to be reseated.
   def balance_tables!
-    open_tables = self.tables.playing
+    open_tables = self.tables.playing.reduce({}) { |h, t|
+      h.merge(t.id => t.open_seats)
+    }
+
     players.standing.each do |player|
-      if new_table = open_tables.first { |t| t.seatings.active.count.between(1, table_size) }
-        new_table.players << player
+      if table = open_tables.find { |tid, n| n > 0 }
+        table_id = table.first
+        open_tables[table_id] -= 1
+        player.seatings.create(:table_id => table_id)
       end
     end
 

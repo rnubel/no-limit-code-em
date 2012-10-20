@@ -14,6 +14,7 @@ gem 'poker_table', '0.1.5', :git => 'git://git.cashnetusa.com/rnubel/poker_table
 gem 'figgy'
 gem 'sqlite3'
 
+gem 'faker'
 gem 'httparty'
 
 gem 'newrelic_rpm'

@@ -12,6 +12,14 @@ class Table < ActiveRecord::Base
     seatings.where(:active => true).order("id ASC").map(&:player)
   end
 
+  def open_seats
+    self.tournament.table_size - filled_seats
+  end
+
+  def filled_seats
+    seatings.where(:active => true).count
+  end
+
   def start_play!
     self.playing = true
     self.save!
@@ -47,9 +55,9 @@ class Table < ActiveRecord::Base
   end
 
   def can_redistribute?
-    slots_needed = self.active_players.count
-    self.tournament.tables.includes(:players).playing.any? { |t| 
-      t != self && (tournament.table_size - t.players.size) >= slots_needed
+    slots_needed = filled_seats
+    self.tournament.tables.playing.any? { |t| 
+      t.id != self.id && t.open_seats >= slots_needed
     }
   end
 

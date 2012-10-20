@@ -112,8 +112,8 @@ describe Table do
 
   context "when rotating dealer order" do
     before :each do
-      @p1 = subject.players.first
-      @p2 = subject.players.last
+      @p1 = subject.players.order("id ASC").first
+      @p2 = subject.players.order("id ASC").last
       @p3 = FactoryGirl.create :player, :tournament => subject.tournament, :initial_stack => 1000
 
       subject.start_play!

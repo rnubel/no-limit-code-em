@@ -1,3 +1,12 @@
+def print_tables(tables)
+  puts "-----------------------------------------------"
+  puts tables.collect { |t|
+    t.active_players.map { |p| "#{p.id} (#{p.stack})" }
+  }.map { |pids|
+    pids.join(" ")
+  }.map { |pls| "[#{pls}]" }
+end
+
 namespace :tournament do
   task :create => :environment do
     raise "A tournament is already open!" unless Tournament.open.empty?
@@ -20,6 +29,21 @@ namespace :tournament do
     t.start!
 
     puts "Tournament #{t.inspect} has closed registration and begun!"
+
+    Rake::Task['tournament:run'].invoke
+  end
+
+  task :run => :environment do
+    t = Tournament.playing.last
+    raise "No tournament playing!" unless t
+
+    print_tables(t.tables.includes(:seatings))
+    while true
+      t.balance_tables!
+
+      print_tables(t.tables.includes(:seatings))
+      sleep 5
+    end
   end
 
   task :end => :environment do
@@ -30,4 +54,6 @@ namespace :tournament do
 
     puts "Tournament #{t.inspect} has been ended!"
   end
+
+  task :restart => [:end, :create]
 end

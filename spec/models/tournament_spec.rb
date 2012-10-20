@@ -17,53 +17,79 @@ describe Tournament do
     t.players.size.should == 1
   end
 
-  subject { Tournament.create open: true }
+  context "small tournament" do
+    subject { Tournament.create open: true }
 
-  before :each do
-    Tournament.any_instance.stubs(:table_size).returns(4)
+    before :each do
+      Tournament.any_instance.stubs(:table_size).returns(4)
 
-    5.times do
-      subject.players << FactoryGirl.create(:player)
-    end
-  end
-
-  context "when started" do
-    before { subject.start! }
-
-    it { should_not be_open }
-    it { should be_playing }
-
-    describe "table seating with 4 players per table" do
-      it { should have(2).tables }
-      
-      it "seats players evenly" do
-        subject.tables[0].should have(3).active_players
-        subject.tables[1].should have(2).active_players
+      5.times do
+        subject.players << FactoryGirl.create(:player)
       end
     end
-    
-    it "starts play at each table" do
-      subject.tables.each { |t|
-        t.should be_playing
-        t.should have(1).round
-      }
+
+    context "when started" do
+      before { subject.start! }
+
+      it { should_not be_open }
+      it { should be_playing }
+
+      describe "table seating with 4 players per table" do
+        it { should have(2).tables }
+        
+        it "seats players evenly" do
+          subject.tables[0].should have(3).active_players
+          subject.tables[1].should have(2).active_players
+        end
+      end
+      
+      it "starts play at each table" do
+        subject.tables.each { |t|
+          t.should be_playing
+          t.should have(1).round
+        }
+      end
+    end
+
+    context "when redistributing" do
+      before { subject.start!
+               subject.players.first.lose!
+               subject.tables.each do |t| t.next_round! end
+               subject.balance_tables! }
+
+      it "should have just one playing table" do
+        subject.tables.playing.count.should == 1
+      end
+    end
+
+    describe "#current_ante" do
+      it "is fixed at 20 FIXME" do
+        subject.current_ante.should == 20 
+      end
     end
   end
 
-  context "when redistributing" do
-    before { subject.start!
-             subject.players.first.lose!
-             subject.tables.each do |t| t.next_round! end
-             subject.balance_tables! }
+  describe "larger tournament" do
+    subject { Tournament.create open: true }
 
-    it "should have just one playing table" do
-      subject.tables.playing.count.should == 1
-    end
-  end
+    before {
+      11.times do
+        subject.players << FactoryGirl.create(:player, :tournament => subject)
+      end
 
-  describe "#current_ante" do
-    it "is fixed at 20 FIXME" do
-      subject.current_ante.should == 20 
+      subject.start!
+    }
+
+    context "when balancing tables" do
+      it "fills up gaps and then creates more tables" do
+        5.times do
+          subject.players << FactoryGirl.create(:player, :tournament => subject)
+        end
+
+        subject.balance_tables!
+
+        subject.tables.map { |t| t.players.count }.should =~ [6, 6, 4]
+      end
     end
   end
 end
