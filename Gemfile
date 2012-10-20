@@ -12,7 +12,6 @@ gem 'thin'
 gem 'poker_table', '0.1.5', :git => 'git://github.com/rnubel/poker_table'
 
 gem 'figgy'
-gem 'sqlite3'
 
 gem 'faker'
 gem 'httparty'
@@ -42,6 +41,7 @@ gem 'jquery-rails'
 # gem 'ruby-debug'
 
 group :development, :test do
+  gem 'sqlite3'
   gem 'guard'
   gem 'guard-rspec'
   gem 'pry'
