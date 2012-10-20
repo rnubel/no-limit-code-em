@@ -11,6 +11,7 @@ class Player < ActiveRecord::Base
   validates_presence_of :name, :key
 
   scope :ordered, order("id ASC")
+  scope :playing, where("lost_at IS NULL")
 
   def self.standing
     joins("LEFT JOIN seatings ON seatings.player_id = players.id AND seatings.active").where("seatings.id IS NULL")
@@ -52,6 +53,12 @@ class Player < ActiveRecord::Base
     s.save!
 
     @current_seating = nil
+  end
+
+  def lose!
+    unseat! if current_seating
+    self.lost_at = Time.now  
+    self.save!
   end
 
   # Have this player attempt to take the given action.

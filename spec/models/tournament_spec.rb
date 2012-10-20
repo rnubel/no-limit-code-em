@@ -20,7 +20,7 @@ describe Tournament do
   subject { Tournament.create open: true }
 
   before :each do
-    subject.stubs(:table_size).returns(4)
+    Tournament.any_instance.stubs(:table_size).returns(4)
 
     5.times do
       subject.players << FactoryGirl.create(:player)
@@ -52,10 +52,13 @@ describe Tournament do
 
   context "when redistributing" do
     before { subject.start!
-             subject.players.first.unseat!
+             subject.players.first.lose!
+             subject.tables.each do |t| t.next_round! end
              subject.balance_tables! }
 
-    pending { should have(1).tables }
+    it "should have just one playing table" do
+      subject.tables.playing.count.should == 1
+    end
   end
 
   describe "#current_ante" do

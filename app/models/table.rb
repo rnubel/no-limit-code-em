@@ -6,6 +6,8 @@ class Table < ActiveRecord::Base
 
   validates_presence_of :tournament_id
 
+  scope :playing, where(:playing => true)
+
   def active_players # Not an ARel
     seatings.where(:active => true).order("id ASC").map(&:player)
   end
@@ -22,11 +24,13 @@ class Table < ActiveRecord::Base
       old_round.close!
 
       # Kick out losers.
-      old_round.losers.map(&:unseat!)
+      old_round.losers.map(&:lose!)
     end
 
     # If we can keep playing, do so.
     if active_players.size <= 1
+      stop!
+    elsif can_redistribute?
       stop!
     else
       self.rounds.create( players: self.active_players, 
@@ -36,13 +40,21 @@ class Table < ActiveRecord::Base
     end
     
     # In some cases, the round will already be over. Check for that.
-    if current_round.over?
+    if current_round && current_round.over?
       current_round.close!
       stop!
     end
   end
 
+  def can_redistribute?
+    slots_needed = self.active_players.count
+    self.tournament.tables.includes(:players).playing.any? { |t| 
+      t != self && (tournament.table_size - t.players.size) >= slots_needed
+    }
+  end
+
   def stop!
+    self.active_players.each { |p| p.unseat! }
     self.playing = false
     self.save!
   end

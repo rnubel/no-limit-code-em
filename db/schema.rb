@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121018065735) do
+ActiveRecord::Schema.define(:version => 20121020032118) do
 
   create_table "actions", :force => true do |t|
     t.string   "action"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(:version => 20121018065735) do
     t.integer  "lock_version",  :default => 0
     t.integer  "tournament_id"
     t.integer  "initial_stack"
+    t.datetime "lost_at"
   end
 
   add_index "players", ["key"], :name => "index_players_on_key"

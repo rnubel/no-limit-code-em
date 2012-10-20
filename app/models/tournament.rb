@@ -14,7 +14,7 @@ class Tournament < ActiveRecord::Base
                # but reseating should pick them up.
 
     #hand_out_chips!
-    create_initial_seatings!
+    create_seatings!
     
     tables.each { |t| t.start_play! }
   end
@@ -37,7 +37,7 @@ class Tournament < ActiveRecord::Base
   end
 
   # Create new tables for any players not seated.
-  def create_initial_seatings!
+  def create_seatings!
     players.standing.each_in_tables(table_size) do |players_at_table|
       self.tables.create( players: players_at_table.sort_by(&:id) )   # Sort for testing purposes only.
     end
@@ -45,6 +45,15 @@ class Tournament < ActiveRecord::Base
 
   # Merge mergeable tables.
   def balance_tables!
+    open_tables = self.tables.playing
+    players.standing.each do |player|
+      if new_table = open_tables.first { |t| t.seatings.active.count.between(1, table_size) }
+        new_table.players << player
+      end
+    end
+
+    # Reseat leftover players.
+    create_seatings!
   end
 
   def current_ante
