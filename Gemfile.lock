@@ -1,5 +1,5 @@
 GIT
-  remote: git://git.cashnetusa.com/rnubel/poker_table
+  remote: git://github.com/rnubel/poker_table
   revision: 67dad6bf2818b4b07a3b7175b7a5cbf53ec41faf
   specs:
     poker_table (0.1.5)
