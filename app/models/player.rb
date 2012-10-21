@@ -48,7 +48,7 @@ class Player < ActiveRecord::Base
       q = q.where("round_id < #{round.id}")
       key = "round-id/#{round.id}"
     else
-      key = "round-count/#{round_players.count}"
+      key = "round-count/#{rounds.over.count}"
     end
 
     Rails.cache.fetch("players/#{id}/stack/#{key}") do
@@ -117,7 +117,7 @@ class Player < ActiveRecord::Base
 
   def idle_time
     return 0 unless r = round
-    last_action = self.actions.where(:round_id => r.id).order("id ASC").last 
-    Time.now - (last_action && last_action.created_at || r.created_at)
+    last_action_in_round = Action.where(:round_id => r.id).order("id ASC").last 
+    Time.now - (last_action_in_round && last_action.created_at || r.created_at)
   end
 end

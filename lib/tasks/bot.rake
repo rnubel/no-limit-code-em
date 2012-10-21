@@ -36,6 +36,7 @@ class Bot
     while true
       s = status
       logger.info "[#{@name}] Getting status... #{s['your_turn']}, #{s['betting_phase']}"
+      break if s["lost_at"]
 
       if s["your_turn"]
         if s["betting_phase"] == 'deal' || s["betting_phase"] == 'post_draw'
