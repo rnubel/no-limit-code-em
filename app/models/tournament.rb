@@ -2,6 +2,7 @@ class Tournament < ActiveRecord::Base
   has_many :registrations
   has_many :players
   has_many :tables
+  has_many :rounds, :through => :tables
 
   scope :open, where(:open => true)
   scope :playing, where(:playing => true)
@@ -57,10 +58,16 @@ class Tournament < ActiveRecord::Base
   end
 
   def current_ante
-    20
+    base = config.ante.base
+    base + (self.rounds.count / config.ante.rounds_per_increase) *
+            config.ante.increase
   end
 
   def table_size
-    AppConfig.tournament.table_size
+    config.table_size
+  end
+
+  def config
+    AppConfig.tournament
   end
 end

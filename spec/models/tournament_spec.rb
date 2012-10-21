@@ -58,13 +58,31 @@ describe Tournament do
                subject.balance_tables! }
 
       it "should have just one playing table" do
-        subject.tables.playing.count.should == 1
+        subject.tables.playing.reload.count.should == 1
       end
     end
 
     describe "#current_ante" do
-      it "is fixed at 20 FIXME" do
-        subject.current_ante.should == 20 
+      before { # Fix config to specific values.
+        AppConfig.tournament.ante.base = 20
+        AppConfig.tournament.ante.rounds_per_increase = 10
+        AppConfig.tournament.ante.increase = 20
+      }
+
+      it "starts off at the base value" do
+        subject.current_ante.should == AppConfig.tournament.ante.base 
+      end
+
+      context "when 20 rounds have passed" do
+        before {
+          subject.stubs(:rounds).returns(
+            mock("rel", :count => 20)
+          )
+        }
+
+        it "returns the ante as 60" do
+          subject.current_ante.should == 60
+        end
       end
     end
   end
