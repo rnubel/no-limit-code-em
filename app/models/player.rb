@@ -78,7 +78,7 @@ class Player < ActiveRecord::Base
   end
 
   def valid_action?(action_params)
-    table.valid_action? action_params.merge(:player => self) 
+    (t = table) && t.valid_action? action_params.merge(:player => self) 
   end
 
   def round
@@ -108,7 +108,11 @@ class Player < ActiveRecord::Base
   end
 
   def actions_in_current_round
-    (l = current_game_state(:log)) && l.select { |l| l[:player_id] == self.id }
+    if l = current_game_state(:log)
+      l.select { |l| l[:player_id] == self.id }
+    else
+      []
+    end
   end
 
   def my_turn?
