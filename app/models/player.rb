@@ -6,7 +6,7 @@ class Player < ActiveRecord::Base
   has_many :rounds,      :through => :round_players
 
   after_initialize :buy_in
-  attr_accessible :initial_stack, :name, :key
+  attr_accessible :initial_stack, :latest_stack, :name, :key
 
   validates_presence_of :name, :key
 
@@ -41,12 +41,19 @@ class Player < ActiveRecord::Base
 
   def stack(round=nil)
     raise "Cannot get stack -- player not registered" unless tournament_id
+   
     q = self.round_players
+    key = ""
     if round
       q = q.where("round_id < #{round.id}")
+      key = "round-id/#{round.id}"
+    else
+      key = "round-count/#{round_players.count}"
     end
 
-    (initial_stack || 0) + q.sum(:stack_change)
+    Rails.cache.fetch("players/#{id}/stack/#{key}") do
+      (initial_stack || 0) + q.sum(:stack_change)
+    end
   end
 
   # Unseat this player from their current table.
