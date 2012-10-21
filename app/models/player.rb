@@ -78,7 +78,7 @@ class Player < ActiveRecord::Base
   end
 
   def valid_action?(action_params)
-    (t = table) && t.valid_action? action_params.merge(:player => self) 
+    (t = table) && t.valid_action?(action_params.merge(:player => self))
   end
 
   def round
