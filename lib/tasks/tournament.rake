@@ -42,11 +42,17 @@ namespace :tournament do
     raise "No tournament playing!" unless t
 
     print_tables(t.tables.includes(:seatings))
-    while true
+    until t.players.playing.count == 1
       t.balance_tables!
 
       print_tables(t.tables.includes(:seatings))
       sleep 5
+    end
+
+    puts "Tournament over! Winners:"
+
+    t.players.sort("lost_at DESC").each_with_index do |p, i|
+      puts "#{i+1}\t#{p.stack}\t#{p.name}"
     end
   end
 
