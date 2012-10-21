@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121020032118) do
+ActiveRecord::Schema.define(:version => 20121021074842) do
 
   create_table "actions", :force => true do |t|
     t.string   "action"
@@ -79,6 +79,14 @@ ActiveRecord::Schema.define(:version => 20121020032118) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "lock_version",  :default => 0
+  end
+
+  create_table "timeout_logs", :force => true do |t|
+    t.integer  "player_id"
+    t.integer  "round_id"
+    t.float    "idle_time"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "tournaments", :force => true do |t|

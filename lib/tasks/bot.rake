@@ -8,7 +8,7 @@ class Bot
 
   def initialize(opts)
     @name = opts[:name]
-    @delay = opts[:delay] || 1
+    @delay = opts[:delay].to_f || 1
     @logger = opts[:logger] || Logger.new(STDOUT)
   end
 

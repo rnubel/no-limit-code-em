@@ -4,3 +4,4 @@ ante:
   base: 20
   rounds_per_increase: 10
   increase: 20
+timeout: 6

@@ -62,6 +62,19 @@ describe Tournament do
       end
     end
 
+    context "when timing out players" do
+      before { subject.start! }
+
+      it "times out the player if enough time has passed" do
+        fp = subject.rounds.first.ordered_players.first
+        Time.stubs(:now).returns(subject.rounds.first.created_at + 8.seconds)
+
+        subject.timeout_players!
+
+        fp.reload.actions.first.action.should == "fold"
+      end
+    end
+
     describe "#current_ante" do
       before { # Fix config to specific values.
         AppConfig.tournament.ante.base = 20

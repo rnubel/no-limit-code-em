@@ -56,6 +56,18 @@ class Tournament < ActiveRecord::Base
     # Reseat leftover players.
     create_seatings!
   end
+  
+  # Fold any players who have been inactive on their turn for at least AppConfig.tournament.timeout seconds.
+  def timeout_players!
+    self.tables.playing.each do |table|
+      if player = table.current_player
+        if player.idle_time > AppConfig.tournament.timeout
+          TimeoutLog.create(:player => player, :round => table.current_round)
+          player.take_action!(:action => "fold")
+        end
+      end
+    end
+  end
 
   def current_ante
     base = config.ante.base

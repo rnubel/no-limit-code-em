@@ -107,4 +107,10 @@ class Player < ActiveRecord::Base
   def my_turn?
     !!(table && table.playing && table.current_player == self)
   end
+
+  def idle_time
+    return 0 unless r = round
+    last_action = self.actions.where(:round_id => r.id).order("id ASC").last 
+    Time.now - (last_action && last_action.created_at || r.created_at)
+  end
 end
