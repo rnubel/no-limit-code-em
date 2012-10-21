@@ -108,7 +108,7 @@ class Player < ActiveRecord::Base
   end
 
   def actions_in_current_round
-    current_game_state.log.select { |l| l[:player_id] == self.id }
+    (l = current_game_state(:log)) && l.select { |l| l[:player_id] == self.id }
   end
 
   def my_turn?
