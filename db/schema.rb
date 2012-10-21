@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121021083406) do
+ActiveRecord::Schema.define(:version => 20121021174920) do
 
   create_table "actions", :force => true do |t|
     t.string   "action"
@@ -53,6 +53,9 @@ ActiveRecord::Schema.define(:version => 20121021083406) do
     t.integer "stack_change"
   end
 
+  add_index "round_players", ["player_id"], :name => "index_round_players_on_player_id"
+  add_index "round_players", ["round_id"], :name => "index_round_players_on_round_id"
+
   create_table "rounds", :force => true do |t|
     t.integer  "table_id"
     t.boolean  "playing"
@@ -72,6 +75,10 @@ ActiveRecord::Schema.define(:version => 20121021083406) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "seatings", ["active"], :name => "index_seatings_on_active"
+  add_index "seatings", ["player_id"], :name => "index_seatings_on_player_id"
+  add_index "seatings", ["table_id"], :name => "index_seatings_on_table_id"
 
   create_table "tables", :force => true do |t|
     t.integer  "tournament_id"

@@ -1,8 +1,9 @@
-require 'httparty'
+require 'httpclient'
 
 class Bot
-  include HTTParty
-  base_uri ENV['host'] || 'localhost:3000'
+  def base_uri
+    ENV['host'] || 'localhost:3000'
+  end
 
   attr_accessor :key, :logger
 
@@ -13,21 +14,22 @@ class Bot
   end
 
   def register(params)
-    response = self.class.post("/api/players", :body => params)
-    puts response
+    response = HTTPClient.new.post("#{base_uri}/api/players", :body => params)
+    json = JSON.parse(response.body)
 
-    raise "Registration failed" unless response["key"]
+    raise "Registration failed" unless json["key"]
 
-    self.key = response["key"]
+    self.key = json["key"]
   end
 
   def status
-    response = self.class.get("/api/players/#{key}")
+    response = HTTPClient.new.get("#{base_uri}/api/players/#{key}")
+    json = JSON.parse(response.body)
   end
 
   def action(params)
     logger.info "[#{@name}] Decided on action: #{params.inspect}"
-    self.class.post("/api/players/#{key}/action", :body => params)
+    HTTPClient.new.post("#{base_uri}/api/players/#{key}/action", :body => params)
   end
 
   def run!

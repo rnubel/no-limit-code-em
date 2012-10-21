@@ -82,7 +82,7 @@ class Player < ActiveRecord::Base
   end
 
   def round
-    (rp = round_players.includes(:round).last) && rp.round
+    rounds.last
   end
 
   def current_game_state(property = nil)
