@@ -51,7 +51,7 @@ namespace :tournament do
 
     puts "Tournament over! Winners:"
 
-    t.players.sort("lost_at DESC").each_with_index do |p, i|
+    t.players.order("lost_at DESC").each_with_index do |p, i|
       puts "#{i+1}\t#{p.stack}\t#{p.name}"
     end
   end
