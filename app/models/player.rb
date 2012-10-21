@@ -118,6 +118,6 @@ class Player < ActiveRecord::Base
   def idle_time
     return 0 unless r = round
     last_action_in_round = Action.where(:round_id => r.id).order("id ASC").last 
-    Time.now - (last_action_in_round && last_action.created_at || r.created_at)
+    Time.now - (last_action_in_round && last_action_in_round.created_at || r.created_at)
   end
 end
