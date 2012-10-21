@@ -1,13 +1,21 @@
-def print_tables(tables)
-  puts "-----------------------------------------------"
-  tables.each do |t|
-    pls = t.active_players
-            .map { |p| "#{p.id} (#{p.stack})" }
-            .join(" ")
+class TournamentPrinter
+  include Hirb::Console
 
-    puts "[  #{pls}  ]"
-    puts "latest round:"
-    puts t.rounds.last.state.log
+  def print_tables(tables)
+    puts "-----------------------------------------------"
+    tables.playing.each_slice(4) do |tables_for_row|
+      logs = tables_for_row.collect { |t| t.rounds.last.state.log }
+      max_s = logs.map(&:size).max
+      logs.collect! { |l| l.insert(-1, *([""] * (max_s - l.size))) }
+
+      table([
+        tables_for_row.collect { |t|
+          t.active_players
+           .map { |p| "#{p.id} (#{p.stack})" }
+           .join(" ")
+        } ] + logs.transpose
+    )
+    end
   end
 end
 
@@ -41,11 +49,11 @@ namespace :tournament do
     t = Tournament.playing.last
     raise "No tournament playing!" unless t
 
-    print_tables(t.tables.includes(:seatings))
+    TournamentPrinter.new.print_tables(t.tables.includes(:seatings))
     until t.players.playing.count == 1
       t.balance_tables!
 
-      print_tables(t.tables.includes(:seatings))
+      TournamentPrinter.new.print_tables(t.tables.includes(:seatings))
       sleep 5
     end
 

@@ -15,6 +15,7 @@ gem 'figgy'
 
 gem 'faker'
 gem 'httparty'
+gem 'hirb'
 
 gem 'newrelic_rpm'
 

@@ -87,6 +87,7 @@ GEM
     guard-rspec (1.2.1)
       guard (>= 1.1)
     hike (1.2.1)
+    hirb (0.7.0)
     httparty (0.8.3)
       multi_json (~> 1.0)
       multi_xml
@@ -204,6 +205,7 @@ DEPENDENCIES
   figgy
   guard
   guard-rspec
+  hirb
   httparty
   jquery-rails
   json
