@@ -62,8 +62,13 @@ class Tournament < ActiveRecord::Base
     self.tables.playing.each do |table|
       if player = table.current_player
         if player.idle_time > AppConfig.tournament.timeout
-          TimeoutLog.create(:player => player, :round => table.current_round)
-          player.take_action!(:action => "fold")
+          puts "!! Timing out #{player.id} for taking #{player.idle_time} second to move!"
+          begin
+            TimeoutLog.create(:player => player, :round => table.current_round)
+            player.take_action!(:action => "fold")
+          rescue
+            puts "Not valid anymore."
+          end
         end
       end
     end
