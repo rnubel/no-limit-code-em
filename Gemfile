@@ -32,6 +32,9 @@ gem 'jquery-rails'
 gem 'bootstrap-sass'
 gem 'haml'
 gem 'google-buttons-sass'
+
+gem 'high_voltage', '1.2.0'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
