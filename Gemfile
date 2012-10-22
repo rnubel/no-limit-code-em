@@ -10,6 +10,7 @@ gem 'json'
 gem 'thin'
 
 gem 'poker_table', '0.1.6', :git => 'git://github.com/rnubel/poker_table'
+gem 'ruby-poker'
 
 gem 'figgy'
 
