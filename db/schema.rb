@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121022032844) do
+ActiveRecord::Schema.define(:version => 20121022195103) do
 
   create_table "actions", :force => true do |t|
     t.string   "action"
@@ -46,9 +46,10 @@ ActiveRecord::Schema.define(:version => 20121022032844) do
   end
 
   create_table "request_logs", :force => true do |t|
-    t.integer "player_id"
-    t.integer "round_id"
-    t.text    "body"
+    t.integer  "player_id"
+    t.integer  "round_id"
+    t.text     "body"
+    t.datetime "created_at"
   end
 
   create_table "round_players", :force => true do |t|
