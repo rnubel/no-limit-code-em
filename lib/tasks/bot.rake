@@ -1,6 +1,11 @@
 require 'httpclient'
+require 'httpclient/include_client'
 
 class Bot
+  extend HTTPClient::IncludeClient
+
+  include_http_client(ENV['host'] || 'localhost:3000')
+
   def base_uri
     ENV['host'] || 'localhost:3000'
   end
@@ -14,7 +19,7 @@ class Bot
   end
 
   def register(params)
-    response = HTTPClient.new.post("#{base_uri}/api/players", :body => params)
+    response = http_client.post("#{base_uri}/api/players", :body => params)
     json = JSON.parse(response.body)
 
     raise "Registration failed" unless json["key"]
@@ -23,16 +28,17 @@ class Bot
   end
 
   def status
-    response = HTTPClient.new.get("#{base_uri}/api/players/#{key}")
+    response = http_client.get("#{base_uri}/api/players/#{key}")
     json = JSON.parse(response.body)
   end
 
   def action(params)
     logger.info "[#{@name}] Decided on action: #{params.inspect}"
-    HTTPClient.new.post("#{base_uri}/api/players/#{key}/action", :body => params)
+    http_client.post("#{base_uri}/api/players/#{key}/action", :body => params)
   end
 
   def decide_action!(s)
+    logger.info s.inspect
     if s["betting_phase"] == 'deal' || s["betting_phase"] == 'post_draw'
       n = rand(100)
       if n < 30
@@ -41,7 +47,7 @@ class Bot
         if n < 80 # Call
           action(:action_name => "bet", :amount => s["minimum_bet"])
         elsif n < 95 # Raise small
-          action(:action_name => "bet", :amount => s["minimum_bet"] + rand(1..20))
+          action(:action_name => "bet", :amount => [s["minimum_bet"] + rand(1..20), s["maximum_bet"]].min)
         else # All-in baby
           action(:action_name => "bet", :amount => s["maximum_bet"])
         end
