@@ -1,8 +1,8 @@
 GIT
   remote: git://github.com/rnubel/poker_table
-  revision: f8d7f53f776bd3c34663b50d2c1388e0c572286f
+  revision: 0525faf499279a8c3e69381dcaeb6f0a0673bd08
   specs:
-    poker_table (0.1.9)
+    poker_table (0.2.0)
       ruby-poker
 
 GEM
@@ -73,8 +73,8 @@ GEM
     eventmachine (1.0.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
-    factory_girl (2.5.2)
-      activesupport (>= 2.3.9)
+    factory_girl (4.1.0)
+      activesupport (>= 3.0.0)
     faker (1.1.2)
       i18n (~> 0.5)
     ffi (1.1.5)
@@ -83,15 +83,21 @@ GEM
     gherkin (2.11.5)
       json (>= 1.4.6)
     google-buttons-sass (0.1.2)
-    guard (1.4.0)
+    guard (1.5.0)
       listen (>= 0.4.2)
+      lumberjack (>= 1.0.2)
+      pry (>= 0.9.10)
       thor (>= 0.14.6)
     guard-rspec (2.1.0)
       guard (>= 1.1)
       rspec (~> 2.11)
     haml (3.1.7)
+    high_voltage (1.2.0)
     hike (1.2.1)
     hirb (0.7.0)
+    httparty (0.9.0)
+      multi_json (~> 1.0)
+      multi_xml
     httpclient (2.3.0.1)
     i18n (0.6.1)
     jquery-rails (2.1.3)
@@ -101,6 +107,7 @@ GEM
     libwebsocket (0.1.5)
       addressable
     listen (0.5.3)
+    lumberjack (1.0.2)
     mail (2.3.3)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
@@ -209,6 +216,7 @@ DEPENDENCIES
   guard
   guard-rspec
   haml
+  high_voltage (= 1.2.0)
   hirb
   httpclient
   jquery-rails
@@ -216,7 +224,7 @@ DEPENDENCIES
   mocha
   newrelic_rpm
   pg
-  poker_table (= 0.1.9)!
+  poker_table (= 0.2.0)!
   pry
   rails (= 3.1.3)
   rspec-rails
