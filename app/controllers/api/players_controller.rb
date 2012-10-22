@@ -2,6 +2,8 @@ module Api
   class PlayersController < ApplicationController
     include ApiErrors
 
+    before_filter :log_request, :only => [ :action ]
+
     # POST /api/players
     #   name: string    
     def create
@@ -37,8 +39,6 @@ module Api
                         :amount => params[:amount] && params[:amount].to_i, 
                         :cards =>  cards_value(params[:cards]) }
 
-      puts action_params.inspect
-
       if not @player
         render_not_found "No player registered with that key."
       elsif @player.valid_action? action_params
@@ -62,6 +62,16 @@ module Api
       else
         param
       end
+    end
+
+    def log_request
+      return true unless AppConfig.tournament.log_requests
+
+      RequestLog.create :player => (p = Player.find_by_key(params[:id])),
+                        :round => p && p.round,
+                        :body => request.raw_post
+
+      true
     end
   end
 end

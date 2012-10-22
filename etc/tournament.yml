@@ -5,3 +5,4 @@ ante:
   rounds_per_increase: 10
   increase: 20
 timeout: 6
+log_requests: true
