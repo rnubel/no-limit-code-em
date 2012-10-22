@@ -9,12 +9,15 @@ gem 'pg'
 gem 'json'
 gem 'thin'
 
-gem 'poker_table', '0.1.4', :git => 'git://git.cashnetusa.com/rnubel/poker_table'
+gem 'poker_table', '0.1.6', :git => 'git://github.com/rnubel/poker_table'
+gem 'ruby-poker'
 
 gem 'figgy'
-gem 'sqlite3'
 
+gem 'faker'
 gem 'httparty'
+gem 'httpclient'
+gem 'hirb'
 
 gem 'newrelic_rpm'
 
@@ -43,6 +46,7 @@ gem 'google-buttons-sass'
 # gem 'ruby-debug'
 
 group :development, :test do
+  gem 'sqlite3'
   gem 'guard'
   gem 'guard-rspec'
   gem 'pry'

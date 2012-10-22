@@ -6,14 +6,19 @@ class Player < ActiveRecord::Base
   has_many :rounds,      :through => :round_players
 
   after_initialize :buy_in
-  attr_accessible :initial_stack, :name, :key
+  attr_accessible :initial_stack, :latest_stack, :name, :key
 
   validates_presence_of :name, :key
 
   scope :ordered, order("id ASC")
+  scope :playing, where("lost_at IS NULL")
 
   def self.standing
     joins("LEFT JOIN seatings ON seatings.player_id = players.id AND seatings.active").where("seatings.id IS NULL")
+  end
+
+  def actions
+    Action.where(:player_id => self.id)
   end
 
   def buy_in
@@ -36,12 +41,19 @@ class Player < ActiveRecord::Base
 
   def stack(round=nil)
     raise "Cannot get stack -- player not registered" unless tournament_id
+   
     q = self.round_players
+    key = ""
     if round
-      q = q.where("round_id <= #{round.id}")
+      q = q.where("round_id < #{round.id}")
+      key = "round-id/#{round.id}"
+    else
+      key = "round-count/#{rounds.over.count}"
     end
 
-    (initial_stack || 0) + q.sum(:stack_change)
+    Rails.cache.fetch("players/#{id}/stack/#{key}") do
+      (initial_stack || 0) + q.sum(:stack_change)
+    end
   end
 
   # Unseat this player from their current table.
@@ -54,17 +66,23 @@ class Player < ActiveRecord::Base
     @current_seating = nil
   end
 
+  def lose!
+    unseat! if current_seating
+    self.lost_at = Time.now  
+    self.save!
+  end
+
   # Have this player attempt to take the given action.
   def take_action!(action_params)
     table.take_action! action_params.merge(:player => self) 
   end
 
   def valid_action?(action_params)
-    table.valid_action? action_params.merge(:player => self) 
+    (t = table) && t.valid_action?(action_params.merge(:player => self))
   end
 
   def round
-    table && table.current_round
+    rounds.last
   end
 
   def current_game_state(property = nil)
@@ -90,10 +108,20 @@ class Player < ActiveRecord::Base
   end
 
   def actions_in_current_round
-    current_game_state.log.select { |l| l[:player_id] == self.id }
+    if l = current_game_state(:log)
+      l.select { |l| l[:player_id] == self.id }
+    else
+      []
+    end
   end
 
   def my_turn?
     !!(table && table.playing && table.current_player == self)
+  end
+
+  def idle_time
+    return 0 unless r = round
+    last_action_in_round = Action.where(:round_id => r.id).order("id ASC").last 
+    Time.now - (last_action_in_round && last_action_in_round.created_at || r.created_at)
   end
 end

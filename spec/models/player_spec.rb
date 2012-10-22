@@ -120,7 +120,8 @@ describe Player do
       end
 
       it "should be able to go back in time" do
-        player.stack(player.rounds.first).should == 110
+        player.stack(player.rounds.first).should == 100
+        player.stack(player.rounds.last).should == 110
       end
     end
   end

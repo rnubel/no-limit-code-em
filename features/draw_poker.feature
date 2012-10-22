@@ -25,9 +25,28 @@ Feature: Action steps
     When player 1 goes all in
     And player 2 goes all in
     And all players replace no cards
-    Then player 1 should win 100
-    And player 2 should win 50
-  
+    Then player 1 wins 100
+    And player 2 wins 50
+ 
+  Scenario: Dealer goes all in
+    When 2 players are at a table with initial stacks [100, 50]
+    Given the deck favors player 2
+    When player 1 goes all in
+    And player 2 goes all in
+    And all players replace no cards
+    Then player 2 wins 100
+    And player 1 wins 50
+
+  Scenario: Player goes all in and loses
+    When 2 players are at a table with initial stacks [100, 50]
+    Given the deck favors player 1
+    When player 1 bets 60
+    And player 2 goes all in
+    And all players replace no cards
+    When player 1 bets 60
+    Then player 1 wins 110
+    And player 2 is unseated
+
   Scenario: 2 players split the pot at a simple table
     When 2 players are at a table
     Given the deck favors both players
@@ -51,9 +70,19 @@ Feature: Action steps
     And player 3 bets 100
     Then player 1 and player 2 split the pot
 
-  Scenario: A player cannot meet the ante
+  Scenario: A player cannot meet the ante but wins
     When 2 players are at a table with initial stacks [5, 25]
     Given the deck favors player 1
     When player 2 goes all in
     And all players replace no cards
-    Then player 1 wins the round
+    Then player 1 wins 10
+    And player 2 wins 20
+
+  Scenario: A player cannot meet the ante and loses
+    When 2 players are at a table with initial stacks [5, 25]
+    Given the deck favors player 2
+    When player 2 goes all in
+    And all players replace no cards
+    Then player 2 wins 30
+    And player 1 is unseated
+

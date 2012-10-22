@@ -1,8 +1,8 @@
 GIT
-  remote: git://git.cashnetusa.com/rnubel/poker_table
-  revision: d81602ce8db74bdfcb838165720a937e6b951473
+  remote: git://github.com/rnubel/poker_table
+  revision: d85786d1ccb3d2a58c0b4b5294f2abd06d6e4474
   specs:
-    poker_table (0.1.4)
+    poker_table (0.1.6)
       ruby-poker
 
 GEM
@@ -73,8 +73,10 @@ GEM
     eventmachine (1.0.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
-    factory_girl (4.1.0)
-      activesupport (>= 3.0.0)
+    factory_girl (2.5.2)
+      activesupport (>= 2.3.9)
+    faker (1.1.2)
+      i18n (~> 0.5)
     ffi (1.1.5)
     figgy (0.9.1)
       json
@@ -89,9 +91,9 @@ GEM
       rspec (~> 2.11)
     haml (3.1.7)
     hike (1.2.1)
+    hirb (0.7.0)
     httparty (0.9.0)
-      multi_json (~> 1.0)
-      multi_xml
+    httpclient (2.3.0.1)
     i18n (0.6.1)
     jquery-rails (2.1.3)
       railties (>= 3.1.0, < 5.0)
@@ -110,7 +112,6 @@ GEM
     mocha (0.12.7)
       metaclass (~> 0.0.1)
     multi_json (1.3.6)
-    multi_xml (0.5.1)
     newrelic_rpm (3.5.0)
     nokogiri (1.5.5)
     pg (0.14.1)
@@ -203,21 +204,25 @@ DEPENDENCIES
   cucumber-rails
   database_cleaner
   factory_girl
+  faker
   figgy
   google-buttons-sass
   guard
   guard-rspec
   haml
+  hirb
   httparty
+  httpclient
   jquery-rails
   json
   mocha
   newrelic_rpm
   pg
-  poker_table (= 0.1.4)!
+  poker_table (= 0.1.6)!
   pry
   rails (= 3.1.3)
   rspec-rails
+  ruby-poker
   sass-rails (~> 3.1.5)
   sqlite3
   thin

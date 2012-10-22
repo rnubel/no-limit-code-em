@@ -7,7 +7,7 @@ describe PlayerPresenter do
     let(:player){ FactoryGirl.create(:player, :registered) }
 
     it "has the needed keys" do
-      subject.to_json.keys.should =~ [:name, :initial_stack, :your_turn, :players_at_table, :hand, :betting_phase, :table_id, :round_id, :round_history, :minimum_bet, :current_bet, :maximum_bet]
+      subject.to_json.keys.should =~ [:name, :initial_stack, :your_turn, :players_at_table, :hand, :betting_phase, :table_id, :round_id, :round_history, :minimum_bet, :current_bet, :maximum_bet, :lost_at]
     end
   }
 
@@ -22,6 +22,29 @@ describe PlayerPresenter do
     it "handles actual cards" do
       player.stubs(:current_player_state).with(:hand).returns("AS AS AS AS AS")
       subject.hand.should == "AS AS AS AS AS"
+    end
+  end
+
+  describe "#minimum_bet" do
+    subject { PlayerPresenter.new(player) }
+    let(:player){ FactoryGirl.create(:player, :registered) }
+
+    context "when player has more chips than the current bet" do
+      it "returns the current bet" do
+        player.expects(:current_game_state).with(:minimum_bet).returns 20
+        player.expects(:stack).returns(25)
+
+        subject.minimum_bet.should == 20
+      end
+    end
+
+    context "when player has less chips than the current bet" do
+      it "returns the players stack indicating they must go all-in" do
+        player.expects(:current_game_state).with(:minimum_bet).returns 20
+        player.expects(:stack).returns(5)
+
+        subject.minimum_bet.should == 5
+      end
     end
   end
 

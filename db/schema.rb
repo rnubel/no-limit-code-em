@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121018065735) do
+ActiveRecord::Schema.define(:version => 20121022032844) do
 
   create_table "actions", :force => true do |t|
     t.string   "action"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(:version => 20121018065735) do
     t.integer  "lock_version",  :default => 0
     t.integer  "tournament_id"
     t.integer  "initial_stack"
+    t.datetime "lost_at"
   end
 
   add_index "players", ["key"], :name => "index_players_on_key"
@@ -44,12 +45,21 @@ ActiveRecord::Schema.define(:version => 20121018065735) do
     t.integer  "current_stack"
   end
 
+  create_table "request_logs", :force => true do |t|
+    t.integer "player_id"
+    t.integer "round_id"
+    t.text    "body"
+  end
+
   create_table "round_players", :force => true do |t|
     t.integer "player_id"
     t.integer "round_id"
     t.integer "initial_stack"
     t.integer "stack_change"
   end
+
+  add_index "round_players", ["player_id"], :name => "index_round_players_on_player_id"
+  add_index "round_players", ["round_id"], :name => "index_round_players_on_round_id"
 
   create_table "rounds", :force => true do |t|
     t.integer  "table_id"
@@ -71,6 +81,10 @@ ActiveRecord::Schema.define(:version => 20121018065735) do
     t.datetime "updated_at"
   end
 
+  add_index "seatings", ["active"], :name => "index_seatings_on_active"
+  add_index "seatings", ["player_id"], :name => "index_seatings_on_player_id"
+  add_index "seatings", ["table_id"], :name => "index_seatings_on_table_id"
+
   create_table "tables", :force => true do |t|
     t.integer  "tournament_id"
     t.boolean  "playing"
@@ -78,6 +92,14 @@ ActiveRecord::Schema.define(:version => 20121018065735) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "lock_version",  :default => 0
+  end
+
+  create_table "timeout_logs", :force => true do |t|
+    t.integer  "player_id"
+    t.integer  "round_id"
+    t.float    "idle_time"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "tournaments", :force => true do |t|

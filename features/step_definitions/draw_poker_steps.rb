@@ -29,7 +29,12 @@ end
 
 Then /^player (\d+) wins the round$/ do |id|
   @player = @table.players[id.to_i-1]
-  @table.rounds.order("id ASC").first.winners.should == [@player]
+  @table.rounds.order("id ASC").first.winners.keys.should == [@player]
+end
+
+Then /^player (\d+) wins (\d+)$/ do |id, amount|
+  @player = @table.players[id.to_i-1]
+  @table.rounds.order("id ASC").first.winners[@player].should == amount.to_i
 end
 
 Then /^player (\d+) cannot bet (-?\d+)$/ do |id, amount|
@@ -44,7 +49,7 @@ end
 
 When /^player (\d+) goes all in$/ do |id|
   @player = @table.players[id.to_i-1]
-  @player.take_action!(:action => "bet", :amount => @player.current_stack)
+  @player.take_action!(:action => "bet", :amount => @player.initial_stack)
 end
 
 When /^all players replace no cards$/ do
@@ -58,6 +63,16 @@ Given /^the deck favors player 1$/ do
   @round.save
 end
 
+Given /^the deck favors player 2$/ do
+  @round.deck = "Ac 5d 2c 3d 3c 9s 4c 8h 5c Kh".split(" ").reverse.join(" ")
+  @round.save
+end
+
+Then /^player (\d+) is unseated/ do |id|
+  @player = @table.players[id.to_i-1]
+  @player.seatings.first.should_not be_active
+end
+
 Given /^the deck favors both players$/ do
   @round.deck = "Ac Ad 2c 2d 3c 3d 4c 4d 5c 5d"
   @round.save
@@ -65,9 +80,9 @@ end
 
 Then /^player (\d+) and player (\d+) split the pot$/ do |p1_id, p2_id|
   @player_one = @table.players[p1_id.to_i-1]
-  @player_one.round_players.first.stack_change.should >= 0
+  @player_one.round_players.order("id ASC").first.stack_change.should >= 0
   @player_two = @table.players[p2_id.to_i-1]
-  @player_two.round_players.first.stack_change.should >= 0
+  @player_two.round_players.order("id ASC").first.stack_change.should >= 0
 end
 
 Given /^the deck favors player 1 and player 2$/ do 

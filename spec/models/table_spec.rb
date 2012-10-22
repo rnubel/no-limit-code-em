@@ -92,11 +92,16 @@ describe Table do
     end
 
     context "when play should stop" do
-      before { Round.any_instance.expects(:losers).returns([subject.players.first]) }
+      let(:loser) { subject.players.order("id ASC").first }
+      before { Round.any_instance.stubs(:losers).returns([loser]) }
       before { subject.next_round! }
       
-      it "unseats any players who lost" do
-        subject.active_players.should == [subject.players.last]
+      it "unseats all players" do
+        subject.active_players.size.should == 0
+      end
+
+      it "makes the loser lose" do
+        loser.reload.lost_at.should_not be_nil
       end
 
       it "should not open a new round" do
@@ -107,8 +112,8 @@ describe Table do
 
   context "when rotating dealer order" do
     before :each do
-      @p1 = subject.players.first
-      @p2 = subject.players.last
+      @p1 = subject.players.order("id ASC").first
+      @p2 = subject.players.order("id ASC").last
       @p3 = FactoryGirl.create :player, :tournament => subject.tournament, :initial_stack => 1000
 
       subject.start_play!

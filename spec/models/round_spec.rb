@@ -116,7 +116,7 @@ describe Round do
       ]
 
       subject.close!
-      subject.winners.should == [subject.players.second]
+      subject.winners.should == { subject.players.second => 20 }
     end
 
     it "provides a list of kicked players to be removed" do
