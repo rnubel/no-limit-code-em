@@ -32,8 +32,15 @@ class Bot
     HTTPClient.new.post("#{base_uri}/api/players/#{key}/action", :body => params)
   end
   
-  def decide_action(hand, min_bet, max_bet, stack)
+  def decide_action(hand, min_bet, max_bet, stack, current_bet)
     case PokerHand.new(hand).rank
+    when "Highest Card"
+      if current_bet == min_bet
+        action = "bet"
+        amount = min_bet
+      else
+        action = "fold"
+      end
     when "Pair"
       action = "bet"
       amount = [min_bet + 5, max_bet].min
@@ -63,7 +70,7 @@ class Bot
 
   def take_action!(s)
     if s["betting_phase"] == 'deal' || s["betting_phase"] == 'post_draw'
-      action, amount = decide_action(s["hand"], s["minimum_bet"], s["maximum_bet"], s["initial_stack"] - s["current_bet"])
+      action, amount = decide_action(s["hand"], s["minimum_bet"], s["maximum_bet"], s["initial_stack"] - s["current_bet"], s["current_bet"])
       
       if action == "fold"
         action(:action_name => "fold")
