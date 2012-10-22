@@ -80,9 +80,9 @@ end
 
 Then /^player (\d+) and player (\d+) split the pot$/ do |p1_id, p2_id|
   @player_one = @table.players[p1_id.to_i-1]
-  @player_one.round_players.first.stack_change.should >= 0
+  @player_one.round_players.order("id ASC").first.stack_change.should >= 0
   @player_two = @table.players[p2_id.to_i-1]
-  @player_two.round_players.first.stack_change.should >= 0
+  @player_two.round_players.order("id ASC").first.stack_change.should >= 0
 end
 
 Given /^the deck favors player 1 and player 2$/ do 
