@@ -76,6 +76,6 @@ Feature: Player actions in a tournament
     When I am not the dealer  
     And I POST to "/api/players/{{@player.key}}/action" with:
       | action_name | replace |
-      | cards       | {{@player.hand.first}} {{@player.hand.second}} {{@player.hand.third}} |
+      | cards       | {{@player.hand.first}} {{@player.hand.second}} {{@player.hand.third.downcase}} |
     Then the response status should be 200
     Then the table's first round should be in the "post_draw" betting round

@@ -58,9 +58,9 @@ module Api
 
     def cards_value(param)
       if param.is_a? String
-        param.split(" ")
+        param.split(" ").map(&:upcase)
       else
-        param
+        param && param.map(&:upcase)
       end
     end
 
