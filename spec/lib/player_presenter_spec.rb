@@ -25,6 +25,29 @@ describe PlayerPresenter do
     end
   end
 
+  describe "#minimum_bet" do
+    subject { PlayerPresenter.new(player) }
+    let(:player){ FactoryGirl.create(:player, :registered) }
+
+    context "when player has more chips than the current bet" do
+      it "returns the current bet" do
+        player.expects(:current_game_state).with(:minimum_bet).returns 20
+        player.expects(:stack).returns(25)
+
+        subject.minimum_bet.should == 20
+      end
+    end
+
+    context "when player has less chips than the current bet" do
+      it "returns the players stack indicating they must go all-in" do
+        player.expects(:current_game_state).with(:minimum_bet).returns 20
+        player.expects(:stack).returns(5)
+
+        subject.minimum_bet.should == 5
+      end
+    end
+  end
+
   describe "#round_history" do
     subject { PlayerPresenter.new(player) }
     let(:player){ FactoryGirl.create(:player, :registered) }

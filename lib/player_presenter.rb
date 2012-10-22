@@ -8,11 +8,11 @@ class PlayerPresenter
   def to_json
     {
       :name => @player.name,
-      :initial_stack => @player.stack,
+      :initial_stack => stack,
       :your_turn => @player.my_turn?,
       :current_bet => @player.current_bet,
-      :minimum_bet => @player.current_game_state(:minimum_bet),
-      :maximum_bet => @player.stack,
+      :minimum_bet => minimum_bet,
+      :maximum_bet => stack,
       :hand => hand,
       :betting_phase => betting_phase,
       :players_at_table => players_at_table,
@@ -33,12 +33,21 @@ class PlayerPresenter
     }
   end
 
+  def stack
+    @stack ||= player.stack # Not changing while this object is alive
+  end
+
   def hand
     @player.current_player_state(:hand) || ""
   end
 
   def betting_phase
     @player.current_game_state(:round)
+  end
+
+  def minimum_bet
+    [stack, 
+     @player.current_game_state(:minimum_bet) || 0].min
   end
 
   def players_at_table
