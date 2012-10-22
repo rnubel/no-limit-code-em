@@ -100,7 +100,7 @@ class Bot
   end
 end
 
-namespace :bot do
+namespace :shaan_bot do
   task :run do
     (ENV['num'] || 1).to_i.times.collect do |i|
       Thread.new do
