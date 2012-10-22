@@ -42,7 +42,7 @@ class ShaanBot < Bot
       replacement_cards = replace_indices.map {|i| hand[i]}
     elsif PokerHand.new(hand).rank == "Two pair"
       cards = hand.map {|c| c[0]}
-      fifth_card = cards.group_by { |e| e }.values { |values| values.size }.last[0]
+      fifth_card = cards.group_by { |e| e }.values { |values| values.size }.sort!{|a,b| b.length <=> a.length}.last[0]
       index = cards.index(fifth_card)
       replacement_cards = hand[index]
     elsif perfect_hands.include?(PokerHand.new(hand).rank)
