@@ -20,22 +20,37 @@ class ShaanBot < Bot
     when "Three of a kind"
       action = "bet"
       amount = [min_bet + 20, max_bet].min
-    when "Straight"
-      action = "bet"
-      amount = max_bet
-    when "Flush"
-      action = "bet"
-      amount = max_bet
-    when "Full house"
-      action = "bet"
-      amount = max_bet
-    when "Four of a kind"
+    when "Straight" || "Flush" || "Full house" || "Four of a kind" || "Straight Flush" || "Royal Flush"
       action = "bet"
       amount = max_bet
     else
       action = "fold" if min_bet == stack
     end
     return action, amount
+  end
+  
+  def decide_replacement(hand)
+    pair_types = ["Pair", "Three of a kind", "Four of a kind"]
+    perfect_hands = ["Straight", "Flush", "Full house", "Royal Flush", "Straight Flush"]
+    if pair_types.include?(PokerHand.new(hand).rank)
+      cards = hand.map {|c| c[0]}
+      pair = cards.group_by { |e| e }.values.max_by { |values| values.size }.first
+      replace_indices = cards.each_with_index.map do |c, i|
+        if c != pair then i end
+      end
+      replace_indices.delete(nil)
+      replacement_cards = replace_indices.map {|i| hand[i]}
+    elsif PokerHand.new(hand).rank == "Two pair"
+      cards = hand.map {|c| c[0]}
+      fifth_card = cards.group_by { |e| e }.values { |values| values.size }.last[0]
+      index = cards.index(fifth_card)
+      replacement_cards = hand[index]
+    elsif perfect_hands.include?(PokerHand.new(hand).rank)
+      replacement_cards = []
+    elsif PokerHand.new(hand).rank == "Highest Card"
+      replacement_cards = PokerHand.new(hand).by_face.to_a[2..4]
+    end
+    return replacement_cards
   end
 
   def take_action!(s)
@@ -49,7 +64,9 @@ class ShaanBot < Bot
       end
   
     else
-      action(:action_name => "replace", :cards => s["hand"].shuffle.first(rand(4)).join(" "))
+      cards = decide_replacement(s["hand"])
+      action(:action_name => "replace", :cards => cards)
+      #action(:action_name => "replace", :cards => s["hand"].shuffle.first(rand(4)).join(" "))
     end
   end
 end
