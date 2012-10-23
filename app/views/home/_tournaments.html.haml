@@ -1,9 +1,15 @@
 %table#scoreboard.table.table-striped
   %thead
     %tr
+      %th
+        ID
+      %th
+        Particpants
   %tbody
     - tournaments.each do |tournament|
       %tr
       - if !(tournament.playing? || tournament.open?)
         %td
           %a(href="/tournaments/#{tournament.id}")= tournament.id
+        %td
+          = tournament.players.count
