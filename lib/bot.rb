@@ -26,20 +26,22 @@ class Bot
     raise "Registration failed" unless json["key"]
 
     self.key = json["key"]
+    logger.info "[#{@name}] (#{Time.now}) Registered with key #{key}"
   end
 
   def status
     response = http_client.get("#{base_uri}/api/players/#{key}")
+    logger.info "[#{@name}] (#{Time.now}) Polled status"
     json = JSON.parse(response.body)
   end
 
   def action(params)
-    logger.info "[#{@name}] Decided on action: #{params.inspect}"
+    logger.info "[#{@name}] (#{Time.now}) Decided on action: #{params.inspect}"
     http_client.post("#{base_uri}/api/players/#{key}/action", :body => params)
   end
 
   def decide_action!(s)
-    logger.info s.inspect
+    logger.info "[#{@name}] (#{Time.now}) #{s.inspect}"
     if s["betting_phase"] == 'deal' || s["betting_phase"] == 'post_draw'
       n = rand(100)
       if n < 30
@@ -62,12 +64,16 @@ class Bot
     register(:name => @name)
 
     while true
-      s = status
-      logger.info "[#{@name}] Getting status... #{s['your_turn']}, #{s['betting_phase']}"
-      break if s["lost_at"]
+      begin
+        s = status
+        logger.info "[#{@name}] Getting status... #{s['your_turn']}, #{s['betting_phase']}"
+        break if s["lost_at"]
 
-      if s["your_turn"]
-        decide_action!(s)
+        if s["your_turn"]
+          decide_action!(s)
+        end
+      rescue Exception => e
+        logger.error "#{e.inspect} #{e.backtrace}"
       end
 
       sleep @delay
