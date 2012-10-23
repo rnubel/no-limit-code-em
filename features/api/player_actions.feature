@@ -64,6 +64,8 @@ Feature: Player actions in a tournament
       | action_name | bet |
       | amount      | 25  |
     And I am not the dealer
+	And I GET from "/api/players/{{@player.key}}"
+	When I pry
     And I POST to "/api/players/{{@player.key}}/action" with:
       | action_name | bet |
       | amount      | 25  |
