@@ -4,6 +4,11 @@ REQUESTS
 
 GET /api/players/PLAYER_KEY (Receive the current state of the game)
 
+// This request will allow us to validate your player key and return the appropriate information.
+
+Response
+
+json
 {
 // Returns your name
       "name" =>"Lacey Kuhic", 
@@ -51,6 +56,8 @@ GET /api/players/PLAYER_KEY (Receive the current state of the game)
 
 
 POST /api/players/PLAYER_KEY/action (place your bet or replace your cards)
+
+Syntax
 
 {
 // Either set your action as "bet" or "replace"
