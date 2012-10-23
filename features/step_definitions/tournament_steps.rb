@@ -17,19 +17,19 @@ Then /^(\d+) table.? should have (\d+) players$/ do |n, p|
 end
 
 When /I am the dealer/ do
-  @player = @tournament.tables.first.current_round.dealer
+  @player = @tournament.tables.ordered.first.reload.current_round.dealer
 end
 
 When /I am not the dealer/ do
-  @player = @tournament.tables.first.current_round.ordered_players.last
+  @player = @tournament.tables.ordered.first.reload.current_round.ordered_players.last
 end
 
 Then /^the table's first round should be over/ do
-  @tournament.tables.first.rounds.first.should be_over
+  @tournament.tables.first.rounds.ordered.first.should be_over
 end
 
 Then /^the table's first round should not be over/ do
-  @tournament.tables.first.rounds.first.should_not be_over
+  @tournament.tables.first.rounds.ordered.first.should_not be_over
 end
 
 
