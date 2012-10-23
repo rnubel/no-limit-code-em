@@ -12,17 +12,17 @@ $(document).ready(function() {
     $('#poker_tables').find('.table_'+number).toggleClass('hover');
   });
 
-  // refresh the data
-  setInterval(function() {
-    $('.loader').fadeIn();
-    $.ajax({
-      url: '/refresh',
-      type: 'POST',
-      success: function(data) {
-        $('.loader').fadeOut();
-      }
-    });
-  }, 7000);
+//  // refresh the data
+//  setInterval(function() {
+//    $('.loader').fadeIn();
+//    $.ajax({
+//      url: '/refresh',
+//      type: 'POST',
+//      success: function(data) {
+//        $('.loader').fadeOut();
+//      }
+//    });
+//  }, 7000);
 });
 
 // input placeholders

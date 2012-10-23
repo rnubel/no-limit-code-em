@@ -1,0 +1,29 @@
+- player && player.rounds && player.rounds.each do |r|
+  %h2= "Round: #{r.id}"
+  %table
+    %thead
+      %tr
+        %th Round
+        %th Player
+        %th Action
+        %th Amount
+    %tbody
+      - r.state && r.state.log && r.state.log.each do |log|
+        - if log[:round] 
+          %tr
+            %td= log[:round]
+        - if log[:player_id] && log[:player_id] == player.id
+          %tr
+            %td
+            %td 
+              %strong= "You"
+            %td 
+              %strong= log[:action]
+            %td 
+              %strong= log[:amount]
+        - else
+          %tr
+            %td
+            %td= log[:player_id]
+            %td= log[:action]
+            %td= log[:amount]
