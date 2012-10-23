@@ -47,8 +47,9 @@ GET /api/players/PLAYER_KEY (Receive the current state of the game)
 
 
 POST /api/players/PLAYER_KEY/action (place your bet or replace your cards)
+
 {
-// Either set your action as �bet� or �replace�
+// Either set your action as "bet" or "replace"
      :action_name => "bet",
 
 // If you are betting, set you bet, otherwise leave it as nil when replacing
