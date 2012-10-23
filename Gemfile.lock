@@ -5,6 +5,12 @@ GIT
     poker_table (0.2.0)
       ruby-poker
 
+GIT
+  remote: https://github.com/robolson/ruby-poker.git
+  revision: 7bdd90cfddfcaaaf5c3925b0592e7999c5cb859c
+  specs:
+    ruby-poker (0.3.2)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -118,7 +124,7 @@ GEM
     multi_json (1.3.6)
     newrelic_rpm (3.5.0)
     nokogiri (1.5.5)
-    pg (0.14.1)
+    pg (0.13.2)
     polyglot (0.3.3)
     pry (0.9.10)
       coderay (~> 1.0.5)
@@ -164,7 +170,6 @@ GEM
       activesupport (>= 3.0)
       railties (>= 3.0)
       rspec (~> 2.11.0)
-    ruby-poker (0.3.2)
     rubyzip (0.9.9)
     sass (3.2.1)
     sass-rails (3.1.6)
@@ -222,12 +227,12 @@ DEPENDENCIES
   json
   mocha
   newrelic_rpm
-  pg
+  pg (= 0.13.2)
   poker_table (= 0.2.0)!
   pry
   rails (= 3.1.3)
   rspec-rails
-  ruby-poker
+  ruby-poker!
   sass-rails (~> 3.1.5)
   sqlite3
   thin

@@ -5,13 +5,13 @@ gem 'rails', '3.1.3'
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
-gem 'pg'
+gem 'pg', '0.13.2'
 gem 'json'
 gem 'thin'
 gem 'dalli'
 
 gem 'poker_table', '0.2.0', :git => 'git://github.com/rnubel/poker_table'
-gem 'ruby-poker'
+gem 'ruby-poker', :git => 'https://github.com/robolson/ruby-poker.git'
 
 gem 'figgy'
 
