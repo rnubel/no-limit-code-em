@@ -1,0 +1,9 @@
+%table#scoreboard.table.table-striped
+  %thead
+    %tr
+      %th Player Name
+  %tbody
+    - players.each do |p|
+      %tr
+      %td
+        %a(href="/players/#{p.id}")= p.name
