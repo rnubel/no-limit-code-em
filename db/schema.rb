@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121022195103) do
+ActiveRecord::Schema.define(:version => 20121023204958) do
 
   create_table "actions", :force => true do |t|
     t.string   "action"
@@ -22,6 +22,9 @@ ActiveRecord::Schema.define(:version => 20121022195103) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "actions", ["player_id"], :name => "index_actions_on_player_id"
+  add_index "actions", ["round_id"], :name => "index_actions_on_round_id"
 
   create_table "players", :force => true do |t|
     t.string   "name"
@@ -35,6 +38,8 @@ ActiveRecord::Schema.define(:version => 20121022195103) do
   end
 
   add_index "players", ["key"], :name => "index_players_on_key"
+  add_index "players", ["lost_at"], :name => "index_players_on_lost_at"
+  add_index "players", ["tournament_id"], :name => "index_players_on_tournament_id"
 
   create_table "registrations", :force => true do |t|
     t.integer  "player_id"
@@ -74,6 +79,9 @@ ActiveRecord::Schema.define(:version => 20121022195103) do
     t.integer  "lock_version", :default => 0
   end
 
+  add_index "rounds", ["playing"], :name => "index_rounds_on_playing"
+  add_index "rounds", ["table_id"], :name => "index_rounds_on_table_id"
+
   create_table "seatings", :force => true do |t|
     t.integer  "player_id"
     t.integer  "table_id"
@@ -95,6 +103,9 @@ ActiveRecord::Schema.define(:version => 20121022195103) do
     t.integer  "lock_version",  :default => 0
   end
 
+  add_index "tables", ["playing"], :name => "index_tables_on_playing"
+  add_index "tables", ["tournament_id"], :name => "index_tables_on_tournament_id"
+
   create_table "timeout_logs", :force => true do |t|
     t.integer  "player_id"
     t.integer  "round_id"
@@ -110,5 +121,7 @@ ActiveRecord::Schema.define(:version => 20121022195103) do
     t.integer  "lock_version", :default => 0
     t.boolean  "playing",      :default => false
   end
+
+  add_index "tournaments", ["playing"], :name => "index_tournaments_on_playing"
 
 end
