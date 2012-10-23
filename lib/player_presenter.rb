@@ -16,21 +16,29 @@ class PlayerPresenter
       :hand => hand,
       :betting_phase => betting_phase,
       :players_at_table => players_at_table,
-      :table_id => @player.table && @player.table.id,
-      :round_id => @player.round && @player.round.id,
+      :table_id => table && table.id,
+      :round_id => round && round.id,
       :round_history => round_history,
       :lost_at => @player.lost_at
     }
   end
 
   def round_history
-    @player.round_players.includes(:round).order("id DESC").collect { |rp|
+    @player.round_players.includes(:round).order("id DESC").limit(10).collect { |rp|
       {
         :round_id => rp.round_id,
         :table_id => rp.round.table_id,
         :stack_change => rp.stack_change
       }
     }
+  end
+
+  def table
+    @table ||= @player.table
+  end
+
+  def round
+    @round ||= @player.round
   end
 
   def stack
@@ -51,8 +59,8 @@ class PlayerPresenter
   end
 
   def players_at_table
-    if player.table
-      player.table.players.ordered.collect do |p|
+    if table
+      table.players.ordered.collect do |p|
         { :player_name => p.name,
           :initial_stack => p.stack,
           :current_bet => p.current_bet,
