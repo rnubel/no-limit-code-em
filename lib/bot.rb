@@ -30,14 +30,18 @@ class Bot
   end
 
   def status
+    logger.info "[#{@name}] (#{Time.now}) Polling status..."
+    start = Time.now
     response = http_client.get("#{base_uri}/api/players/#{key}")
-    logger.info "[#{@name}] (#{Time.now}) Polled status"
+    logger.info "[#{@name}] (#{Time.now}) Polling status took #{Time.now - start}s"
     json = JSON.parse(response.body)
   end
 
   def action(params)
+    start = Time.now
     logger.info "[#{@name}] (#{Time.now}) Decided on action: #{params.inspect}"
     http_client.post("#{base_uri}/api/players/#{key}/action", :body => params)
+    logger.info "[#{@name}] (#{Time.now}) Posting action took #{Time.now - start}s"
   end
 
   def decide_action!(s)

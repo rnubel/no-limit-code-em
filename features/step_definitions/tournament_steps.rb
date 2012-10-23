@@ -62,3 +62,6 @@ Then /^the tournament should have (\d+) playing tables?$/ do |n|
   @tournament.tables.playing.count.should == n.to_i
 end
 
+Then /^(\d+) players? should be standing/ do |n|
+  @tournament.players.playing.standing.count.should == n.to_i
+end

@@ -51,3 +51,13 @@ Feature: Tournament seating
     When tables are balanced
     Then the tournament should have 1 playing table
 
+  Scenario: A table goes down to 1 player with no room elsewhere
+    Given a tournament is open
+    And 18 players are registered
+    When the tournament starts
+    When table 1 loses 5 players
+    And table 1 finishes its round
+    When tables are balanced
+    Then the tournament should have 2 playing tables
+    And 1 player should be standing
+
