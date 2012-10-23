@@ -4,8 +4,11 @@ module Sandbox
 
     # GET /sandbox/players/:key
     def show
-      if params[:id].length >= 32
+      if params[:id] == "fc2455f8-1879-4ad4-8012-1f337c2869f2"
         json = '{"name":"Bill9","initial_stack":250,"your_turn":true,"current_bet":20,"minimum_bet":25,"maximum_bet":250,"hand":["6D","5C","AS","5H","9H"],"betting_phase":"deal","players_at_table":[{"player_name":"Bill8","initial_stack":250,"current_bet":25,"actions":[{"action":"ante","amount":20},{"action":"bet","amount":25}]},{"player_name":"Bill9","initial_stack":250,"current_bet":20,"actions":[{"action":"ante","amount":20}]}],"table_id":88,"round_id":105,"round_history":[{"round_id":105,"table_id":88,"stack_change":null}],"lost_at":null}'
+        render :json => JSON.parse(json)
+      elsif params[:id] == "728f53dd-a5dc-4582-8864-be37576b9592"
+        json = '{"name":"Bill8","initial_stack":250,"your_turn":true,"current_bet":25,"minimum_bet":25,"maximum_bet":250,"hand":["2C","7H","8C","3D","2D"],"betting_phase":"draw","players_at_table":[{"player_name":"Bill8","initial_stack":250,"current_bet":25,"actions":[{"action":"ante","amount":20},{"action":"bet","amount":25}]},{"player_name":"Bill9","initial_stack":250,"current_bet":25,"actions":[{"action":"ante","amount":20},{"action":"bet","amount":25}]}],"table_id":92,"round_id":110,"round_history":[{"round_id":110,"table_id":92,"stack_change":null}],"lost_at":null}'
         render :json => JSON.parse(json)
       else
         render_not_found "Invalid key. Should look like #{SecureRandom.uuid}"
@@ -14,14 +17,56 @@ module Sandbox
 
     # POST /sandbox/players/:key/action
     def action
-      return render_bad_request "Amount must be a positive integer if passed" if 
-        params[:amount] && (params[:amount].to_i < 0)
+      case params[:id]
+      when "fc2455f8-1879-4ad4-8012-1f337c2869f2"
+        json = '{"name":"Bill9","initial_stack":250,"your_turn":true,"current_bet":20,"minimum_bet":25,"maximum_bet":250,"hand":["6D","5C","AS","5H","9H"],"betting_phase":"deal","players_at_table":[{"player_name":"Bill8","initial_stack":250,"current_bet":25,"actions":[{"action":"ante","amount":20},{"action":"bet","amount":25}]},{"player_name":"Bill9","initial_stack":250,"current_bet":20,"actions":[{"action":"ante","amount":20}]}],"table_id":88,"round_id":105,"round_history":[{"round_id":105,"table_id":88,"stack_change":null}],"lost_at":null}'  
+        return render_bad_request "Amount must be a positive integer" if 
+          params[:amount] && (params[:amount].to_i < 0)
+      when "728f53dd-a5dc-4582-8864-be37576b9592"
+        json = '{"name":"Bill8","initial_stack":250,"your_turn":true,"current_bet":25,"minimum_bet":25,"maximum_bet":250,"hand":["2C","7H","8C","3D","2D"],"betting_phase":"draw","players_at_table":[{"player_name":"Bill8","initial_stack":250,"current_bet":25,"actions":[{"action":"ante","amount":20},{"action":"bet","amount":25}]},{"player_name":"Bill9","initial_stack":250,"current_bet":25,"actions":[{"action":"ante","amount":20},{"action":"bet","amount":25}]}],"table_id":92,"round_id":110,"round_history":[{"round_id":110,"table_id":92,"stack_change":null}],"lost_at":null}'
+        return render_bad_request 'Action must be set to "replace"' if
+          params[:action_name] != "replace"
+      else
+        return render_not_found "Invalid key. Should look like #{SecureRandom.uuid}"
+      end 
+      
+      action = { :action => params[:action_name], 
+                 :amount => params[:amount] && params[:amount].to_i, 
+                 :cards =>  cards_value(params[:cards]) }
+      if valid_action?(JSON.parse(json), action_params)
+        json = '{:action => valid}'
+        render :json => JSON.parse(json)
+      else
+        json = '{:action => invalid}'
+        render :json => JSON.parse(json)
+      end
+    end
+    
+    private
+    
+    def valid_action?(json, action)
+      case action[:action]
+          when "bet" # Absolute amount!            
+            amount = action[:amount].to_i
+            raised_amount = amount - (json[:current_bet] || 0)
 
-      @player = Player.find_by_key(params[:id])
-
-      action_params = { :action => params[:action_name], 
-                        :amount => params[:amount] && params[:amount].to_i, 
-                        :cards =>  cards_value(params[:cards]) }
+            (amount >= json[:minimum_bet] || raised_amount == json[:stack]) && raised_amount <= json[:stack]
+          when "replace" # List of cards!
+            return false unless action[:cards].is_a? Enumerable
+            action[:cards].all? { |c|
+              json[:hand].include?(c)
+            } && action[:cards].size <= DRAW_LIMIT
+          when "fold" # Should always be allowed, if it's their turn.
+            true
+          end
+    end
+    
+    def cards_value(param)
+      if param.is_a? String
+        param.split(" ").map(&:upcase)
+      else
+        param && param.map(&:upcase)
+      end
     end
     
     
