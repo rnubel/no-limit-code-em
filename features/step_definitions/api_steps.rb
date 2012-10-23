@@ -46,6 +46,7 @@ Then 'the JSON errors should include:' do |json|
   expected_errors = JSON.parse(interpolate(json))
   response_object = JSON.parse(last_response.body)
   response_object['errors'].should include(expected_errors)
+  puts last_response.body
 end
 
 Then /^the JSON response should match \/(.*)\/$/ do |pattern|
