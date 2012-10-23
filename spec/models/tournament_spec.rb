@@ -121,6 +121,18 @@ describe Tournament do
 
         subject.tables.map { |t| t.players.count }.should =~ [6, 6, 4]
       end
+
+      it "does not assign players to empty tables" do
+        subject.tables.order("id ASC").first.players.each do |p|
+          p.lose!
+        end
+
+        5.times do
+          subject.players << FactoryGirl.create(:player, :tournament => subject)
+        end
+
+        subject.tables.order("id ASC").first.should have(0).active_players
+      end
     end
   end
 end

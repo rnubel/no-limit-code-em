@@ -48,7 +48,7 @@ class Tournament < ActiveRecord::Base
   def balance_tables!
     open_tables = self.tables.playing
     players.playing.standing.each do |player|
-      if new_table = open_tables.find { |t| t.open_seats >= 1 }
+      if new_table = open_tables.find { |t| t.open_seats.between?(1, table_size - 1) }
         new_table.players << player
       end
     end
@@ -62,7 +62,7 @@ class Tournament < ActiveRecord::Base
     self.tables.playing.each do |table|
       if player = table.current_player
         if player.idle_time > AppConfig.tournament.timeout
-          puts "!! Timing out #{player.id} for taking #{player.idle_time} second to move!"
+          puts "!! Timing out #{player.id} for taking #{player.idle_time} seconds to act!"
           begin
             TimeoutLog.create(:player => player, :round => table.current_round)
             player.take_action!(:action => "fold")
