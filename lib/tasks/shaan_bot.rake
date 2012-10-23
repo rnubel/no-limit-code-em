@@ -29,11 +29,67 @@ class ShaanBot < Bot
     return action, amount
   end
   
+  def almost_flush?(hand)
+    suits = hand.map {|c| c[1]}
+    suits.group_by { |e| e }.values.max_by { |values| values.size }.count == 4
+  end
+  
+  def almost_straight(hand)
+    cards = hand.map {|c| c[0]}
+    cards = cards.map do |c| 
+      case c
+      when "A"
+        1
+      when "K" 
+        13
+      when "Q" 
+        12
+      when "J" 
+        11
+      when "T" 
+        10
+      else 
+        c.to_i
+      end
+    end
+    sorted_cards = cards.sort{|a,b| a <=> b}
+    differences = [sorted_cards[1] - sorted_cards[0], sorted_cards[2] - sorted_cards[1], sorted_cards[3] - sorted_cards[2], sorted_cards[4] - sorted_cards[3]]
+    
+    possibles = [[1,1,2], [1,1,1], [2,1,1], [1,2,1]]
+    
+    case_one = differences[0..2]
+    case_two = differences[1..3]
+    if possibles.include?(case_one) 
+      index = cards.index(sorted_cards[4])
+      replacement_cards = hand[index]
+    elsif possibles.include?(case_two)
+      index = cards.index(sorted_cards[0])
+      replacement_cards = hand[index]
+    end
+    
+    return [replacement_cards]
+  end
+  
   def decide_replacement(hand)
     pair_types = ["Pair", "Three of a kind", "Four of a kind"]
     perfect_hands = ["Straight", "Flush", "Full house", "Royal Flush", "Straight Flush"]
+    replacement_cards = almost_straight(hand)    
+    if replacement_cards == []
+      if almost_flush?(hand)
+      suits = hand.map {|c| c[1]}
+      other_suit = suits.group_by { |e| e }.values.max_by { |values| values.size }.first
+      replace_indices = suits.each_with_index.map do |s, i|
+        if s != other_suit then i end
+      end
+      replace_indices.delete(nil)
+      replacement_cards = replace_indices.map {|i| hand[i]}
+      elsif PokerHand.new(hand).rank == "Highest Card"
+        replacement_cards = PokerHand.new(hand).by_face.to_a[2..4]
+      end
+    end
+    
     if pair_types.include?(PokerHand.new(hand).rank)
-      cards = hand.map {|c| c[0]}
+        cards = hand.map {|c| c[0]}
       pair = cards.group_by { |e| e }.values.max_by { |values| values.size }.first
       replace_indices = cards.each_with_index.map do |c, i|
         if c != pair then i end
@@ -44,12 +100,11 @@ class ShaanBot < Bot
       cards = hand.map {|c| c[0]}
       fifth_card = cards.group_by { |e| e }.values { |values| values.size }.sort!{|a,b| b.length <=> a.length}.last[0]
       index = cards.index(fifth_card)
-      replacement_cards = hand[index]
+      replacement_cards = [hand[index]]
     elsif perfect_hands.include?(PokerHand.new(hand).rank)
       replacement_cards = []
-    elsif PokerHand.new(hand).rank == "Highest Card"
-      replacement_cards = PokerHand.new(hand).by_face.to_a[2..4]
     end
+    
     return replacement_cards
   end
 
