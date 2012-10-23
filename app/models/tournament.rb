@@ -16,8 +16,6 @@ class Tournament < ActiveRecord::Base
 
     #hand_out_chips!
     create_seatings!
-    
-    tables.each { |t| t.start_play! }
   end
 
   def end!
@@ -39,9 +37,12 @@ class Tournament < ActiveRecord::Base
 
   # Create new tables for any players not seated.
   def create_seatings!
+    new_tables = []
     players.playing.standing.each_in_tables(table_size) do |players_at_table|
-      self.tables.create( players: players_at_table.sort_by(&:id) )   # Sort for testing purposes only.
+      new_tables.push self.tables.create( players: players_at_table.sort_by(&:id) )   # Sort for testing purposes only.
     end
+
+    new_tables.map &:start_play!
   end
 
   # Reseat any players who stood up because they expected to be reseated.

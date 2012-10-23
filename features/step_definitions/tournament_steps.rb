@@ -36,3 +36,29 @@ end
 Then /the table's first round should be in the "(.*)" betting round/ do |round|
   @tournament.tables.first.rounds.first.betting_round.should == round
 end
+
+When /^table (\d) loses (\d+) players?$/ do |id, n|
+  @table = @tournament.tables.order("id ASC")[id.to_i-1]
+  n.to_i.times do |i|
+    @table.active_players.first.lose!
+  end
+end
+
+When /^table (\d) finishes its round$/ do |id|
+  @table = @tournament.tables.order("id ASC")[id.to_i-1]
+  @table.next_round!
+end
+
+Then /^table (\d) should not be playing$/ do |id|
+  @table = @tournament.tables.order("id ASC")[id.to_i-1]
+  @table.should_not be_playing
+end
+
+When /^tables are balanced$/ do
+  @tournament.balance_tables!
+end
+
+Then /^the tournament should have (\d+) playing tables?$/ do |n|
+  @tournament.tables.playing.count.should == n.to_i
+end
+

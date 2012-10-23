@@ -56,9 +56,9 @@ class Table < ActiveRecord::Base
 
   def can_redistribute?
     slots_needed = filled_seats
-    self.tournament.tables.playing.any? { |t| 
-      t.id != self.id && t.open_seats >= slots_needed
-    }
+    available_seats = self.tournament.tables.playing.where("id <> #{id}").all.sum(0, &:open_seats)
+
+    slots_needed <= available_seats
   end
 
   def stop!
