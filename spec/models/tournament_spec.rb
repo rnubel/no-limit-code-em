@@ -38,8 +38,8 @@ describe Tournament do
         it { should have(2).tables }
         
         it "seats players evenly" do
-          subject.tables[0].should have(3).active_players
-          subject.tables[1].should have(2).active_players
+          subject.tables.ordered[0].should have(3).active_players
+          subject.tables.ordered[1].should have(2).active_players
         end
       end
       

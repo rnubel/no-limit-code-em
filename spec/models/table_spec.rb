@@ -87,7 +87,7 @@ describe Table do
       before { subject.next_round! }
 
       it "sets the old round to not be playing" do
-        subject.rounds.first.should_not be_playing
+        subject.rounds.ordered.first.should_not be_playing
       end
     end
 

@@ -7,6 +7,7 @@ class Table < ActiveRecord::Base
   validates_presence_of :tournament_id
 
   scope :playing, where(:playing => true)
+  scope :ordered, order("id ASC")
 
   def active_players # Not an ARel
     seatings.where(:active => true).order("id ASC").map(&:player)

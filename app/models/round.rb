@@ -17,6 +17,7 @@ class Round < ActiveRecord::Base
   before_save :set_ante!
 
   scope :over, where(:playing => false)
+  scope :ordered, order("id ASC")
 
   def shuffle_deck!
     self.deck ||= DECK.shuffle.join(" ") # Allow override for testing
