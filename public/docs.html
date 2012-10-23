@@ -80,13 +80,21 @@ json
 // Returns your five-card hand
       "hand" => ["2S", "TH", "AH", "AD", "2D"],
 
-// Returns the current state of the round: ["deal", "draw", "post_draw", "showdown"]
-// You should post your bet when the betting_phase is "deal" or "post_draw" and
-// you should post your replacement when the betting_phase is "draw"
+// Returns the current state of the round: 
+	["deal", "draw", "post_draw", "showdown"]
+// You should bet when the betting_phase is "deal" or "post_draw" and
+// you should replace cards when the betting_phase is "draw"
       "betting_phase" => "bet", 
 
 // Returns the state of all players at the current table
-      "players_at_table" => [{:player_name=>"Aida Gusikowski", :initial_stack=>250, :current_bet=>20, :actions=>[{:action=>"ante", :amount=>20}, {:action=>"bet", :amount=>20}]} . . . ]
+      "players_at_table" => [{:player_name=>"Aida Gusikowski", 
+			      :initial_stack=>250, 
+		              :current_bet=>20, 
+			      :actions=>[{:action=>"ante", 
+				          :amount=>20}, 
+					 {:action=>"bet", 
+					  :amount=>20},..]
+			     }
 
 // Returns the id of your table
       "table_id" => 12, 
@@ -97,7 +105,7 @@ json
 // Returns a log of all rounds that you have played
       "round_history" => [{:round_id=>59, :table_id=>3, 
          :stack_change=>2368}, {:round_id=>58,    
-         :table_id=>3, :stack_change=>120}, . . . ], 
+         :table_id=>3, :stack_change=>120}, ...], 
 
 // Returns the time at which you lose 
       "lost_at" => nil
@@ -109,48 +117,49 @@ json
 
           </br>
 
-          <section id='content'>
-			// NEED TO EDIT OR REMOVE
-            <h2>
-              Explanation of Response 
-              <div class='loader'></div>
-            </h2>
-            <div class='docs poker_tables_wrapper'>
-              <div class='clearfix'></div>
-              <table class='table table-striped' id='scoreboard'>
-                <thead>
-                  <tr>
-                    <th>Term</th>
-                    <th>Description</th>
-                  </tr>
-                </thead>
-                <tr>
-                  <td>"play"</td>
-                  <td>Signal that it is your turn</td>
-                </tr>
-                <tr>
-                  <td>"replacement"</td>
-                  <td>true signals that you should be making a post request to replace your cards</td>
-                </tr>
-                <tr>
-                  <td>"bet" and "min_bet"</td>
-                  <td>If these two are different, your actions are limited to "call", "raise", or "fold".  If these two are the same value, your actions are limited to "check", "bet", or "fold".
-</td>
-                </tr>
-                <tr>
-                  <td>"waiting"</td>
-                  <td>True signals that your table is waiting for all other tables to be ready to reshuffle the seats.</td>
-                </tr>
-              </table>
-            </div>
-          </section>
+          <!-- <section id='content'>
+          			// NEED TO EDIT OR REMOVE
+                      <h2>
+                        Explanation of Response 
+                        <div class='loader'></div>
+                      </h2>
+                      <div class='docs poker_tables_wrapper'>
+                        <div class='clearfix'></div>
+                        <table class='table table-striped' id='scoreboard'>
+                          <thead>
+                            <tr>
+                              <th>Term</th>
+                              <th>Description</th>
+                            </tr>
+                          </thead>
+                          <tr>
+                            <td>"play"</td>
+                            <td>Signal that it is your turn</td>
+                          </tr>
+                          <tr>
+                            <td>"replacement"</td>
+                            <td>true signals that you should be making a post request to replace your cards</td>
+                          </tr>
+                          <tr>
+                            <td>"bet" and "min_bet"</td>
+                            <td>If these two are different, your actions are limited to "call", "raise", or "fold".  If these two are the same value, your actions are limited to "check", "bet", or "fold".
+          </td>
+                          </tr>
+                          <tr>
+                            <td>"waiting"</td>
+                            <td>True signals that your table is waiting for all other tables to be ready to reshuffle the seats.</td>
+                          </tr>
+                        </table>
+                      </div>
+                    </section> -->
 
           </br>
 
           <section id='content'>
 
             <h2>
-              <strong>POST</strong> /api/players/PLAYER_KEY/action (place your bet or replace your cards)
+              <strong>POST</strong> /api/players/PLAYER_KEY/action 
+				(place your bet or replace your cards)
               <div class='loader'></div>
             </h2>
 
