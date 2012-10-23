@@ -23,8 +23,8 @@ GET /api/players/PLAYER_KEY (Receive the current state of the game)
       "hand" => ["2S", "TH", "AH", "AD", "2D"],
       
 // Returns the current state of the round: ["deal", "draw", "post_draw", "showdown"]
-// You should post your bet when the betting_phase is "deal" or "post_draw� "nd
-// you should post your replacement when the betting_phase is �draw�
+// You should post your bet when the betting_phase is "deal" or "post_draw" and
+// you should post your replacement when the betting_phase is "draw"
       "betting_phase" => "bet", 
 
 // Returns the state of all players at the current table
