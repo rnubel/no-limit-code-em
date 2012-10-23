@@ -1,1 +1,63 @@
-GET /api/players/PLAYER_KEY (Receive the current state of the game){// Returns your name      ÒnameÓ		=>"Lacey Kuhic", // Returns your stack at the start of the round      Òinitial_stackÓ		=> 500,       // Returns true if it is your turn and false if it is not your turn      Òyour_turnÓ		=> false,       // Returns your current bet      Òcurrent_betÓ		=> 50,       // Returns your minimum bet to stay in the round      Òminimum_betÓ	=> 50,      // Returns your maximum bet that you can place      Òmaximum_betÓ 	=> 500,       // Returns your five-card hand      ÒhandÓ			=> ["2S", "TH", "AH", "AD", "2D"],      // Returns the current state of the round: [ÒdealÓ, ÒdrawÓ, Òpost_drawÓ, ÒshowdownÓ]// You should post your bet when the betting_phase is ÒdealÓ or Òpost_drawÓ and// you should post your replacement when the betting_phase is ÒdrawÓ      Òbetting_phaseÓ 	=> "bet", // Returns the state of all players at the current table      Òplayers_at_table	=> [{:player_name=>"Aida Gusikowski", :initial_stack=>250, :current_bet=>20, :actions=>[{:action=>"ante", :amount=>20}, {:action=>"bet", :amount=>20}]} . . . ]      // Returns the id of your table      Òtable_id		=> 12,       // Returns the id of the current round      Òround_idÓ		=> 59,       // Returns a log of all rounds that you have playedÒround_historyÓ	=> [{:round_id=>59, :table_id=>3,          :stack_change=>2368}, {:round_id=>58,             :table_id=>3, :stack_change=>120}, . . . ], // Returns the time at which you lose       Òlost_atÓ		=> nil}POST /api/players/PLAYER_KEY/action (place your bet or replace your cards){// Either set your action as ÒbetÓ or ÒreplaceÓ     :action_name => ÒbetÓ,// If you are betting, set you bet, otherwise leave it as nil when replacing     :amount => 50,// If you are replacing, set cards as an array of the cards you are discarding     :cards => [Ò3dÓ, ÒQsÓ]}
+GET /api/players/PLAYER_KEY (Receive the current state of the game)
+
+{
+// Returns your name
+      "name" =>"Lacey Kuhic", 
+
+// Returns your stack at the start of the round
+      "initial_stack" => 500, 
+      
+// Returns true if it is your turn and false if it is not your turn
+      "your_turn" => false, 
+      
+// Returns your current bet
+      "current_bet" => 50, 
+      
+// Returns your minimum bet to stay in the round
+      "minimum_bet" => 50,
+      
+// Returns your maximum bet that you can place
+      "maximum_bet" => 500, 
+      
+// Returns your five-card hand
+      "hand" => ["2S", "TH", "AH", "AD", "2D"],
+      
+// Returns the current state of the round: ["deal", "draw", "post_draw", "showdown"]
+// You should post your bet when the betting_phase is "deal" or "post_draw" and
+// you should post your replacement when the betting_phase is "draw"
+      "betting_phase" => "bet", 
+
+// Returns the state of all players at the current table
+      "players_at_table" => [{:player_name=>"Aida Gusikowski", :initial_stack=>250, :current_bet=>20, :actions=>[{:action=>"ante", :amount=>20}, {:action=>"bet", :amount=>20}]} . . . ]
+      
+// Returns the id of your table
+      "table_id" => 12, 
+      
+// Returns the id of the current round
+      "round_id" => 59, 
+      
+// Returns a log of all rounds that you have played
+      "round_history" => [{:round_id=>59, :table_id=>3, 
+         :stack_change=>2368}, {:round_id=>58,    
+         :table_id=>3, :stack_change=>120}, . . . ], 
+
+// Returns the time at which you lose 
+      "lost_at" => nil
+}
+
+
+POST /api/players/PLAYER_KEY/action (place your bet or replace your cards)
+
+{
+// Either set your action as "bet" or "replace"
+     :action_name => "bet",
+
+// If you are betting, set you bet, otherwise leave it as nil when replacing
+     :amount => 50,
+
+// If you are replacing, set cards as an array of the cards you are discarding
+     :cards => ["3d", "Qs"]
+}
+
+
+

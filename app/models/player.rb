@@ -28,11 +28,7 @@ class Player < ActiveRecord::Base
   def current_seating
     return @current_seating if @current_seating # Clear this when a player leaves their table.
 
-    active_seatings = seatings.active
-    # Assert a sanity check.
-    raise "Player is seated at more than one table!" if active_seatings.size > 1
-
-    @current_seating = active_seatings.first
+    @current_seating = seatings.active.first
   end
   
   def table
