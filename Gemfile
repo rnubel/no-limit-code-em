@@ -8,6 +8,7 @@ gem 'rails', '3.1.3'
 gem 'pg'
 gem 'json'
 gem 'thin'
+gem 'dalli'
 
 gem 'poker_table', '0.2.0', :git => 'git://github.com/rnubel/poker_table'
 gem 'ruby-poker'
