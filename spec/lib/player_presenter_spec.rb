@@ -114,6 +114,12 @@ describe PlayerPresenter do
                          :actions => antes}
                      ]
       end
+
+      it "ignores players not in the round" do
+        player.table.players << FactoryGirl.create(:player)
+
+        subject.should have(2).players_at_table
+      end
     end
   end
 

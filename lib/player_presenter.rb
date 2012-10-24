@@ -72,7 +72,9 @@ class PlayerPresenter
 
   def players_at_table
     if table
-      table.players.ordered.collect do |p|
+      table.active_players.collect { |p|
+        next unless player_property(p.id, :id)
+
         { :player_name => p.name,
           :initial_stack => player_property(p.id, :initial_stack),
           :current_bet => player_property(p.id, :current_bet),
@@ -82,7 +84,7 @@ class PlayerPresenter
           :actions => state.log.select { |a| a[:player_id] == p.id }
                                    .map { |a| a.except(:player_id) }
         }
-      end
+      }.compact
     else
       [] # No reason to mess with the format
     end
