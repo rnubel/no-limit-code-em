@@ -51,7 +51,7 @@ namespace :tournament do
 
     TournamentPrinter.new.print_tables(t.tables.includes(:seatings))
     until t.players.playing.count == 1
-      t.timeout_players!
+      t.timeout_players!(*[ENV['timeout']].compact)
       t.balance_tables!
 
       TournamentPrinter.new.print_tables(t.tables.includes(:seatings))

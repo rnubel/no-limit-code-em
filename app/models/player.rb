@@ -44,7 +44,7 @@ class Player < ActiveRecord::Base
       q = q.where("round_id < #{round.id}")
       key = "round-id/#{round.id}"
     else
-      key = "round-count/#{rounds.over.count}"
+      key = "round-count/#{rounds.over.count}/#{lost_at.nil?}"
     end
 
     Rails.cache.fetch("players/#{id}/stack/#{key}") do
