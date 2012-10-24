@@ -1,6 +1,6 @@
 class Player < ActiveRecord::Base
-  has_many :seatings
   has_many :round_players
+  has_many :seatings
   belongs_to :tournament
   has_many :tables,      :through => :seatings
   has_many :rounds,      :through => :round_players
@@ -70,6 +70,7 @@ class Player < ActiveRecord::Base
 
   # Have this player attempt to take the given action.
   def take_action!(action_params)
+    @current_game_state = nil
     table.take_action! action_params.merge(:player => self) 
   end
 
@@ -82,8 +83,8 @@ class Player < ActiveRecord::Base
   end
 
   def current_game_state(property = nil)
-    s = (r = self.round) && r.state
-    property ? s && s.send(property) : s
+    @current_game_state ||= (r = self.round) && r.state
+    property ? @current_game_state && @current_game_state.send(property) : @current_game_state
   end
 
   def current_player_state(property = nil)

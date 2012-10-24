@@ -85,7 +85,7 @@ describe PlayerPresenter do
         @table.start_play!
       }
 
-      let(:antes) { [{:action => "ante", :amount => @table.current_round.ante }]}
+      let(:antes) { [{:action => "ante", :amount => @table.current_round.ante}]}
 
       it "has basic stats" do
         subject.players_at_table

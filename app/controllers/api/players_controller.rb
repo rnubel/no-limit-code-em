@@ -51,7 +51,6 @@ module Api
     end
 
     private
-    # TODO: move to presenter
     def status(player)
       PlayerPresenter.new(player).to_json
     end

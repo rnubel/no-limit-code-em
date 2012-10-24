@@ -45,12 +45,16 @@ class PlayerPresenter
     @stack ||= player.stack # Not changing while this object is alive
   end
 
+  def state
+    @state ||= @player.current_game_state
+  end
+
   def hand
     @player.current_player_state(:hand) || ""
   end
 
   def betting_phase
-    @player.current_game_state(:round)
+   state && state.round
   end
 
   def minimum_bet
@@ -58,17 +62,25 @@ class PlayerPresenter
      @player.current_game_state(:minimum_bet) || 0].min
   end
 
+  def player_property(id, property)
+    @player_hash ||= state.players.reduce({}) { |h, p|
+      h[p[:id]] = p; h
+    }
+
+    @player_hash[id] && @player_hash[id][property]
+  end
+
   def players_at_table
     if table
       table.players.ordered.collect do |p|
         { :player_name => p.name,
-          :initial_stack => p.stack,
-          :current_bet => p.current_bet,
+          :initial_stack => player_property(p.id, :initial_stack),
+          :current_bet => player_property(p.id, :current_bet),
           # These are the *actual* actions as seen by
           # PokerTable for this player. It may be different
           # from what they entered, but is more accurate.
-          :actions => p.actions_in_current_round
-                       .map {|a| action_json(a) }
+          :actions => state.log.select { |a| a[:player_id] == p.id }
+                                   .map { |a| a.except(:player_id) }
         }
       end
     else

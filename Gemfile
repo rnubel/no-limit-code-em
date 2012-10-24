@@ -53,6 +53,7 @@ group :development, :test do
   gem 'guard'
   gem 'guard-rspec'
   gem 'pry'
+  gem 'ruby-prof'
 end
 
 group :test do
