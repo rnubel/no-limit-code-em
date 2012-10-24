@@ -35,8 +35,8 @@ module Sandbox
                  :amount => params[:amount] && params[:amount].to_i, 
                  :cards =>  cards_value(params[:cards]) }
       if valid_action?(JSON.parse(json), action)
-        json = '{"action":"valid"}'
-        render :json => JSON.parse(json)
+        changed_state = take_action(JSON.parse(json), action)
+        render :json => changed_state
       else
         json = '{"action":"invalid"}'
         render :json => JSON.parse(json)
@@ -47,19 +47,36 @@ module Sandbox
     
     def valid_action?(json, action)
       case action[:action]
-          when "bet" # Absolute amount!            
-            amount = action[:amount].to_i
-            raised_amount = amount - (json["current_bet"] || 0)
+      when "bet" # Absolute amount!            
+        amount = action[:amount].to_i
+        raised_amount = amount - (json["current_bet"] || 0)
 
-            (amount >= json["minimum_bet"] || raised_amount == json["initial_stack"]) && raised_amount >= 0
-          when "replace" # List of cards!
-            return false unless action[:cards].is_a? Enumerable
-            action[:cards].all? { |c|
-              json["hand"].include?(c)
-            } && action[:cards].size <= 3
-          when "fold" # Should always be allowed, if it's their turn.
-            true
-          end
+        (amount >= json["minimum_bet"] || raised_amount == json["initial_stack"]) && raised_amount >= 0
+      when "replace" # List of cards!
+        return false unless action[:cards].is_a? Enumerable
+        action[:cards].all? { |c|
+          json["hand"].include?(c)
+        } && action[:cards].size <= 3
+      when "fold" # Should always be allowed, if it's their turn.
+        true
+      end
+    end
+    
+    def take_action(json, action)
+      logger.debug "JSON: #{json}"
+      case action[:action]
+      when "bet"
+        raised_amount = action[:amount] - json["current_bet"].to_i
+        json["current_bet"] = action[:amount]
+        json["stack"] = (json["stack"].to_i - raised_amount)
+      when "replace"
+        @deck = ["AC", "6H", "QD"]
+        json["hand"] = json["hand"].to_a - action[:cards]
+        (5 - json["hand"].size).times do
+          json["hand"].to_a.push @deck.delete_at(0)
+        end
+      end
+      return json
     end
     
     def cards_value(param)
