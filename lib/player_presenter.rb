@@ -67,7 +67,7 @@ class PlayerPresenter
       h[p[:id]] = p; h
     }
 
-    @player_hash[id] && @player_hash[id][property]
+    @player_hash && @player_hash[id] && @player_hash[id][property]
   end
 
   def players_at_table
