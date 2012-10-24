@@ -38,6 +38,7 @@ describe Player do
     subject { FactoryGirl.create(:player, :registered) }
 
     before { FactoryGirl.create(:table, 
+              :tournament => subject.tournament,
               :players => [subject,
                            FactoryGirl.create(:player, :registered, 
                                               :tournament => subject.tournament)

@@ -38,6 +38,9 @@ json
 
 // Returns the state of all players at the current table
       "players_at_table" => [{:player_name=>"Aida Gusikowski", :initial_stack=>250, :current_bet=>20, :actions=>[{:action=>"ante", :amount=>20}, {:action=>"bet", :amount=>20}]} . . . ]
+
+// Returns the number of players remaining in the tournament
+      "total_players_remaining" => 100,
       
 // Returns the id of your table
       "table_id" => 12, 
