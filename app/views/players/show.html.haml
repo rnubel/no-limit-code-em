@@ -1,4 +1,4 @@
-- player && player.rounds && player.rounds.each do |r|
+- @player.rounds.each do |r|
   %h2= "Round: #{r.id}"
   %table
     %thead
@@ -8,22 +8,23 @@
         %th Action
         %th Amount
     %tbody
+      - r.initial_state && r.initial_state.simulate!.players.each do |p|
+        %tr
+          %td{:colspan=>2}= @players[p[:id]] && @players[p[:id]].name
+          %td dealt
+          %td= p[:hand] && p[:hand].join(" ")
       - r.state && r.state.log && r.state.log.each do |log|
-        - if log[:round] 
-          %tr
-            %td= log[:round]
-        - if log[:player_id] && log[:player_id] == player.id
-          %tr
-            %td
-            %td 
-              %strong= "You"
+        %tr
+          - if log[:round]
+            %td{:colspan => 4, :style => "font-size:24px"}= log[:round]  # Aww yeah Pete. Aww yeah. -Robert
+          - else
+            %td{:colspan => 2}
+              - if log[:player_id] && log[:player_id] == @player.id
+                %strong
+                  =player_name(log[:player_id])
+              - else
+                =player_name(log[:player_id])
             %td 
               %strong= log[:action]
             %td 
-              %strong= log[:amount]
-        - else
-          %tr
-            %td
-            %td= log[:player_id]
-            %td= log[:action]
-            %td= log[:amount]
+              %strong= log[:amount] || log[:cards] && log[:cards].join(" ")
