@@ -31,9 +31,8 @@ class Round < ActiveRecord::Base
     self.playing = false
     self.save!
 
-    self.state.stack_changes.each do |player_id, change|
-      rp = self.round_players.where(:player_id => player_id).first
-      rp.stack_change = change
+    self.round_players.each do |rp|
+      rp.stack_change = self.state.stack_changes[rp.player_id]
       rp.save!
     end
   end

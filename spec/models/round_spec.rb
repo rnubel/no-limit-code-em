@@ -97,7 +97,7 @@ describe Round do
 
   describe "when being closed" do
     it "updates its round_players with their stack change" do
-      PokerTable.any_instance.expects(:stack_changes).returns({
+      PokerTable.any_instance.stubs(:stack_changes).returns({
         subject.players[0].id => -10,
         subject.players[1].id => -10,
         subject.players[2].id => 20,
