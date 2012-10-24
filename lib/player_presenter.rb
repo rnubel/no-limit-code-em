@@ -16,6 +16,7 @@ class PlayerPresenter
       :hand => hand,
       :betting_phase => betting_phase,
       :players_at_table => players_at_table,
+      :total_players_remaining => total_players_remaining,
       :table_id => table && table.id,
       :round_id => round && round.id,
       :round_history => round_history,
@@ -88,6 +89,10 @@ class PlayerPresenter
     else
       [] # No reason to mess with the format
     end
+  end
+
+  def total_players_remaining
+    @player.tournament.players.playing.count
   end
 
   # Nested presenter... sort of.
