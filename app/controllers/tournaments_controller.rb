@@ -13,9 +13,10 @@ class TournamentsController < ApplicationController
     render :json => @tournament.players.each_with_index.collect { |p, i|
       {
         :name => p.name,
-        :stack => p.stack
+        :stack => p.stack,
+        :lost_at => p.lost_at
       }
-    }.sort_by { |p| p[:stack] }.reverse
+    }.sort_by { |p| [p[:stack], p[:lost_at]] }.reverse
   end
 
   def tables
