@@ -59,10 +59,10 @@ class Tournament < ActiveRecord::Base
   end
   
   # Fold any players who have been inactive on their turn for at least AppConfig.tournament.timeout seconds.
-  def timeout_players!
+  def timeout_players!(timeout = AppConfig.tournament.timeout)
     self.tables.playing.each do |table|
       if player = table.current_player
-        if player.idle_time > AppConfig.tournament.timeout
+        if player.idle_time > timeout
           puts "!! Timing out #{player.id} for taking #{player.idle_time} seconds to act!"
           begin
             TimeoutLog.create(:player => player, :round => table.current_round)
