@@ -2,6 +2,10 @@ NoLimitV2::Application.routes.draw do
   get "/" => 'home#index', :as => :root
   
   resources :tournaments do
+    collection do
+      get 'scoreboard'
+      get 'tables'
+    end
   end
 
   resources :players do
