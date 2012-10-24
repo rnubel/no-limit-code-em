@@ -63,7 +63,7 @@ class PlayerPresenter
   end
 
   def player_property(id, property)
-    @player_hash ||= state.players.reduce({}) { |h, p|
+    @player_hash ||= state && state.players.reduce({}) { |h, p|
       h[p[:id]] = p; h
     }
 
