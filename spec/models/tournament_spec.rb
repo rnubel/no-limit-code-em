@@ -80,21 +80,22 @@ describe Tournament do
         AppConfig.tournament.ante.base = 20
         AppConfig.tournament.ante.rounds_per_increase = 10
         AppConfig.tournament.ante.increase = 20
+        AppConfig.tournament.ante.inc_power = 1.5
       }
 
       it "starts off at the base value" do
         subject.current_ante.should == AppConfig.tournament.ante.base 
       end
 
-      context "when 20 rounds have passed" do
+      context "when 30 rounds have passed" do
         before {
           subject.stubs(:rounds).returns(
-            mock("rel", :count => 20)
+            mock("rel", :count => 30)
           )
         }
 
-        it "returns the ante as 60" do
-          subject.current_ante.should == 60
+        it "returns the ante as 120" do
+          subject.current_ante.should == 120
         end
       end
     end

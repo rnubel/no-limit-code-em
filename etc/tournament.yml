@@ -4,5 +4,6 @@ ante:
   base: 20
   rounds_per_increase: 10
   increase: 20
+  inc_power: 1.5
 timeout: 6
 log_requests: true

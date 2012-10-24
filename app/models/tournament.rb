@@ -77,7 +77,7 @@ class Tournament < ActiveRecord::Base
 
   def current_ante
     base = config.ante.base
-    base + (self.rounds.count / config.ante.rounds_per_increase) *
+    base + ((self.rounds.count / config.ante.rounds_per_increase) ** config.ante.inc_power).to_i *
             config.ante.increase
   end
 
