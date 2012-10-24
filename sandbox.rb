@@ -12,14 +12,16 @@ keys.each do |key|
 
   response = HTTPClient.new.get("#{base_uri}/sandbox/players/#{key}")
   json = JSON.parse(response.body)
+  puts "CURRENT GAME STATE:"
   puts json
   
   if json["betting_phase"] == "deal"
     params = {:action_name => "bet", :amount => 25}
   else
-    params = {:action_name => "replace", :cards => "7H"}
+    params = {:action_name => "replace", :cards => "7H 8C 2D"}
   end
   puts
+  puts "NEW GAME STATE:"
   response = HTTPClient.new.post("#{base_uri}/sandbox/players/#{key}/action", :body => params)
   json = JSON.parse(response.body)
   puts json
