@@ -3,7 +3,7 @@ Feature: Player Registration
   
   Scenario: Successful registration
     Given a tournament is open
-    When I POST to "/api/players" with:
+    When I POST to "/api/players.json" with:
       | name    | Team4   |
     Then a new player should be registered for that tournament
     And the JSON response should include entries:
@@ -12,7 +12,7 @@ Feature: Player Registration
 
   Scenario: Unsuccessful registration
     Given no tournament is open
-    When I POST to "/api/players" with:
+    When I POST to "/api/players.json" with:
       | name    | Team4   |
     Then the response status should be 404
     And the JSON response should include entries:

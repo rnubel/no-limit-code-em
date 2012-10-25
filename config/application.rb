@@ -1,4 +1,5 @@
 require File.expand_path('../boot', __FILE__)
+require 'rack/throttle'
 
 require 'rails/all'
 
@@ -9,11 +10,38 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
+class ClientLimiter < Rack::Throttle::Interval
+  def client_identifier(request)
+    # Attempt to grab key from path.
+    match = request.path.match(/\/api\/players\/([a-zA-Z0-9\-]{32,36})/)
+    match && match[1]
+  end
+
+  def allowed?(request)
+    return true unless client_identifier(request)
+    t1 = request_start_time(request)
+    t0 = cache_get(key = cache_key(request)) rescue nil
+    allowed = !t0 || (dt = t1 - t0.to_f) >= minimum_interval
+    Rails.logger.info "RATE LIMIT CHECK FOR key=#{client_identifier(request)} with delta #{dt} versus #{minimum_interval}"
+    begin
+      cache_set(key, t1) if allowed
+      allowed
+    rescue => e
+      # If an error occurred while trying to update the timestamp stored
+      # in the cache, we will fall back to allowing the request through.
+      # This prevents the Rack application blowing up merely due to a
+      # backend cache server (Memcached, Redis, etc.) being offline.
+      allowed = true
+    end
+  end
+end
+
 module NoLimitV2
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
+    config.middleware.use ClientLimiter, :min => 0.8
 
     # Cache things.
     config.cache_store = :memory_store
