@@ -38,7 +38,7 @@ class TournamentPresenter
     end
 
     @tables.each do |t|
-      t[:pot] = t[:players].sum(&:current_bet)
+      t[:pot] = t[:players].sum {|h| h[:current_bet]}
     end
   end
 end

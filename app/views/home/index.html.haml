@@ -4,11 +4,11 @@
       Scoreboard
       .loader
     .scoreboard_wrapper
-      = render :partial => "tournaments/scoreboard", :locals => {:scoreboard => @scoreboard}
+      = render :partial => "tournaments/scoreboard", :locals => {:scoreboard => @scoreboard} if @scoreboard
 .span8
   %section#content
     %h2 
       Tables
       .loader
     .poker_tables_wrapper
-      = render :partial => "tournaments/poker_tables", :locals => {:tables => @tables}
+      = render :partial => "tournaments/poker_tables", :locals => {:tables => @tables} if @tables

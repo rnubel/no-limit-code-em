@@ -17,9 +17,11 @@ body {
 
 a { &:hover { text-decoration: none; } }
 
+.container { width: 900px !important; }
+.span4 { width: 240px !important; }
 .navbar {
   .container {
-    width: 940px;
+    width: 900px;
   }
   .navbar-inner {
     padding: 8px 0px;

@@ -2,22 +2,26 @@
   - tables.each do |data|
     .poker_table
       %h3 Table #{data[:table_id]}
+      .pot
+        Current pot 
+        .pull-right
+          != stack_display(data[:pot])
+          = data[:pot]
       %ul.players
         - data[:players].each_with_index do |player, i|
           %li{:class => ("bottom" if (i/3).truncate % 2 == 1)}
             - if (i/3).truncate % 2 != 1
-              %span.name= player[:name].slice(0,15)
+              %span.name= player[:name].first(12)
               %span.stack
-                != stack_display(player[:stack])
+                != stack_display(player[:stack], false)
                 = player[:stack]
             - else
               %span.stack
-                != stack_display(player[:stack])
+                != stack_display(player[:stack], false)
                 = player[:stack]
-              %span.name= player[:name]
-      .clearfix
-      %h3.last_winner
-        %i.icon.icon-white.icon-exclamation-sign
+              %span.name= player[:name].first(12)
+      .clearfix{:style => "margin-bottom: 10px;"}
+      .last_winner
         - data[:latest_winners].each do |winner|
-          #{winner[:name]} won #{winner[:winnings]}
+          %span #{winner[:name]} won #{winner[:winnings]}
   .clearfix

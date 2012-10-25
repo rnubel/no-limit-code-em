@@ -5,7 +5,7 @@ $(function() {
   $('.field').placeHeld();
 
   // refresh the data
-  setInterval(function() {
+  //setInterval(function() {
     $('.loader').fadeIn();
     $.ajax({
       url: '/tournaments/refresh',
@@ -14,7 +14,7 @@ $(function() {
         $('.loader').fadeOut();
       }
     });
-  }, 7000);
+  //}, 7000);
 });
 
 // input placeholders
