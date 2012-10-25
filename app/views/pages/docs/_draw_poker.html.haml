@@ -1,89 +1,100 @@
+%h2 Enova Draw Poker
+%p The rules for Enova Draw Poker are essentially the same as normal draw poker. Players are given a set amount of chip and arranged at tables with no more than six players per table, with tables merging together as players bust out (lose all their chips).
+
+%p At each table, players play out hands (also referred to as "rounds" in these docs) of draw poker. The steps of a hand are as follows:
+%ul
+  %li Each player sets their bet at the ante. If they can't meet the ante, they go all-in for what they have.
+  %li Each player is dealt 5 cards, face down (i.e., no one else can see these cards).
+  %li The 'deal' betting phase begins. Each player, in order (refer to the order of players as returned by the status request), gets a chance to raise their bet. They must meet the previous player's bet, fold, or go all in. Once all players have gone all-in or agreed on a bet, the betting phase ends.
+  %li The 'draw' phase begins, in which all players must make a request to replace the cards they want to replace (up to 3). The phase ends when all players have made a replace action or have folded.
+  %li The 'post_draw' phase begins, which is another betting phase.
+  %li When the 'post_draw' phase ends, the 'showdown' happens. This is when all players still in show their cards and the game determines winners.
+
+%h3 Examples
+These are some of the scenarios we used to test our server:
 %pre
   :preserve
-    Feature: Action steps
-    We want to describe all of the possible sequences of actions in 5 card draw poker
-    
     Background:
-    Given a tournament is open
+      Given a tournament is open
     
     Scenario: Simplest table
-    When 2 players are at a table
-    And player 1 bets 20
-    And player 2 folds
-    Then player 1 wins the round
+      When 2 players are at a table
+      And player 1 bets 20
+      And player 2 folds
+      Then player 1 wins the round
     
     Scenario: Betting above maximum bet
-    When 2 players are at a table
-    And player 1 bets 50
-    Then player 2 cannot bet 1000
+      When 2 players are at a table
+      And player 1 bets 50
+      Then player 2 cannot bet 1000
     
     Scenario: Betting below minimum bet
-    When 2 players are at a table
-    Then player 1 cannot bet 1
+      When 2 players are at a table
+      Then player 1 cannot bet 1
     
     Scenario: Going all in
-    When 2 players are at a table with initial stacks [50, 100]
-    Given the deck favors player 1
-    When player 1 goes all in
-    And player 2 goes all in
-    And all players replace no cards
-    Then player 1 wins 100
-    And player 2 wins 50
+      When 2 players are at a table with initial stacks [50, 100]
+      Given the deck favors player 1
+      When player 1 goes all in
+      And player 2 goes all in
+      And all players replace no cards
+      Then player 1 wins 100
+      And player 2 wins 50
     
     Scenario: Dealer goes all in
-    When 2 players are at a table with initial stacks [100, 50]
-    Given the deck favors player 2
-    When player 1 goes all in
-    And player 2 goes all in
-    And all players replace no cards
-    Then player 2 wins 100
-    And player 1 wins 50
+      When 2 players are at a table with initial stacks [100, 50]
+      Given the deck favors player 2
+      When player 1 goes all in
+      And player 2 goes all in
+      And all players replace no cards
+      Then player 2 wins 100
+      And player 1 wins 50
     
     Scenario: Player goes all in and loses
-    When 2 players are at a table with initial stacks [100, 50]
-    Given the deck favors player 1
-    When player 1 bets 60
-    And player 2 goes all in
-    And all players replace no cards
-    Then player 1 wins 110
-    And player 2 is unseated
+      When 2 players are at a table with initial stacks [100, 50]
+      Given the deck favors player 1
+      When player 1 bets 60
+      And player 2 goes all in
+      And all players replace no cards
+      Then player 1 wins 110
+      And player 2 is unseated
     
     Scenario: 2 players split the pot at a simple table
-    When 2 players are at a table
-    Given the deck favors both players
-    When player 1 bets 100
-    And player 2 bets 100
-    And all players replace no cards
-    And player 1 bets 100
-    And player 2 bets 150
-    And player 1 bets 150
-    Then player 1 and player 2 split the pot
+      When 2 players are at a table
+      Given the deck favors both players
+      When player 1 bets 100
+      And player 2 bets 100
+      And all players replace no cards
+      And player 1 bets 100
+      And player 2 bets 150
+      And player 1 bets 150
+      Then player 1 and player 2 split the pot
     
     Scenario: 2 players split the pot at a larger table
-    When 3 players are at a table
-    Given the deck favors player 1 and player 2
-    When player 1 bets 100
-    And player 2 bets 100
-    And player 3 bets 100
-    And all players replace no cards
-    And player 1 bets 100
-    And player 2 bets 100
-    And player 3 bets 100
-    Then player 1 and player 2 split the pot
+      When 3 players are at a table
+      Given the deck favors player 1 and player 2
+      When player 1 bets 100
+      And player 2 bets 100
+      And player 3 bets 100
+      And all players replace no cards
+      And player 1 bets 100
+      And player 2 bets 100
+      And player 3 bets 100
+      Then player 1 and player 2 split the pot
     
     Scenario: A player cannot meet the ante but wins
-    When 2 players are at a table with initial stacks [5, 25]
-    Given the deck favors player 1
-    When player 2 goes all in
-    And all players replace no cards
-    Then player 1 wins 10
-    And player 2 wins 20
+      When 2 players are at a table with initial stacks [5, 25]
+      Given the deck favors player 1
+      When player 2 goes all in
+      And all players replace no cards
+      Then player 1 wins 10
+      And player 2 wins 20
     
     Scenario: A player cannot meet the ante and loses
-    When 2 players are at a table with initial stacks [5, 25]
-    Given the deck favors player 2
-    When player 2 goes all in
-    And all players replace no cards
-    Then player 2 wins 30
-    And player 1 is unseated
+      When 2 players are at a table with initial stacks [5, 25]
+      Given the deck favors player 2
+      When player 2 goes all in
+      And all players replace no cards
+      Then player 2 wins 30
+      And player 1 is unseated
     
