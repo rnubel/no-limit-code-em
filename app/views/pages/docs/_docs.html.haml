@@ -1,174 +1,106 @@
-!!!
-%html
-  %head
-    %title No Limit Code 'Em | Docs
-    %link{:href => "/assets/application.scss", :media => "all", :rel => "stylesheet", :type => "text/css"}/
-    %meta{:content => "authenticity_token", :name => "csrf-param"}/
-    %meta{:content => "cVlN8pDZ3+cIL/mQTA7PDZgd3b5Etu4nQYzQt+hs01g=", :name => "csrf-token"}/
-  %body.docs
-    .container
-      .row
-        .span8
-          %section#content
-            %h2
-              Requests
-              .loader
-            .poker_tables_wrapper
-              #poker_tables
-                %p There are 2 types of request you will need to make to the server. GET and POST.
-          %section#content
-            %h2
-              %strong GET
-              \/api/players/PLAYER_KEY (Receive the current state of the game)
-              .loader
-            .poker_tables_wrapper
-              #poker_tables
-                %h4 Syntax
-                %h5 // This request will allow us to validate your player key and return the appropriate information.
-                %h5 Response
-                %pre
-                  :preserve
-                    json
-                    {
-                    // Returns your name
-                          "name" =>"Lacey Kuhic", 
-                    
-                    // Returns your stack at the start of the round
-                          "initial_stack" => 500, 
-                    
-                    // Returns true if it is your turn and false if it is not your turn
-                          "your_turn" => false, 
-                    
-                    // Returns your current bet
-                          "current_bet" => 50, 
-                    
-                    // Returns your minimum bet to stay in the round
-                          "minimum_bet" => 50,
-                    
-                    // Returns your maximum bet that you can place
-                          "maximum_bet" => 500, 
-                    
-                    // Returns your five-card hand
-                          "hand" => ["2S", "TH", "AH", "AD", "2D"],
-                    
-                    // Returns the current state of the round: 
-                    	["deal", "draw", "post_draw", "showdown"]
-                    // You should bet when the betting_phase is "deal" or "post_draw" and
-                    // you should replace cards when the betting_phase is "draw"
-                          "betting_phase" => "bet", 
-                    
-                    // Returns the state of all players at the current table
-                          "players_at_table" => [{:player_name=>"Aida Gusikowski", 
-                    			      :initial_stack=>250, 
-                    		              :current_bet=>20, 
-                    			      :actions=>[{:action=>"ante", 
-                    				          :amount=>20}, 
-                    					 {:action=>"bet", 
-                    					  :amount=>20},..]
-                    			     }
-                    // Returns the number of players remaining in the tournament
-                          "total_players_remaining" => 100,
-                    // Returns the id of your table
-                          "table_id" => 12, 
-                    
-                    // Returns the id of the current round
-                          "round_id" => 59, 
-                    
-                    // Returns a log of all rounds that you have played
-                          "round_history" => [{:round_id=>59, :table_id=>3, 
-                             :stack_change=>2368}, {:round_id=>58,    
-                             :table_id=>3, :stack_change=>120}, ...], 
-                    
-                    // Returns the time at which you lose 
-                          "lost_at" => nil
-                    }
-          %section#content
-            %h2
-              %strong POST
-              \/api/players/PLAYER_KEY/action
-              (place your bet or replace your cards)
-              .loader
-            .poker_tables_wrapper
-              #poker_tables
-                %h4 Syntax
-                %h5 Request
-                %pre
-                  :preserve
-                    {
-                    // Either set your action as "bet" or "replace"
-                         :action_name => "bet",
-                    
-                    // If you are betting, set you bet, otherwise leave it as nil when replacing
-                         :amount => 50,
-                    
-                    // If you are replacing, set cards as an array of the cards you are discarding
-                         :cards => ["3d", "Qs"]
-                    }
-                %h5 Response
-                %pre
-                  :preserve
-                    json
-                    {
-                      "name":"Rosendo Thompson",
-                      "initial_stack":240,
-                      "your_turn":false,
-                      "current_bet":10,
-                      "minimum_bet":10,
-                      "maximum_bet":240,
-                      "hand":["2C", "8H", "7C", "JS", "9D"],
-                      "betting_phase":"draw",
-                      "players_at_table":[
-                                        {"player_name":"Rosendo Thompson",
-                                          "initial_stack":240,
-                                          "current_bet":10,
-                                          "actions":[
-                                            {"action":"ante",
-                                            "amount":10},
-                                            {"action":"bet",
-                                            "amount":10}]
-                                        },
-                                        {"player_name":"Ayden Mertz",
-                                        "initial_stack":260,
-                                        "current_bet":10,
-                                        "actions":[{"action":"ante",
-                                        "amount":10},
-                                        {"action":"bet",
-                                        "amount":10}]
-                                        }],
-                      "total_players_remaining":2,
-                      "table_id":71,
-                      "round_id":685,
-                      "round_history":[
-                                         {"round_id":685,
-                                         "table_id":71,
-                                         "stack_change":null},
-                                         {"round_id":684,
-                                         "table_id":71,
-                                         "stack_change":-10},
-                                         {"round_id":683,
-                                         "table_id":71,
-                                         "stack_change":10},
-                                         {"round_id":682,
-                                         "table_id":71,
-                                         "stack_change":-10},
-                                         {"round_id":681,
-                                         "table_id":71,
-                                         "stack_change":10},
-                                         {"round_id":680,
-                                         "table_id":71,
-                                         "stack_change":-10},
-                                         {"round_id":679,
-                                         "table_id":71,
-                                         "stack_change":10},
-                                         {"round_id":678,
-                                         "table_id":71,
-                                         "stack_change":-10},
-                                         {"round_id":677,
-                                         "table_id":71,
-                                         "stack_change":10},
-                                         {"round_id":676,
-                                         "table_id":71,
-                                         "stack_change":-10}
-                                       ],
-                      "lost_at":null
-                    }
+%h2 Requests
+%p There are 2 types of request you will need to make to the server. GET and POST.
+%h2 
+  GET
+  \/api/players/PLAYER_KEY (Receive the current state of the game)
+#poker_tables
+  %h4 Syntax
+  %h5 // This request will allow us to validate your player key and return the appropriate information.
+  %h5 Response
+  %pre
+    :preserve
+      json
+      {
+      // Returns your name
+            "name" =>"Lacey Kuhic", 
+      
+      // Returns your stack at the start of the round
+            "initial_stack" => 500, 
+      
+      // Returns true if it is your turn and false if it is not your turn
+            "your_turn" => false, 
+      
+      // Returns your current bet
+            "current_bet" => 50, 
+      
+      // Returns your minimum bet to stay in the round
+            "minimum_bet" => 50,
+      
+      // Returns your maximum bet that you can place
+            "maximum_bet" => 500, 
+      
+      // Returns your five-card hand
+            "hand" => ["2S", "TH", "AH", "AD", "2D"],
+      
+      // Returns the current state of the round: 
+        ["deal", "draw", "post_draw", "showdown"]
+      // You should bet when the betting_phase is "deal" or "post_draw" and
+      // you should replace cards when the betting_phase is "draw"
+            "betting_phase" => "bet", 
+      
+      // Returns the state of all players at the current table
+            "players_at_table" => [{:player_name=>"Aida Gusikowski", 
+                  :initial_stack=>250, 
+                        :current_bet=>20, 
+                  :actions=>[{:action=>"ante", 
+                        :amount=>20}, 
+                 {:action=>"bet", 
+                  :amount=>20},..]
+                 }
+      // Returns the number of players remaining in the tournament
+            "total_players_remaining" => 100,
+      // Returns the id of your table
+            "table_id" => 12, 
+      
+      // Returns the id of the current round
+            "round_id" => 59, 
+      
+      // Returns a log of all rounds that you have played
+            "round_history" => [{:round_id=>59, :table_id=>3, 
+               :stack_change=>2368}, {:round_id=>58,    
+               :table_id=>3, :stack_change=>120}, ...], 
+      
+      // Returns the time at which you lose 
+            "lost_at" => nil
+      }
+
+%h2 Explanation of Response
+%table#scoreboard.table.table-striped
+  %thead
+    %tr
+      %th Term
+      %th Description
+  %tr
+    %td "play"
+    %td Signal that it is your turn
+  %tr
+    %td "replacement"
+    %td true signals that you should be making a post request to replace your cards
+  %tr
+    %td "bet" and "min_bet"
+    %td
+      If these two are different, your actions are limited to "call", "raise", or "fold".  If these two are the same value, your actions are limited to "check", "bet", or "fold".
+  %tr
+    %td "waiting"
+    %td True signals that your table is waiting for all other tables to be ready to reshuffle the seats.
+%h2
+  POST
+  \/api/players/PLAYER_KEY/action
+  (place your bet or replace your cards)
+#poker_tables
+  %h4 Syntax
+  %h5 Request
+  %pre
+    :preserve
+      {
+      // Either set your action as "bet" or "replace"
+           :action_name => "bet",
+      
+      // If you are betting, set you bet, otherwise leave it as nil when replacing
+           :amount => 50,
+      
+      // If you are replacing, set cards as an array of the cards you are discarding
+           :cards => ["3d", "Qs"]
+      }
+%h5 Response
+%p No JSON response is returned from the server.

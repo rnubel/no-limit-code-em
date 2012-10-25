@@ -1,19 +1,70 @@
+<!DOCTYPE html>
+<html>
 
+  <head>
+    <title>No Limit Code 'Em | Sandbox Testing</title>
+    <link href="/assets/application.scss" media="all" rel="stylesheet" type="text/css" />
+    <meta content="authenticity_token" name="csrf-param" />
+    <meta content="cVlN8pDZ3+cIL/mQTA7PDZgd3b5Etu4nQYzQt+hs01g=" name="csrf-token" />
+  </head>
+
+  <body class='docs'>
+    <div class='navbar'>
+      <div class='navbar-inner'>
+        <div class='container'>
+          <a class='logo' href='/'>No Limit Code 'Em</a>
+          <div class='pull-right'>
+            <div class="btn-group">
+              <a class="btn" href="/rules.html">Rules</a>
+              <a class="btn" href="/docs.html">Docs</a>
+              <a class="btn" href="/help.html">Help</a>
+              <a class="btn" href="/code.html">Example</a>
+              <a class="btn active" href="/sandbox_testing.html">Sandbox</a>
+            </div>   
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class='container'>
+      <div class='row'>
+        <div class='span8'>
+          <section id='content'>
+            <h2>
               Sandbox Testing 
-              In order to make sure that you are sending the correct requests and receiving the correct information, you can use this Sandbox Testing routes.
-              GET /sandbox/players/:key/ (Get the game's current state.)
-              Syntax
-                Request
+              <div class='loader'></div>
+            </h2>
+
+            <div class='poker_tables_wrapper'>
+              <div id='poker_tables'>
+                <p>In order to make sure that you are sending the correct requests and receiving the correct information, you can use this Sandbox Testing routes.</p>
+              </div>
+            </div>
+          </section>
+
+          </br>
+
+          <section id='content'>
+            <h2>
+              <strong>GET</strong> /sandbox/players/:key/ (Get the game's current state.)
+              <div class='loader'></div>
+            </h2>
+
+            <div class='poker_tables_wrapper'>
+              <div id='poker_tables'>
+                <h4>Syntax</h4>
+                <h5>Request</h5>
+                <pre>
 
 	To receive a game state where you must respond with a bet, 
 	use PLAYER_KEY = fc2455f8-1879-4ad4-8012-1f337c2869f2
 	
 	To receive a game state where you must respond with a replacement of cards,
 	use PLAYER_KEY = 728f53dd-a5dc-4582-8864-be37576b9592
-
+				</pre>
 Example game state where it is your turn to bet:	
-Response
-
+				<h5>Response</h5>
+				<pre>
 json
 {
 // Returns your name
@@ -59,14 +110,28 @@ json
 // Returns the time at which you lose 
       "lost_at" => null
 }
-              
-              POST /sandbox/players/:key/action (Posting an action.)
-         
+                </pre>
+              </div>
+            </div>
 
-Syntax
+          </section>
 
-Request
+          </br>
 
+          <section id='content'>
+
+            <h2>
+              <strong>POST</strong> /sandbox/players/:key/action (Posting an action.)
+              <div class='loader'></div>
+            </h2>
+
+            <div class='poker_tables_wrapper'>
+              <div id='poker_tables'>
+                <h4>Syntax</h4>
+
+                <h5>Request</h5>
+                
+                <pre>
 In order to post a bet, 
 use PLAYER_KEY = fc2455f8-1879-4ad4-8012-1f337c2869f2
 and to post a replacement of cards, 
@@ -85,9 +150,25 @@ json
      :action_name => "replace",
      :cards => ["3D"]
 }
-            
-Response
+                </pre>
+                
+                <h5>Response</h5>
 
+                <pre>
 If your action is valid, you will be returned a game state that 
 mirrors the effect of that action.
-               
+                </pre>
+
+              </div>
+            </div>
+
+          </section>
+
+        </div>
+
+      </div>
+    </div>
+
+  </body>
+</html>
+
