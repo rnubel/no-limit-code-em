@@ -1,0 +1,40 @@
+!!!
+%html
+  %head
+    %title No Limit Code 'Em | Rules
+    %link{:href => "/assets/application.scss", :media => "all", :rel => "stylesheet", :type => "text/css"}/
+    %meta{:content => "authenticity_token", :name => "csrf-param"}/
+    %meta{:content => "cVlN8pDZ3+cIL/mQTA7PDZgd3b5Etu4nQYzQt+hs01g=", :name => "csrf-token"}/
+  %body.docs
+    .container
+      .row
+        .span8
+          %section#content
+            %h2 Rules for No Limit Code 'Em
+            .poker_tables_wrapper
+              %h5{:style => "margin-left: 20px;"}
+                Probably a little different than the "real" rules
+                .clearfix
+                %table#scoreboard.table.table-striped{:style => "border-top: 1px solid #ddd;"}
+                  %thead
+                    %tr
+                      %th Step
+                      %th Description
+                  %tr
+                    %td 1
+                    %td Only 1 student can register per team. Teams must have 1 or 2 people.
+                  %tr
+                    %td 2
+                    %td Once registration is declared to be open, you must register at http://no-limit-code-em.com/registration with your Team Name and Student ID. Your Team Name can be whatever you want. Your Student ID must be the ID of the card that you have on you right now. Should you win, you will be asked to show your card as proof that you are, indeed, the winner.
+                  %tr
+                    %td 3
+                    %td Your Player Key is returned to you upon being registered. The Player Key is a randomly and securely generated string. You will use this Key to identify yourself in the code. This Player Key must be saved and kept hidden from other teams.
+                  %tr
+                    %td 4
+                    %td In order to properly send your requests, you must include the Player Key in your requests. Adequate time will be provided to test connectivity.
+                  %tr
+                    %td 5
+                    %td You have 5 seconds to respond back to the server with your action once the server has declared it is your turn. If you do not respond, the server will set your action as a FOLD and you will wait until the next round to conduct your next move.
+                  %tr
+                    %td 6
+                    %td You must make a valid action or you will be FOLDED. For example, if you bet 200 chips when you only have 150 chips, you will be FOLDED. Or, if you CALL when the minimum bet and your bet are the same, that is the wrong response because a check is expected.
