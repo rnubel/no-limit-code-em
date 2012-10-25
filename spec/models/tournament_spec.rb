@@ -78,7 +78,7 @@ describe Tournament do
     describe "#current_ante" do
 
       it "starts off at the base value" do
-        subject.current_ante.should == 24 # (-0.0008*5+0.1)*250
+        subject.current_ante.should == 10
       end
 
       context "when 2 players remain" do
@@ -89,8 +89,8 @@ describe Tournament do
           end
         }
 
-        it "returns the ante as 61" do
-          subject.current_ante.should == 61 # (-0.0008*2+0.1)*625
+        it "returns the ante as 50" do
+          subject.current_ante.should == 50
         end
       end
     end
