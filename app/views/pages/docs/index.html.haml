@@ -1,19 +1,57 @@
-%h2
-  Documents
-%h3 
-  Rules For Five Card Draw
-%body
-  .layer1
-    %p.heading Flow
-    .content= render :partial => "pages/docs/rules_five_card" 
-    %p.heading Rankings
-    .content= render :partial => "pages/docs/ranking_five_card" 
-  :javascript
-    jQuery(document).ready(function() {
-      jQuery(".content").hide();
-      //toggle the componenet with class msg_body
-      jQuery(".heading").click(function()
-      {
-        jQuery(this).next(".content").slideToggle(500);
-      });
-    });
+.span4
+  %ul.bs-docs-sidenav.nav
+    %li.active
+      %a{:href => "#rules", :"data-toggle" => "tab"} 
+        %i.icon.icon-chevron-right
+        Rules
+    %li
+      %a{:href => "#request", :"data-toggle" => "tab"} 
+        %i.icon.icon-chevron-right
+        Request and Response 
+    %li
+      %a{:href => "#draw", :"data-toggle" => "tab"}
+        %i.icon.icon-chevron-right
+        Draw Poker
+    %li
+      %a{:href => "#suite", :"data-toggle" => "tab"}
+        %i.icon.icon-chevron-right
+        Suit Lookup 
+    %li
+      %a{:href => "#ranking", :"data-toggle" => "tab"}
+        %i.icon.icon-chevron-right
+        Hand rankings 
+    %li
+      %a{:href => "#ante", :"data-toggle" => "tab"}
+        %i.icon.icon-chevron-right
+        Ante Progression
+    %li
+      %a{:href => "#example", :"data-toggle" => "tab"}
+        %i.icon.icon-chevron-right
+        Example Bot
+    %li
+      %a{:href => "#sandbox", :"data-toggle" => "tab"}
+        %i.icon.icon-chevron-right
+        Sandbox Testing
+
+.span8
+  .tab-content
+    #rules.tab-pane.active
+      = render :partial => "pages/docs/rules"
+    #suite.tab-pane
+      = render :partial => "pages/docs/help"
+    #request.tab-pane
+      = render :partial => "pages/docs/docs"
+    #draw.tab-pane
+      = render :partial => "pages/docs/draw_poker"
+    #actions.tab-pane
+      = render :partial => "pages/docs/player_actions"
+    #tournament.tab-pane
+      = render :partial => "pages/docs/tournament_seating"
+    #ante.tab-pane
+      = render :partial => "pages/docs/ante_progression"
+    #example.tab-pane
+      = render :partial => "pages/docs/example_bot" 
+    #sandbox.tab-pane
+      = render :partial => "pages/docs/sandbox_testing" 
+    #ranking.tab-pane
+      = render :partial => "pages/docs/ranking_five_card" 

@@ -1,24 +1,24 @@
-%h2
-%p In order to make sure that you are sending the correct requests and receiving the correct information, you can use special Sandbox Testing routes.
+.docs
+  %h2 Sandbox Testing
+  .content
+    %p In order to make sure that you are sending the correct requests and receiving the correct information, you can use special Sandbox Testing routes.
+    .title Testing requests and actions
+    %p
+      To test your bot, point it towards the endpoint:
+      %pre
+        http://no-limit-code-em.com/sandbox/players/SANDBOX_KEY
+      (notice the /sandbox/ instead of /api/). Then, your bot will receive a state based on the value of the sandbox key.
+    %p
+      To receive a game state where you must respond with a bet, use 
+      %strong fc2455f8-1879-4ad4-8012-1f337c2869f2
+      as SANDBOX_KEY.
+    %p
+      To receive a game state where you must respond with a replacement of cards, use
+      %strong 728f53dd-a5dc-4582-8864-be37576b9592
+      as SANDBOX_KEY.
 
-.title Testing requests and actions
-%p
-  To test your bot, point it towards the endpoint:
-  %pre
-    http://no-limit-code-em.com/sandbox/players/SANDBOX_KEY
-  (notice the /sandbox/ instead of /api/). Then, your bot will receive a state based on the value of the sandbox key.
-%p
-  To receive a game state where you must respond with a bet, use 
-  %strong fc2455f8-1879-4ad4-8012-1f337c2869f2
-  as SANDBOX_KEY.
-%p
-  To receive a game state where you must respond with a replacement of cards, use
-  %strong 728f53dd-a5dc-4582-8864-be37576b9592
-  as SANDBOX_KEY.
-
-%p
-  To test the action, have your bot post to 
-  %pre
-    http://no-limit-code-em.com/sandbox/players/SANDBOX_KEY/action
-  with the parameters it would make for that action. If your action is valid, you will be returned a game state that 
-mirrors the effect of that action.
+    %p
+      To test the action, have your bot post to 
+      %pre
+        http://no-limit-code-em.com/sandbox/players/SANDBOX_KEY/action
+      with the parameters it would make for that action. If your action is valid, you will be returned a game state that mirrors the effect of that action.

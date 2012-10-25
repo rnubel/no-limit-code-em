@@ -145,11 +145,12 @@ i.chip {
   background: -webkit-linear-gradient(top, white 0%, #f4f4f4 100%);
   background: linear, to bottom, white 0%, #f4f4f4 100%; 
   border: 1px solid #ddd;
+  font-weight: normal; 
 }
 .well {
-  line-height: 22px;
+  line-height: 23px;
   background: #fff !important;
-  font-size: 15px;
+  font-size: 16px;
 }
 .bs-docs-sidenav {
   width: 228px;
