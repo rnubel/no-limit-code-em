@@ -1,26 +1,33 @@
-%h2 Rules for No Limit Code 'Em
-%h5 Probably a little different than the "real" rules
+%h2 Welcome to Enova's No Limit Code 'Em!
+Your challenge for tonight is to write a poker bot which is capable of communicating with our server ("the house") and playing a mean hand of poker. On these help pages you'll find all the information you need to understand the protocol for communicating your actions and receiving the game state, as well as the actual rules of the game. Feel free to ask any of the Enova staff wandering around for help, too!
+
+%h2 Basic Rules
 .clearfix
 %table#scoreboard.table.table-striped{:style => "border-top: 1px solid #ddd;"}
-  %thead
-    %tr
-      %th Step
-      %th Description
   %tr
     %td 1
     %td Only 1 student can register per team. Teams must have 1 or 2 people.
   %tr
     %td 2
-    %td Once registration is declared to be open, you must register at http://no-limit-code-em.com/registration with your Team Name and Student ID. Your Team Name can be whatever you want. Your Student ID must be the ID of the card that you have on you right now. Should you win, you will be asked to show your card as proof that you are, indeed, the winner.
+    %td 
+      Once registration opens (whether for a test tournament or a real tournament), open your browser and go to 
+      %a{:href=>'http://no-limit-code-em.com/pages/registration'}
+        http://no-limit-code-em.com/pages/registration
+      and enter your team name. Your team name can be whatever you want, but keep it short and make it unique.
   %tr
     %td 3
-    %td Your Player Key is returned to you upon being registered. The Player Key is a randomly and securely generated string. You will use this Key to identify yourself in the code. This Player Key must be saved and kept hidden from other teams.
+    %td Your Player Key is returned to you upon being registered. The Player Key is a randomly and securely generated string. You will use this Key to identify yourself in the code. This Player Key must be saved and kept hidden from other teams. Note that you will get a different key for every tournament you register for, so we recommend making it easy to change your key for your bot.
   %tr
     %td 4
-    %td In order to properly send your requests, you must include the Player Key in your requests. Adequate time will be provided to test connectivity.
+    %td 
+      You can write your bot in whatever language you want. The basic function of your bot is to perform three steps:
+      %ol
+        %li Make an HTTP "GET" request to our server to get the game state. We will return the game state in JSON format, so make your language of choice can parse JSON (we recommend Ruby or Python).
+        %li If the state indicates it's your bot's turn, make an HTTP "POST" request to our server to post your action.
+        %li Go back to step 1!
   %tr
     %td 5
-    %td You have 5 seconds to respond back to the server with your action once the server has declared it is your turn. If you do not respond, the server will set your action as a FOLD and you will wait until the next round to conduct your next move.
+    %td Once it becomes your turn, you have 5 seconds to respond back to the server with a valid action once the server has declared it is your turn. If you do not respond, the server will set your action as a FOLD and you will wait until the next round to conduct your next move.
   %tr
     %td 6
-    %td You must make a valid action or you will be FOLDED. For example, if you bet 200 chips when you only have 150 chips, you will be FOLDED. Or, if you CALL when the minimum bet and your bet are the same, that is the wrong response because a check is expected.
+    %td You are only allowed to poll the game state once per second. If you request the state more often, we will rate-limit your request and you will receive a response of "403 Rate Limit Exceeded".
