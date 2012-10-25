@@ -1,109 +1,118 @@
-.docs 
+.docs
   %h2 Requests
   .well
-    There are 2 types of request you will need to make to the server. GET and POST.
+    %p There are 2 types of request you will need to make to the server, GET and POST. If you aren't familiar with the terms, a GET request is the type of HTTP request your web browser makes to a server when you simply visit that page by typing in a URL. On the other hand, a POST request is the type of request made when you submit a web form. Consult your HTTP library-of-choice's documentation to see how to send a request of each type.
 
   %h2 
-    %strong GET
-    \/api/players/PLAYER_KEY 
+    %strong GET 
+    http://no-limit-code-em.com/api/players/PLAYER_KEY 
   .content
-    %p This request will allow us to validate your player key and return the current state of the game
-    .title Response
+    %p Retrieves the current state of the game as seen by your player.
+    Just pass your player key as part of the path. There are no querystring parameters for this request.
+
+    .title Example request:
+    %pre
+      GET http://no-limit-code-em.com/api/players/46e6b984-7166-4dd8-a763-52408278a852
+
+    .title Example response:
     %pre
       :preserve
-        json
         {
         // Returns your name
               "name" =>"Lacey Kuhic", 
         
-        // Returns your stack at the start of the round
-              "initial_stack" => 500, 
+        // Returns your stack as it was at the start of the round
+              "initial_stack": 500, 
         
         // Returns true if it is your turn and false if it is not your turn
-              "your_turn" => false, 
+              "your_turn": false, 
         
-        // Returns your current bet
-              "current_bet" => 50, 
+        // Returns your current bet (this is an absolute value from the start of the round)
+              "current_bet": 50, 
         
         // Returns your minimum bet to stay in the round
-              "minimum_bet" => 50,
+              "minimum_bet": 50,
         
-        // Returns your maximum bet that you can place
-              "maximum_bet" => 500, 
+        // Returns your maximum bet that you can place (always the same as initial_stack)
+              "maximum_bet": 500, 
         
         // Returns your five-card hand
-              "hand" => ["2S", "TH", "AH", "AD", "2D"],
+              "hand": ["2S", "TH", "AH", "AD", "2D"],
         
         // Returns the current state of the round: 
-          ["deal", "draw", "post_draw", "showdown"]
+        // Either deal, draw, post_draw, or showdown.
         // You should bet when the betting_phase is "deal" or "post_draw" and
         // you should replace cards when the betting_phase is "draw"
-              "betting_phase" => "bet", 
+              "betting_phase": "bet", 
         
         // Returns the state of all players at the current table
-              "players_at_table" => [{:player_name=>"Aida Gusikowski", 
-                    :initial_stack=>250, 
-                          :current_bet=>20, 
-                    :actions=>[{:action=>"ante", 
-                          :amount=>20}, 
-                   {:action=>"bet", 
-                    :amount=>20},..]
-                   }
+              "players_at_table": [
+                  { "player_name":    "Aida Gusikowski", 
+                    "initial_stack":  250, 
+                    "current_bet":    20, 
+                    "actions": [
+                      { "action":"ante", "amount": 20 },
+                      { "amount":"bet", "amount": 50" }
+                    ]
+                  }
+                ]
+
         // Returns the number of players remaining in the tournament
-              "total_players_remaining" => 100,
+              "total_players_remaining": 100,
+
         // Returns the id of your table
-              "table_id" => 12, 
+              "table_id": 12, 
         
         // Returns the id of the current round
-              "round_id" => 59, 
+              "round_id": 59, 
         
         // Returns a log of all rounds that you have played
-              "round_history" => [{:round_id=>59, :table_id=>3, 
-                 :stack_change=>2368}, {:round_id=>58,    
-                 :table_id=>3, :stack_change=>120}, ...], 
+        // Note that a non-negative stack change means you won or broke even during the round,
+        // whereas a negative stack change means you lost during the round. We will only return
+        // the past 10 rounds' worth of history.
+              "round_history": [
+                {"round_id": 59, "table_id": 3, "stack_change": 2368}, 
+                {"round_id": 58, "table_id": 3, "stack_change": 120}
+              ]
         
-        // Returns the time at which you lose 
-              "lost_at" => nil
+        // Returns the time at which you lost
+              "lost_at": null
         }
-
-    .title Explanation of Response
-    %table.table.table-striped.table-bordered
-      %thead
-        %tr
-          %th Term
-          %th Description
-      %tr
-        %td "play"
-        %td Signal that it is your turn
-      %tr
-        %td "replacement"
-        %td true signals that you should be making a post request to replace your cards
-      %tr
-        %td "bet" and "min_bet"
-        %td
-          If these two are different, your actions are limited to "call", "raise", or "fold".  If these two are the same value, your actions are limited to "check", "bet", or "fold".
-      %tr
-        %td "waiting"
-        %td True signals that your table is waiting for all other tables to be ready to reshuffle the seats.
-
-  .clearfix{:style => "margin-top: 20px;"}
-  %h2
-    %strong POST
+  %h2 
+    %strong POST 
     \/api/players/PLAYER_KEY/action
   .content
-    %p Place your bet or replace your cards
-    .title Request
+    %p Place your bet, fold your hand, or replace your cards during the draw phase.
+
+    .title Parameters
+    %table.table.table-striped.table-bordered
+      %tr
+        %td 
+          action_name
+        %td 
+          Either "bet", "fold", or "replace"
+      %tr
+        %td 
+          amount
+        %td 
+          If you are betting, set your bet (this is an absolute amount), otherwise leave it as nil when replacing.
+      %tr
+        %td 
+          cards
+        %td 
+          If you are replacing, set cards as a string-separated list of the cards you are discarding. E.g., "Ac 5s" or "4H 3D TS" or "" to replace nothing. Otherwise, leave nil or blank.
+
+    .title Example request:
+    %pre
+      POST http://no-limit-code-em.com/api/players/46e6b984-7166-4dd8-a763-52408278a852/action?action_name=bet&amount=20
+    %p or, equivalently:
     %pre
       :preserve
-        {
-        // Either set your action as "bet" or "replace"
-             :action_name => "bet",
-        
-        // If you are betting, set you bet, otherwise leave it as nil when replacing
-             :amount => 50,
-        
-        // If you are replacing, set cards as an array of the cards you are discarding
-             :cards => ["3d", "Qs"]
-        }
+        POST http://no-limit-code-em.com/api/players/46e6b984-7166-4dd8-a763-52408278a852/action
+        Headers:
+          Content-type: application/json
+        Body:
+          {"action_name":"bet", "amount":20}
+
     .title Response
     %p No JSON response is returned from the server.
