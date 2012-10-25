@@ -68,7 +68,6 @@ module Sandbox
       when "bet"
         raised_amount = action[:amount] - json["current_bet"].to_i
         json["current_bet"] = action[:amount]
-        json["initial_stack"] = (json["initial_stack"].to_i - raised_amount)
       when "replace"
         @deck = ["AC", "6H", "QD"]
         json["hand"] = json["hand"].to_a - action[:cards]
