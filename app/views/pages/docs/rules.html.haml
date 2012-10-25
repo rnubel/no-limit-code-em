@@ -1,0 +1,29 @@
+%h2
+  Rules
+%h3
+  No Limit Code Em Rules
+%body
+  .layer1
+    %p.heading Rules
+    .content= render :partial => "pages/docs/rules"
+    %p.heading Suite Lookup
+    .content= render :partial => "pages/docs/help"
+    %p.heading Request and Response
+    .content= render :partial => "pages/docs/docs"
+    %p.heading Draw Poker 
+    .content= render :partial => "pages/docs/draw_poker"
+    %p.heading Player Actions
+    .content= render :partial => "pages/docs/player_actions"
+    %p.heading Tournament Seating
+    .content= render :partial => "pages/docs/tournament_seating"
+    %p.heading Ante Progression
+    .content= render :partial => "pages/docs/ante_progression"
+  :javascript
+    jQuery(document).ready(function() {
+      jQuery(".content").hide();
+      //toggle the componenet with class msg_body
+      jQuery(".heading").click(function()
+      {
+        jQuery(this).next(".content").slideToggle(500);
+      });
+    });
