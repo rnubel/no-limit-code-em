@@ -138,7 +138,6 @@ i.chip {
 
 .bs-docs-sidenav {
   width: 228px;
-  margin: 30px 0 0;
   padding: 0;
   background-color: #fff;
   -webkit-border-radius: 6px;
@@ -151,6 +150,7 @@ i.chip {
 .bs-docs-sidenav > li > a {
   display: block;
   *width: 190px;
+  font-size: 14px;
   margin: 0 0 -1px;
   padding: 8px 14px;
   border: 1px solid #e5e5e5;
@@ -170,7 +170,6 @@ i.chip {
   z-index: 2;
   padding: 9px 15px;
   border: 0;
-  text-shadow: 0 1px 0 rgba(0,0,0,.15);
   -webkit-box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
      -moz-box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
           box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
@@ -188,9 +187,12 @@ i.chip {
 .bs-docs-sidenav a:hover .icon-chevron-right {
   opacity: .5;
 }
+
+.bs-docs-sidenav .active .icon-chevron-right {
+  background-image: url("/assets/glyphicons-halflings.png") !important;
+}
 .bs-docs-sidenav .active .icon-chevron-right,
 .bs-docs-sidenav .active a:hover .icon-chevron-right {
-  background-image: url(../img/glyphicons-halflings-white.png);
   opacity: 1;
 }
 .bs-docs-sidenav.affix {

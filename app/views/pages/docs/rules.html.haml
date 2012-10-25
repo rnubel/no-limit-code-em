@@ -1,33 +1,47 @@
 .span4
   %ul.bs-docs-sidenav.nav
     %li.active
-      %a{:href => "#rules", :"data-toggle" => "tab"} Rules
+      %a{:href => "#rules", :"data-toggle" => "tab"} 
+        %i.icon.icon-chevron-right
+        Rules
     %li
-      %a{:href => "#suite", :"data-toggle" => "tab"} Suite Lookup
+      %a{:href => "#request", :"data-toggle" => "tab"} 
+        %i.icon.icon-chevron-right
+        Request and Response 
     %li
-      %a{:href => "#request", :"data-toggle" => "tab"} Request and Response
+      %a{:href => "#draw", :"data-toggle" => "tab"}
+        %i.icon.icon-chevron-right
+        Draw Poker
     %li
-      %a{:href => "#draw", :"data-toggle" => "tab"} Draw Poker
+      %a{:href => "#suite", :"data-toggle" => "tab"}
+        %i.icon.icon-chevron-right
+        Suite Lookup 
     %li
-      %a{:href => "#actions", :"data-toggle" => "tab"} Player Actions
+      %a{:href => "#actions", :"data-toggle" => "tab"}
+        %i.icon.icon-chevron-right
+        Player Actions
     %li
-      %a{:href => "#tournament", :"data-toggle" => "tab"} Tournament Seating
+      %a{:href => "#tournament", :"data-toggle" => "tab"} 
+        %i.icon.icon-chevron-right
+        Tournament Seating
     %li
-      %a{:href => "#ante", :"data-toggle" => "tab"} Ante Progression
+      %a{:href => "#ante", :"data-toggle" => "tab"}
+        %i.icon.icon-chevron-right
+        Ante Progression
 
 .span8
   .tab-content
     #rules.tab-pane.active
-      .content= render :partial => "pages/docs/rules"
+      = render :partial => "pages/docs/rules"
     #suite.tab-pane
-      .content= render :partial => "pages/docs/help"
+      = render :partial => "pages/docs/help"
     #request.tab-pane
-      .content= render :partial => "pages/docs/docs"
+      = render :partial => "pages/docs/docs"
     #draw.tab-pane
-      .content= render :partial => "pages/docs/draw_poker"
+      = render :partial => "pages/docs/draw_poker"
     #actions.tab-pane
-      .content= render :partial => "pages/docs/player_actions"
+      = render :partial => "pages/docs/player_actions"
     #tournament.tab-pane
-      .content= render :partial => "pages/docs/tournament_seating"
+      = render :partial => "pages/docs/tournament_seating"
     #ante.tab-pane
-      .content= render :partial => "pages/docs/ante_progression"
+      = render :partial => "pages/docs/ante_progression"
