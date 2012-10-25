@@ -9,6 +9,7 @@ class Player < ActiveRecord::Base
   attr_accessible :initial_stack, :latest_stack, :name, :key
 
   validates_presence_of :name, :key
+  validates_uniqueness_of :name, :key, :scope => [:tournament_id], :case_sensitive => true
 
   scope :ordered, order("id ASC")
   scope :playing, where("lost_at IS NULL")
