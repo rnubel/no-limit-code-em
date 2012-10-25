@@ -10,14 +10,21 @@ module Api
       tournament = Tournament.open.last
 
       if tournament
-        @player = tournament.players.create! name: params[:name],
-                                             key: SecureRandom.uuid
-        message = { :name => @player.name,
-                    :key =>  @player.key   }
+        @player = tournament.players.new name: params[:name],
+                                         key: SecureRandom.uuid
+        if @player.valid?
+          @player.save!
+          message = { :name => @player.name,
+                      :key =>  @player.key,
+                      :message => "Your player key is #{ @player.key }" }
+        else
+          message = { :message => "You must register with a valid and unique player name." }
+        end
+
         respond_to do |format|
           format.json { render :json => message }
           format.xml  { render :xml => message }
-          format.html { redirect_to '/pages/registration', :notice => "Your player key is #{ @player.key }" }
+          format.html { redirect_to '/pages/registration', :notice => message[:message] }
         end
       else
         respond_to do |format|
