@@ -9,8 +9,8 @@ class Table < ActiveRecord::Base
   scope :playing, where(:playing => true)
   scope :ordered, order("id ASC")
 
-  def active_players # Not an ARel
-    seatings.where(:active => true).order("id ASC").map(&:player)
+  def active_players
+    self.players.where("seatings.active")
   end
 
   def open_seats
