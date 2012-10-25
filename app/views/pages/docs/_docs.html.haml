@@ -84,30 +84,6 @@
                     }
           %section#content
             %h2
-              Explanation of Response
-              .loader
-            .docs.poker_tables_wrapper
-              .clearfix
-              %table#scoreboard.table.table-striped
-                %thead
-                  %tr
-                    %th Term
-                    %th Description
-                %tr
-                  %td "play"
-                  %td Signal that it is your turn
-                %tr
-                  %td "replacement"
-                  %td true signals that you should be making a post request to replace your cards
-                %tr
-                  %td "bet" and "min_bet"
-                  %td
-                    If these two are different, your actions are limited to "call", "raise", or "fold".  If these two are the same value, your actions are limited to "check", "bet", or "fold".
-                %tr
-                  %td "waiting"
-                  %td True signals that your table is waiting for all other tables to be ready to reshuffle the seats.
-          %section#content
-            %h2
               %strong POST
               \/api/players/PLAYER_KEY/action
               (place your bet or replace your cards)
@@ -129,4 +105,70 @@
                          :cards => ["3d", "Qs"]
                     }
                 %h5 Response
-                %p No JSON response is returned from the server.
+                %pre
+                  :preserve
+                    json
+                    {
+                      "name":"Rosendo Thompson",
+                      "initial_stack":240,
+                      "your_turn":false,
+                      "current_bet":10,
+                      "minimum_bet":10,
+                      "maximum_bet":240,
+                      "hand":["2C", "8H", "7C", "JS", "9D"],
+                      "betting_phase":"draw",
+                      "players_at_table":[
+                                        {"player_name":"Rosendo Thompson",
+                                          "initial_stack":240,
+                                          "current_bet":10,
+                                          "actions":[
+                                            {"action":"ante",
+                                            "amount":10},
+                                            {"action":"bet",
+                                            "amount":10}]
+                                        },
+                                        {"player_name":"Ayden Mertz",
+                                        "initial_stack":260,
+                                        "current_bet":10,
+                                        "actions":[{"action":"ante",
+                                        "amount":10},
+                                        {"action":"bet",
+                                        "amount":10}]
+                                        }],
+                      "total_players_remaining":2,
+                      "table_id":71,
+                      "round_id":685,
+                      "round_history":[
+                                         {"round_id":685,
+                                         "table_id":71,
+                                         "stack_change":null},
+                                         {"round_id":684,
+                                         "table_id":71,
+                                         "stack_change":-10},
+                                         {"round_id":683,
+                                         "table_id":71,
+                                         "stack_change":10},
+                                         {"round_id":682,
+                                         "table_id":71,
+                                         "stack_change":-10},
+                                         {"round_id":681,
+                                         "table_id":71,
+                                         "stack_change":10},
+                                         {"round_id":680,
+                                         "table_id":71,
+                                         "stack_change":-10},
+                                         {"round_id":679,
+                                         "table_id":71,
+                                         "stack_change":10},
+                                         {"round_id":678,
+                                         "table_id":71,
+                                         "stack_change":-10},
+                                         {"round_id":677,
+                                         "table_id":71,
+                                         "stack_change":10},
+                                         {"round_id":676,
+                                         "table_id":71,
+                                         "stack_change":-10}
+                                       ],
+                      "lost_at":null
+                    }
