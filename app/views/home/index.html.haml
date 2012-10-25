@@ -1,7 +1,12 @@
 .span4
   %aside#sidebar
     %h2 
-      Tournaments
+      Scoreboard
       .loader
     .scoreboard_wrapper
-      = render :partial => "tournaments", :locals => {:tournaments => Tournament.find(:all)}
+.span8
+  %section#content
+    %h2 
+      Tables
+      .loader
+    .poker_tables_wrapper

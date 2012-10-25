@@ -1,4 +1,6 @@
 class TournamentsController < ApplicationController
+  respond_to :json
+
   def index
     @tournaments = Tournament.where(:open => false, :playing => false).all
   end
@@ -7,22 +9,18 @@ class TournamentsController < ApplicationController
     @tournament = Tournament.find(params[:id])
   end
 
-  def scoreboard
-    @tournament = Tournament.playing.last
+  def refresh
+    tournament = Tournament.playing.last
 
-    render :json => @tournament.players.each_with_index.collect { |p, i|
+    @scoreboard = tournament.players.each_with_index.collect { |p, i|
       {
         :name => p.name,
         :stack => p.stack,
         :lost_at => p.lost_at
       }
     }.sort_by { |p| [p[:stack], p[:lost_at]] }.reverse
-  end
 
-  def tables
-    @tournament = Tournament.playing.last
-
-    table_list = @tournament.tables.playing.collect do |table|
+    @tables = tournament.tables.playing.collect do |table|
       {
         :table_id => table.id,
         :players => table.active_players.collect { |p| {:player_id => p.id, 
@@ -33,7 +31,5 @@ class TournamentsController < ApplicationController
         :latest_winners => table.rounds.ordered.last(3).reject(&:playing).collect(&:winners).map { |h| h.map { |p, w| { :name => p.name, :winnings => w } }}
       }
     end
-
-    render :json => table_list
   end
 end
