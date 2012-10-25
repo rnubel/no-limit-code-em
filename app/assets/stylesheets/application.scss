@@ -235,9 +235,13 @@ i.chip {
   border: 1px solid #ddd; @include border-radius(8px 8px 0px 0px !important); 
 }
 .docs .table-bordered { @include border-radius(0px !important); }
-.docs .table { font-size: 14px; }
+.docs .table { font-size: 14px; margin-bottom: 0 }
 .docs table th, .docs .table td { background: #fff; }
 .table-bordered thead:last-child tr:last-child th:first-child, .table-bordered tbody:last-child tr:last-child td:first-child, .table-bordered tfoot:last-child tr:last-child td:first-child,
-.table-bordered thead:first-child tr:first-child th:first-child, .table-bordered tbody:first-child tr:first-child td:first-child { @include border-radius(0); }
+table-bordered thead:first-child tr:first-child th:first-child, .table-bordered tbody:first-child tr:first-child td:first-child { @include border-radius(0); }
 .docs .content { margin-bottom: 30px; border-bottom: 1px solid #ddd; padding: 20px; background: #fff;  border-left: 1px solid #ddd; border-right: 1px solid #ddd; }
 .title { font-size: 16px; font-weight: bold; border-top: 1px dashed #ddd; margin-top: 20px;  padding: 20px 0px; }
+.docs { line-height: 22px; }
+.docs ul { border-top: 2px solid #ddd; list-style: none; margin:0; padding: 0 } 
+.docs ul li { line-height: 22px; padding: 10px 15px; }
+.docs ul li:nth-child(even) { background: #f1f1f1 }

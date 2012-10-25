@@ -6,5 +6,4 @@
       %h2 
         Players
         .loader
-      .scoreboard_wrapper
-        = render :partial => "players", :locals => {:players => @tournament.players}
+      = render :partial => "players", :locals => {:players => @tournament.players}

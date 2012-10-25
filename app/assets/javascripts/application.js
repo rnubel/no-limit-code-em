@@ -3,16 +3,29 @@
 //= require_self
 
 $(function() {
-  // refresh the data
-  setInterval(function() {
-    $('.loader').fadeIn();
-    $.ajax({
-      url: '/tournaments/refresh',
-      type: 'GET',
-      success: function() {
-        $('.loader').fadeOut();
-      }
-    });
-  }, 7000);
+  reload_page();
+
+  var refresh = getURLParameter("refresh");
+  if(refresh == "true") {
+    setInterval(function() {
+      reload_page();
+    }, 7000);
+  }
 })
 
+function reload_page() {
+  $('.loader').fadeIn();
+  $.ajax({
+    url: '/tournaments/refresh',
+    type: 'GET',
+    success: function() {
+      $('.loader').fadeOut();
+    }
+  });
+}
+
+function getURLParameter(name) {
+    return decodeURI(
+        (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
+    );
+}

@@ -1,12 +1,14 @@
-%h2 Ante Progression
-In order to keep the tournament moving and wrap things up, the ante will increase as play goes on. Ante progression works as follows:
+.docs
 
-%ul
-  %li The ante will be a certain percentage of the average chipstack of all active players in the tournament.
-  %li 
-    That percentage is determined by the following equation:
-    %pre
-      p = (0.08 / (1 + 100 * (e ^ (-10 * n)))) + 0.02 
-    Where p is the percentage of the average chipstack, and n is the percentage of players knocked out.
-  %li As players are eliminated, this percentage will rise until only two players remain.
-  %li The ante will be rounded to the nearest 10.
+  %h2 Ante Progression
+  .content
+    %p In order to keep the tournament moving and wrap things up, the ante will increase as play goes on. Ante progression works as follows:
+    %ul
+      %li The ante will be a certain percentage of the average chipstack of all active players in the tournament.
+      %li 
+        That percentage is determined by the following equation:
+        %pre{:style => "margin-top: 5px;"}
+          p = (0.08 / (1 + 100 * (e ^ (-10 * n)))) + 0.02 
+        Where p is the percentage of the average chipstack, and n is the percentage of players knocked out.
+      %li As players are eliminated, this percentage will rise until only two players remain.
+      %li The ante will be rounded to the nearest 10.
