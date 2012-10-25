@@ -6,6 +6,7 @@ NoLimitV2::Application.routes.draw do
     collection do
       get 'scoreboard'
       get 'tables'
+      get 'refresh'
     end
   end
 

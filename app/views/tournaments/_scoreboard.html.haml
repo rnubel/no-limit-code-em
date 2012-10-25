@@ -1,0 +1,12 @@
+%table#scoreboard.table.table-striped
+  %thead
+    %tr
+      %th Name
+      %th Chips
+  %tbody
+  - scoreboard.each do |data|
+    %tr.player{:class => ("lost" if data[:lost_at] != nil)}
+      %td= data[:name].slice(0,15)
+      %td.chips
+        != stack_display(data[:stack], false)
+        = data[:stack] 
