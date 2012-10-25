@@ -4,5 +4,5 @@
     %strong= @player.name
   .content
     - @player.rounds.each do |r|
-      = link_to "Round #{r.id}", round_path(r)
+      = link_to "Round #{r.id}", round_path(r), :style => "display:block"
 
