@@ -8,6 +8,7 @@ gem 'rails', '3.1.3'
 gem 'pg', '0.13.2'
 gem 'json'
 gem 'thin'
+gem 'rack-throttle', :git => 'https://github.com/baroquebobcat/rack-throttle.git'
 gem 'dalli'
 
 gem 'poker_table', '0.2.0', :git => 'git://github.com/rnubel/poker_table'
