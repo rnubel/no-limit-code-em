@@ -19,6 +19,7 @@ class ClientLimiter < Rack::Throttle::Interval
 
   def allowed?(request)
     return true unless client_identifier(request)
+    return true if request.path =~ /action/
     t1 = request_start_time(request)
     t0 = cache_get(key = cache_key(request)) rescue nil
     allowed = !t0 || (dt = t1 - t0.to_f) >= minimum_interval
