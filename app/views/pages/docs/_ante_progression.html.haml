@@ -1,10 +1,9 @@
-%p
-  %pre
-    %code
-      Ante Progression works as follows:
-      The ante will be a certain percentage of the average chipstack of all active players in the tournament.
-      That percentage is determined by the following equation:
-      p = (0.08 / (1 + 100 * (e ^ (-10 * n)))) + 0.02
-      where p is the percentage of the average chipstack, and n is the percentage of players knocked out.
-      The ante will be rounded to the nearest 10.
-      As players are eliminated, this percentage will rise until only two players remain.
+%pre
+  :preserve
+    Ante Progression works as follows:
+    The ante will be a certain percentage of the average chipstack of all active players in the tournament.
+    That percentage is determined by the following equation:
+    p = (0.08 / (1 + 100 * (e ^ (-10 * n)))) + 0.02 
+    where p is the percentage of the average chipstack, and n is the percentage of players knocked out.
+    The ante will be rounded to the nearest 10.
+    As players are eliminated, this percentage will rise until only two players remain.

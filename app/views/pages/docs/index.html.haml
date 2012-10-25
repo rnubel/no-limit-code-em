@@ -1,33 +1,13 @@
-%head
-  %script{:src => "http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"}
-  :css
-    .layer1 {
-    margin: 0;
-    padding: 0;
-    }
-    .heading {
-    margin: 1px;
-    padding: 3px 10px;
-    cursor: pointer;
-    position: relative;
-    }
-    .content {
-    padding: 5px 10px;
-    background-color:#fafafa;
-    }
-    pre { background: #111122; padding: 10px; color: #228822; }
 %h2
   Documents
+%h3 
+  Rules For Five Card Draw
 %body
   .layer1
-    %p.heading Draw Poker
-    .content= render :partial => "pages/docs/draw_poker" 
-    %p.heading Player Actions
-    .content= render :partial => "pages/docs/player_actions" 
-    %p.heading Tournament Seating
-    .content= render :partial => "pages/docs/tournament_seating" 
-    %p.heading Ante Progression
-    .content= render :partial => "pages/docs/ante_progression" 
+    %p.heading Flow
+    .content= render :partial => "pages/docs/rules_five_card" 
+    %p.heading Rankings
+    .content= render :partial => "pages/docs/ranking_five_card" 
   :javascript
     jQuery(document).ready(function() {
       jQuery(".content").hide();
