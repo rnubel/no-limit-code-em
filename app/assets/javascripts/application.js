@@ -11,7 +11,7 @@ $(function() {
       url: '/tournaments/refresh',
       type: 'GET'
     });
-  }, 12000);
+  }, 7000);
 });
 
 // input placeholders

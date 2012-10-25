@@ -28,7 +28,7 @@ class TournamentsController < ApplicationController
                                                         :initial_stack => p.current_player_state(:initial_stack),
                                                         :stack => p.current_player_state(:stack), 
                                                         :current_bet => p.current_player_state(:current_bet) }},
-        :latest_winners => table.rounds.ordered.last(3).reject(&:playing).collect(&:winners).map { |h| h.map { |p, w| { :name => p.name, :winnings => w } }}
+        :latest_winners => table.rounds.ordered.last(3).reject(&:playing).collect(&:winners).map { |h| h.map { |p, w| { :name => p.name, :winnings => w } }}.flatten
       }
     end
   end
