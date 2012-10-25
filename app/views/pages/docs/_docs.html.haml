@@ -1,113 +1,118 @@
-%h2 Requests
-%p There are 2 types of request you will need to make to the server, GET and POST. If you aren't familiar with the terms, a GET request is the type of HTTP request your web browser makes to a server when you simply visit that page by typing in a URL. On the other hand, a POST request is the type of request made when you submit a web form. Consult your HTTP library-of-choice's documentation to see how to send a request of each type.
-%h2 GET http://no-limit-code-em.com/api/players/PLAYER_KEY 
-Retrieves the current state of the game as seen by your player.
-%h3 Parameters
-Just pass your player key as part of the path. There are no querystring parameters for this request.
-%h3 Example
-Request:
-%pre
-  GET http://no-limit-code-em.com/api/players/46e6b984-7166-4dd8-a763-52408278a852
+.docs
+  %h2 Requests
+  .well
+    %p There are 2 types of request you will need to make to the server, GET and POST. If you aren't familiar with the terms, a GET request is the type of HTTP request your web browser makes to a server when you simply visit that page by typing in a URL. On the other hand, a POST request is the type of request made when you submit a web form. Consult your HTTP library-of-choice's documentation to see how to send a request of each type.
 
-Response:
-%pre
-  :preserve
-    {
-    // Returns your name
-          "name" =>"Lacey Kuhic", 
-    
-    // Returns your stack as it was at the start of the round
-          "initial_stack": 500, 
-    
-    // Returns true if it is your turn and false if it is not your turn
-          "your_turn": false, 
-    
-    // Returns your current bet (this is an absolute value from the start of the round)
-          "current_bet": 50, 
-    
-    // Returns your minimum bet to stay in the round
-          "minimum_bet": 50,
-    
-    // Returns your maximum bet that you can place (always the same as initial_stack)
-          "maximum_bet": 500, 
-    
-    // Returns your five-card hand
-          "hand": ["2S", "TH", "AH", "AD", "2D"],
-    
-    // Returns the current state of the round: 
-    // Either deal, draw, post_draw, or showdown.
-    // You should bet when the betting_phase is "deal" or "post_draw" and
-    // you should replace cards when the betting_phase is "draw"
-          "betting_phase": "bet", 
-    
-    // Returns the state of all players at the current table
-          "players_at_table": [
-              { "player_name":    "Aida Gusikowski", 
-                "initial_stack":  250, 
-                "current_bet":    20, 
-                "actions": [
-                  { "action":"ante", "amount": 20 },
-                  { "amount":"bet", "amount": 50" }
+  %h2 
+    %strong GET 
+    http://no-limit-code-em.com/api/players/PLAYER_KEY 
+  .content
+    %p Retrieves the current state of the game as seen by your player.
+    Just pass your player key as part of the path. There are no querystring parameters for this request.
+
+    .title Example request:
+    %pre
+      GET http://no-limit-code-em.com/api/players/46e6b984-7166-4dd8-a763-52408278a852
+
+    .title Example response:
+    %pre
+      :preserve
+        {
+        // Returns your name
+              "name" =>"Lacey Kuhic", 
+        
+        // Returns your stack as it was at the start of the round
+              "initial_stack": 500, 
+        
+        // Returns true if it is your turn and false if it is not your turn
+              "your_turn": false, 
+        
+        // Returns your current bet (this is an absolute value from the start of the round)
+              "current_bet": 50, 
+        
+        // Returns your minimum bet to stay in the round
+              "minimum_bet": 50,
+        
+        // Returns your maximum bet that you can place (always the same as initial_stack)
+              "maximum_bet": 500, 
+        
+        // Returns your five-card hand
+              "hand": ["2S", "TH", "AH", "AD", "2D"],
+        
+        // Returns the current state of the round: 
+        // Either deal, draw, post_draw, or showdown.
+        // You should bet when the betting_phase is "deal" or "post_draw" and
+        // you should replace cards when the betting_phase is "draw"
+              "betting_phase": "bet", 
+        
+        // Returns the state of all players at the current table
+              "players_at_table": [
+                  { "player_name":    "Aida Gusikowski", 
+                    "initial_stack":  250, 
+                    "current_bet":    20, 
+                    "actions": [
+                      { "action":"ante", "amount": 20 },
+                      { "amount":"bet", "amount": 50" }
+                    ]
+                  }
                 ]
-              }
-            ]
 
-    // Returns the number of players remaining in the tournament
-          "total_players_remaining": 100,
+        // Returns the number of players remaining in the tournament
+              "total_players_remaining": 100,
 
-    // Returns the id of your table
-          "table_id": 12, 
-    
-    // Returns the id of the current round
-          "round_id": 59, 
-    
-    // Returns a log of all rounds that you have played
-    // Note that a non-negative stack change means you won or broke even during the round,
-    // whereas a negative stack change means you lost during the round. We will only return
-    // the past 10 rounds' worth of history.
-          "round_history": [
-            {"round_id": 59, "table_id": 3, "stack_change": 2368}, 
-            {"round_id": 58, "table_id": 3, "stack_change": 120}
-          ]
-    
-    // Returns the time at which you lost
-          "lost_at": null
-    }
+        // Returns the id of your table
+              "table_id": 12, 
+        
+        // Returns the id of the current round
+              "round_id": 59, 
+        
+        // Returns a log of all rounds that you have played
+        // Note that a non-negative stack change means you won or broke even during the round,
+        // whereas a negative stack change means you lost during the round. We will only return
+        // the past 10 rounds' worth of history.
+              "round_history": [
+                {"round_id": 59, "table_id": 3, "stack_change": 2368}, 
+                {"round_id": 58, "table_id": 3, "stack_change": 120}
+              ]
+        
+        // Returns the time at which you lost
+              "lost_at": null
+        }
+  %h2 
+    %strong POST 
+    \/api/players/PLAYER_KEY/action
+  .content
+    %p Place your bet, fold your hand, or replace your cards during the draw phase.
 
-%h2 POST /api/players/PLAYER_KEY/action
-Place your bet, fold your hand, or replace your cards during the draw phase.
+    .title Parameters
+    %table.table.table-striped.table-bordered
+      %tr
+        %td 
+          action_name
+        %td 
+          Either "bet", "fold", or "replace"
+      %tr
+        %td 
+          amount
+        %td 
+          If you are betting, set your bet (this is an absolute amount), otherwise leave it as nil when replacing.
+      %tr
+        %td 
+          cards
+        %td 
+          If you are replacing, set cards as a string-separated list of the cards you are discarding. E.g., "Ac 5s" or "4H 3D TS" or "" to replace nothing. Otherwise, leave nil or blank.
 
-%h3 Parameters
-%table.table.table-striped{:style => "border-top: 1px solid #ddd;"}
-  %tr
-    %td
-      action_name
-    %td
-      Either "bet", "fold", or "replace"
-  %tr
-    %td
-      amount
-    %td
-      If you are betting, set your bet (this is an absolute amount), otherwise leave it as nil when replacing.
-  %tr
-    %td
-      cards
-    %td 
-      If you are replacing, set cards as a string-separated list of the cards you are discarding. E.g., "Ac 5s" or "4H 3D TS" or "" to replace nothing. Otherwise, leave nil or blank.
+    .title Example request:
+    %pre
+      POST http://no-limit-code-em.com/api/players/46e6b984-7166-4dd8-a763-52408278a852/action?action_name=bet&amount=20
+    %p or, equivalently:
+    %pre
+      :preserve
+        POST http://no-limit-code-em.com/api/players/46e6b984-7166-4dd8-a763-52408278a852/action
+        Headers:
+          Content-type: application/json
+        Body:
+          {"action_name":"bet", "amount":20}
 
-%h3 Example
-Request:
-%pre
-  POST http://no-limit-code-em.com/api/players/46e6b984-7166-4dd8-a763-52408278a852/action?action_name=bet&amount=20
-or, equivalently:
-%pre
-  :preserve
-    POST http://no-limit-code-em.com/api/players/46e6b984-7166-4dd8-a763-52408278a852/action
-    Headers:
-      Content-type: application/json
-    Body:
-      {"action_name":"bet", "amount":20}
-
-
-%h3 Response
-%p No JSON response is returned from the server.
+    .title Response
+    %p No JSON response is returned from the server.
