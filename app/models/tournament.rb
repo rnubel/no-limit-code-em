@@ -77,9 +77,11 @@ class Tournament < ActiveRecord::Base
 
   def current_ante
     num_active_players = self.players.playing.count
+    percent_active_players = num_active_players.to_f / self.players.count.to_f
+    percent_inactive_players = 1.0 - percent_active_players
     avg_chipstack = (AppConfig.tournament.initial_stack * players.count) / num_active_players
-    ante_percent = -0.0008 * num_active_players + 0.1
-    ante = (ante_percent * avg_chipstack).to_i
+    ante_percent = (0.08 / (1 + 100 * (2.71828 ** (-10 * percent_inactive_players)))) + 0.02
+    ante = (ante_percent * avg_chipstack).to_i.round(-1)
   end
 
   def table_size
