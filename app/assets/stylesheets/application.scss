@@ -136,6 +136,21 @@ i.chip {
   }
 } 
 
+.doc { 
+  margin: 0;
+  padding: 5px 10px;
+  font-size: 22px;
+  @include border-radius(8px 8px 0px 0px);
+  background: -moz-linear-gradient(top, white 0%, #f4f4f4 100%);
+  background: -webkit-linear-gradient(top, white 0%, #f4f4f4 100%);
+  background: linear, to bottom, white 0%, #f4f4f4 100%; 
+  border: 1px solid #ddd;
+}
+.well {
+  line-height: 22px;
+  background: #fff !important;
+  font-size: 15px;
+}
 .bs-docs-sidenav {
   width: 228px;
   padding: 0;
@@ -182,7 +197,6 @@ i.chip {
   opacity: .25;
 }
 .bs-docs-sidenav > li > a:hover {
-  background-color: #f5f5f5;
 }
 .bs-docs-sidenav a:hover .icon-chevron-right {
   opacity: .5;
@@ -203,4 +217,27 @@ i.chip {
   top: auto;
   bottom: 270px;
 }
-
+.docs h2 {
+  background: #fff;
+  background: -moz-linear-gradient(top, white 0%, #f4f4f4 100%);
+  background: -webkit-linear-gradient(top, white 0%, #f4f4f4 100%);
+  background: linear, to bottom, white 0%, #f4f4f4 100%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 4px 4px 0 0;
+  color: #444;
+  font-size: 1.25em;
+  font-weight: 400;
+  margin: 0;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5); 
+  margin: 0;
+  padding: 5px 10px;
+  border-radius: 8px 8px 0px 0px;
+  border: 1px solid #ddd; @include border-radius(8px 8px 0px 0px !important); 
+}
+.docs .table-bordered { @include border-radius(0px !important); }
+.docs .table { font-size: 14px; }
+.docs table th, .docs .table td { background: #fff; }
+.table-bordered thead:last-child tr:last-child th:first-child, .table-bordered tbody:last-child tr:last-child td:first-child, .table-bordered tfoot:last-child tr:last-child td:first-child,
+.table-bordered thead:first-child tr:first-child th:first-child, .table-bordered tbody:first-child tr:first-child td:first-child { @include border-radius(0); }
+.docs .content { margin-bottom: 30px; border-bottom: 1px solid #ddd; padding: 20px; background: #fff;  border-left: 1px solid #ddd; border-right: 1px solid #ddd; }
+.title { font-size: 16px; font-weight: bold; border-top: 1px dashed #ddd; margin-top: 20px;  padding: 20px 0px; }
