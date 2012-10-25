@@ -9,7 +9,10 @@ $(function() {
     $('.loader').fadeIn();
     $.ajax({
       url: '/tournaments/refresh',
-      type: 'GET'
+      type: 'GET',
+      success: function() {
+        $('.loader').fadeOut();
+      }
     });
   }, 7000);
 });
