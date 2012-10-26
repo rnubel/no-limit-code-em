@@ -12,9 +12,9 @@ class SmartBot < Bot
     hand = PokerHand.new(s["hand"])
     pot = s["players_at_table"].map { |p| p["current_bet"] }.sum
     if s["current_bet"] && s["current_bet"] != s["minimum_bet"]
-      potodds = (s["minimum_bet"] - s["current_bet"].to_f) / pot.to_f
+      potodds = pot.to_f / (pot.to_f + (s["minimum_bet"] - s["current_bet"].to_f))
     else
-      potodds = s["minimum_bet"] / pot.to_f
+      potodds = pot.to_f / (pot.to_f + s["minimum_bet"].to_f)
     end
     case s["betting_phase"]
     when 'deal'
@@ -80,7 +80,7 @@ class SmartBot < Bot
         #logger.info "hand: #{hand.to_s}, go all in"
         action(:action_name => "bet", :amount => s["maximum_bet"])
       when "Pair"
-        if potodds >= 0.5
+        if potodds >= 0.3
           action(:action_name => "bet", :amount => s["minimum_bet"])
         else
           action(:action_name => "fold")
