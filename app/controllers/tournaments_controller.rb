@@ -10,8 +10,11 @@ class TournamentsController < ApplicationController
   end
 
   def refresh
-    tournament = Tournament.playing.last
+    tournament = Tournament.last
     
+    @scoreboard = []
+    @tables = []
+
     if tournament
       p = TournamentPresenter.new(tournament)
 

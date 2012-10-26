@@ -1,0 +1,31 @@
+.docs
+  - r = @round
+  %h2= "Round: #{r.id}"
+  %table.table.table-bordered.table-striped{:style => "margin-bottom:20px;background:#fff;"}
+    %tbody
+      - r.initial_state && r.initial_state.simulate!.players.each do |p|
+        %tr
+          %td{:colspan=>2}= @players[p[:id]] && @players[p[:id]].name
+          %td dealt
+          %td= p[:hand] && p[:hand].join(" ")
+      - r.state && r.state.log && r.state.log.each do |log|
+        %tr
+          - if log[:round]
+            %td{:colspan => 4, :style => "background:#fff;color:#000;font-size:24px"}= log[:round].humanize
+          - else
+            %td{:colspan => 2}
+              = player_name(log[:player_id])
+            %td 
+              = log[:action]
+            %td 
+              = log[:amount] || log[:cards] && log[:cards].join(" ")
+      %tr
+        %td{:colspan => 4, :style => "background:#fff;color:#000;font-size:24px"} Final Hands
+        - r.state.players.each do |p|
+          %tr 
+            %td{:colspan => 2} 
+              = player_name(p[:id]) 
+            %td
+              = p[:hand].join(" ")
+            %td
+              = PokerHand.new(p[:hand]).rank 

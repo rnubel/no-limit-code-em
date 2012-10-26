@@ -9,6 +9,7 @@ NoLimitV2::Application.routes.draw do
       get 'refresh'
     end
   end
+  resources :rounds
 
   resources :players do
   end
