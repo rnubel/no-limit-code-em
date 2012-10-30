@@ -3,6 +3,6 @@
     For player: 
     %strong= @player.name
   .content
-    - @player.rounds.each do |r|
+    - @player.rounds.order(:id).each do |r|
       = link_to "Round #{r.id}", round_path(r), :style => "display:block"
 
