@@ -6,4 +6,4 @@
       %h2 
         Players
         .loader
-      = render :partial => "players", :locals => {:players => @tournament.players}
+      = render :partial => "players", :locals => {:players => @tournament.players.order('lost_at DESC')}

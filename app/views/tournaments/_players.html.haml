@@ -3,7 +3,9 @@
     %tr
       %th Player Name
   %tbody
-    - players.each do |p|
+    - players.each_with_index do |p, i|
       %tr
       %td
-        %a(href="/players/#{p.id}")= p.name
+        %p
+          #{ordinalize(i+1)} - 
+          %a(href="/players/#{p.id}")= p.name

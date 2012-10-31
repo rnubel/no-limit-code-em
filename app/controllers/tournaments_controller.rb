@@ -2,7 +2,7 @@ class TournamentsController < ApplicationController
   respond_to :json
 
   def index
-    @tournaments = Tournament.where(:open => false, :playing => false).all
+    @tournaments = Tournament.where(:open => false, :playing => false).order(:id).all
   end
 
   def show
