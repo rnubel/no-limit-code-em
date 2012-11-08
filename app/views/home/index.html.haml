@@ -1,14 +1,27 @@
-.span4
-  %aside#sidebar
-    %h2 
-      Scoreboard
-      .loader
-    .scoreboard_wrapper
-      = render :partial => "tournaments/scoreboard", :locals => {:scoreboard => @scoreboard} if @scoreboard
-.span8
-  %section#content
-    %h2 
-      Tables
-      .loader
-    .poker_tables_wrapper
-      = render :partial => "tournaments/poker_tables", :locals => {:tables => @tables} if @tables
+-#
+  .span4
+    %aside#sidebar
+      %h2 
+        Scoreboard
+        .loader
+      .scoreboard_wrapper
+        = render :partial => "tournaments/scoreboard", :locals => {:scoreboard => @scoreboard} if @scoreboard
+  .span8
+    %section#content
+      %h2 
+        Tables
+        .loader
+      .poker_tables_wrapper
+        = render :partial => "tournaments/poker_tables", :locals => {:tables => @tables} if @tables
+
+.docs
+  %h2 Remote Hackathon - 11/15/2012
+  .content
+    %h3 Want more?
+    %p
+      Interested in a second chance at trying out your bot? Enova will be running a final, remote hackathon on <b>Thursday, November 15th</b>! There won't be any prizes, but there will be unending glory.
+    %p
+      Everyone is welcome to compete. The event will start around <b>6:30pm</b>, with tournaments running frequently until <b>10pm</b>.
+
+    %h3 Important note
+    %p If you participated at the U of I hackathon, be aware that <b>the code has changed entirely.</b> It's still five-card draw, but the betting semantics are different, and the format of how we return the state and how you specify your action is now different. Your logic will still apply, but you may need to adjust how you parse and send requests. Read the redesigned <b>Docs</b> pages to get the full info.
