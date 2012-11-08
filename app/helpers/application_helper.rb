@@ -1,4 +1,5 @@
 module ApplicationHelper
+  include ActiveSupport::Inflector
   def stack_display(chips, border=true)
     colors = {:white=>1, :red=>5, :green=>25, :black=>100, :purple=>500, :yellow=>1000, :gray=>5000}
 
