@@ -2,6 +2,9 @@
   %thead
     %tr
       %th Player Name
+      %th Hands Played
+      %th Hands Won
+      %th Hands Lost
   %tbody
     - players.each_with_index do |p, i|
       %tr
@@ -9,3 +12,9 @@
         %p
           #{ordinalize(i+1)} - 
           %a(href="/players/#{p.id}")= p.name
+      %td
+        = p.round_players.count
+      %td
+        = p.round_players.where("stack_change >= 0").count
+      %td
+        = p.round_players.where("stack_change < 0").count

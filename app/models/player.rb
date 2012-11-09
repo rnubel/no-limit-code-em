@@ -13,6 +13,7 @@ class Player < ActiveRecord::Base
 
   scope :ordered, order("id ASC")
   scope :playing, where("lost_at IS NULL")
+  scope :ranked, order("lost_at DESC")
 
   def self.standing
     joins("LEFT JOIN seatings ON seatings.player_id = players.id AND seatings.active").where("seatings.id IS NULL")
