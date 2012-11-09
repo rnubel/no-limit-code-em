@@ -32,6 +32,10 @@
       %a{:href => "#sandbox", :"data-toggle" => "tab"}
         %i.icon.icon-chevron-right
         Sandbox Testing
+    %li
+      %a{:href => "#tips", :"data-toggle" => "tab"}
+        %i.icon.icon-chevron-right
+        Tips
 
 .span8
   .tab-content
@@ -55,3 +59,5 @@
       = render :partial => "pages/docs/sandbox_testing" 
     #ranking.tab-pane
       = render :partial => "pages/docs/ranking_five_card" 
+    #tips.tab-pane
+      = render :partial => "pages/docs/tips" 

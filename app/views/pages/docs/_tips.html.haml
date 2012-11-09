@@ -1,0 +1,40 @@
+.docs
+  %h2 Tips
+  .content
+    %p Here are some tips from Enova to help you out:
+    %ol
+      %li Focus on getting your communication with the server working <b>first</b>. Players who wait until the final stage to get their actual requests working often never get them working, resulting in a lot of wasted effort. A bot who just checks and folds has a better chance of winning than a bot with a complicated strategy but never makes a valid action!
+      %li{:style => "margin-top:5px;"}
+        Make note of the betting semantics. They're a little strange but are easier for our server (and probably your bot) to understand. Here's an example, including a full set of actions for a round to make it clear:
+        %ol.spaced
+          %li Bob and Joe meet the ante of 20. The round begins in the 'deal' phase.
+          %li 
+            Bob wants to raise by 10. He sends the request:
+            .div{:style => "padding:8px"}
+              <code>{ "action_name": "bet", "amount": 30 }</code>
+          %li
+            Joe decides to call. He sends the request:
+            .div{:style => "padding:8px"}
+              <code>{ "action_name": "bet", "amount": 30 }</code>
+          %li 
+            The betting phase moves to 'draw'. Bob decides to replace his ace of spaces and jack of clubs.
+            .div{:style => "padding:8px"}
+              <code>{ "action_name": "replace", "cards": "AS JC" }</code>
+          %li 
+            Joe decides to replace nothing.
+            .div{:style => "padding:8px"}
+              <code>{ "action_name": "replace", "cards": "" }</code>
+          %li
+            The betting phase moves 'post_draw'. This is another betting round, and Bob starts off by checking.
+            .div{:style => "padding:8px"}
+              <code>{ "action_name": "bet", "amount": 30 }</code>
+          %li
+            Joe decides to raise by 5.
+            .div{:style => "padding:8px"}
+              <code>{ "action_name": "bet", "amount": 35 }</code>
+          %li
+            Bob gives up and folds.
+            .div{:style => "padding:8px"}
+              <code>{ "action_name": "fold }</code>
+          %li
+            The round ends, and Bob loses 30 chips to Joe.
