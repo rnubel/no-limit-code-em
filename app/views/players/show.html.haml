@@ -13,6 +13,6 @@
             = link_to "#{r.round_id}", round_path(r.round), :style => "display:block"
           %td
             - if r.stack_change
-              = stack_change < 0 ? "Lost #{r.stack_change.abs}" : "Won #{r.stack_change}"
+              = r.stack_change < 0 ? "Lost #{r.stack_change.abs}" : "Won #{r.stack_change}"
             - else
               Didn't finish
