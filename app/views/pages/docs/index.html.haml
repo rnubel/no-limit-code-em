@@ -3,19 +3,19 @@
     %li.active
       %a{:href => "#rules", :"data-toggle" => "tab"} 
         %i.icon.icon-chevron-right
-        Rules
+        Overview
     %li
-      %a{:href => "#request", :"data-toggle" => "tab"} 
+      %a{:href => "#api", :"data-toggle" => "tab"} 
         %i.icon.icon-chevron-right
-        Request and Response 
+        API
     %li
       %a{:href => "#draw", :"data-toggle" => "tab"}
         %i.icon.icon-chevron-right
-        Draw Poker
+        Game Rules
     %li
       %a{:href => "#suite", :"data-toggle" => "tab"}
         %i.icon.icon-chevron-right
-        Suit Lookup 
+        Card Suits and Values
     %li
       %a{:href => "#ranking", :"data-toggle" => "tab"}
         %i.icon.icon-chevron-right
@@ -43,7 +43,7 @@
       = render :partial => "pages/docs/rules"
     #suite.tab-pane
       = render :partial => "pages/docs/help"
-    #request.tab-pane
+    #api.tab-pane
       = render :partial => "pages/docs/docs"
     #draw.tab-pane
       = render :partial => "pages/docs/draw_poker"
