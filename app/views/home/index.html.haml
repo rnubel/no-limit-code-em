@@ -1,4 +1,9 @@
--#
+.alert.alert-info
+  Join us in IRC! Click here:
+  %a{:href => "http://webchat.freenode.net/?channels=enova&uio=MTE9ODIdf"}
+    http://webchat.freenode.net/?channels=enova&uio=MTE9ODIdf
+  
+- if Time.now >= Time.parse("2012-11-15 6:00PM CST")
   .span4
     %aside#sidebar
       %h2 
@@ -13,19 +18,19 @@
         .loader
       .poker_tables_wrapper
         = render :partial => "tournaments/poker_tables", :locals => {:tables => @tables} if @tables
+- else
+  .docs
+    %h2 Remote Hackathon - 11/15/2012
+    .content
+      %h3 Want more?
+      %p
+        Interested in a second chance at trying out your bot? Enova will be running a final, remote hackathon on <b>Thursday, November 15th</b>! Everyone and anyone is welcome to compete. There won't be any prizes, but there will be unending glory.
+      .well
+        <b style='color:#88F;font-size:20px;margin-right:5px;'>!</b> The event will start around <b>6:30pm CST</b>, with tournaments running frequently until <b>10pm CST</b>.
 
-.docs
-  %h2 Remote Hackathon - 11/15/2012
-  .content
-    %h3 Want more?
-    %p
-      Interested in a second chance at trying out your bot? Enova will be running a final, remote hackathon on <b>Thursday, November 15th</b>! Everyone and anyone is welcome to compete. There won't be any prizes, but there will be unending glory.
-    .well
-      <b style='color:#88F;font-size:20px;margin-right:5px;'>!</b> The event will start around <b>6:30pm CST</b>, with tournaments running frequently until <b>10pm CST</b>.
-
-    %h3 Important note
-    %p
-      If you participated at the UIUC hackathon, be aware that <b>the code has changed entirely.</b> It's still five-card draw, and the scheme of having an automated bot
-      polling and posting actions are the same, but the betting semantics and the formats of how we return the state and how you specify your action are different.
-      Your logic will still apply, but you will need to adjust how you parse and 
-      send requests. Read the redesigned <a href='pages/docs/index.html'><b>Docs</b> page</a> to get the full info.
+      %h3 Important note
+      %p
+        If you participated at the UIUC hackathon, be aware that <b>the code has changed entirely.</b> It's still five-card draw, and the scheme of having an automated bot
+        polling and posting actions are the same, but the betting semantics and the formats of how we return the state and how you specify your action are different.
+        Your logic will still apply, but you will need to adjust how you parse and 
+        send requests. Read the redesigned <a href='pages/docs/index.html'><b>Docs</b> page</a> to get the full info.
