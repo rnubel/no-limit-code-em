@@ -48,7 +48,7 @@ class Bot
     logger.info "[#{@name}] (#{Time.now}) #{s.inspect}"
     if s["betting_phase"] == 'deal' || s["betting_phase"] == 'post_draw'
       n = rand(100)
-      if n < 30
+      if n < 50
         action(:action_name => "fold")
       else
         if n < 80 # Call
