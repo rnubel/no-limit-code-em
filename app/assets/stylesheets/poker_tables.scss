@@ -53,24 +53,42 @@
       text-shadow: 0px 1px 0px rgba(0,0,0,0.7);
       @include border-radius(8px 8px 0px 0px);
       border-bottom: 2px solid rgba(0,0,0,0.7);
-
-      &.last_winner { 
-        margin-top: 10px;
-        @include border-radius(0 0 8px 8px);
-        background: rgba(0,0,0,0.2);
-        border-bottom: none;
-        text-shadow: none;
-        line-height: 24px;
-        font-size: 1em;
-        text-align: left;
-
-        i {
-          @include opacity(0.3);
-          margin-right: 3px;
-        }
-      }
+      i { margin-top: 2px }
     }
 
+    .pot {
+      background: rgba(0,0,0,0.2);
+      border-bottom: none;
+      text-shadow: none;
+      line-height: 24px;
+      font-size: 1em;
+      text-align: left;
+      padding: 3px 9px; 
+      margin: 0;
+      color: #fff;
+      border-bottom: 2px solid #000;
+    }
+
+    .last_winner { 
+      @include border-radius(0 0 8px 8px);
+      background: rgba(0,0,0,0.1);
+      border-bottom: none;
+      text-shadow: none;
+      line-height: 24px;
+      font-size: 1em;
+      text-align: left;
+      padding: 3px 9px; 
+      margin: 0;
+      color: rgba(255,255,255,0.4);
+      span { display: block; }
+      span:first-child { color: rgba(255,255,255,0.8); }
+      span:last-child { color: rgba(255,255,255,0.2); }
+
+      i {
+        @include opacity(0.3);
+        margin-right: 3px;
+      }
+    }
   }
 }
  

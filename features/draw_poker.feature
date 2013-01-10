@@ -6,7 +6,7 @@ Feature: Action steps
   
   Scenario: Simplest table
     When 2 players are at a table
-    And player 1 bets 20
+    And player 1 bets 24
     And player 2 folds
     Then player 1 wins the round
 

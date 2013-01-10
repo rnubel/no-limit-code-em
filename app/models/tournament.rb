@@ -59,10 +59,10 @@ class Tournament < ActiveRecord::Base
   end
   
   # Fold any players who have been inactive on their turn for at least AppConfig.tournament.timeout seconds.
-  def timeout_players!
+  def timeout_players!(timeout = AppConfig.tournament.timeout)
     self.tables.playing.each do |table|
       if player = table.current_player
-        if player.idle_time > AppConfig.tournament.timeout
+        if player.idle_time > timeout
           puts "!! Timing out #{player.id} for taking #{player.idle_time} seconds to act!"
           begin
             TimeoutLog.create(:player => player, :round => table.current_round)
@@ -76,9 +76,12 @@ class Tournament < ActiveRecord::Base
   end
 
   def current_ante
-    base = config.ante.base
-    base + ((self.rounds.count / config.ante.rounds_per_increase) ** config.ante.inc_power).to_i *
-            config.ante.increase
+    num_active_players = self.players.playing.count
+    percent_active_players = num_active_players.to_f / self.players.count.to_f
+    percent_inactive_players = 1.0 - percent_active_players
+    avg_chipstack = (AppConfig.tournament.initial_stack * players.count) / num_active_players
+    ante_percent = (0.08 / (1 + 100 * (2.71828 ** (-10 * percent_inactive_players)))) + 0.02
+    ante = (ante_percent * avg_chipstack).to_i.round(-1)
   end
 
   def table_size

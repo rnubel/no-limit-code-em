@@ -10,19 +10,35 @@ module Api
       tournament = Tournament.open.last
 
       if tournament
-        @player = tournament.players.create! name: params[:name],
-                                             key: SecureRandom.uuid
-        render :json => { :name =>  @player.name,
-                          :key =>   @player.key   }
+        @player = tournament.players.new name: params[:name],
+                                         key: SecureRandom.uuid
+        if @player.valid?
+          @player.save!
+          message = { :name => @player.name,
+                      :key =>  @player.key,
+                      :message => "Your player key is #{ @player.key }" }
+        else
+          message = { :message => "You must register with a valid and unique player name." }
+        end
+
+        respond_to do |format|
+          format.json { render :json => message }
+          format.xml  { render :xml => message }
+          format.html { redirect_to '/pages/registration', :notice => message[:message] }
+        end
       else
-        render_not_found "The tournament is currently closed."
+        respond_to do |format|
+          format.json { render_not_found "The tournament is currently closed." }
+          format.xml  { render_not_found "The tournament is currently closed." }
+          format.html { redirect_to '/pages/registration', :alert => "The tournament is currently closed." }
+        end
       end
     end
 
     # GET /api/players/:key
     def show
       if @player = Player.find_by_key(params[:id])
-        render :json => status(@player)
+        render :json => player_status(@player)
       else
         render_not_found "No player registered with that key."
       end
@@ -44,14 +60,15 @@ module Api
       elsif @player.valid_action? action_params
         @player.take_action! action_params
 
-        render :json => status(@player)
+        render :json => player_status(@player)
       else
         render_unprocessable_entity "That action (#{action_params.inspect}) is not valid."
       end
     end
 
     private
-    def status(player)
+    # can't call this status, otherwise redirect_to whines
+    def player_status(player)
       PlayerPresenter.new(player).to_json
     end
 

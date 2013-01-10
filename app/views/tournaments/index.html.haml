@@ -2,14 +2,32 @@
   %thead
     %tr
       %th
-        ID
+        Date/time
       %th
         Participants
+      %th
+        First place
+      %th
+        Second place
+      %th
+        Third place
+      %th
+        &nbsp;
   %tbody
     - @tournaments.each do |tournament|
       %tr
       - if !(tournament.playing? || tournament.open?)
         %td
-          %a(href="/tournaments/#{tournament.id}")= tournament.id
+          %a(href="/tournaments/#{tournament.id}")= tournament.created_at.localtime.strftime("%d %b %I:%M %p")
         %td
           = tournament.players.count
+        %td
+          = tournament.players.ranked.first.try(:name) || "None"
+        %td
+          = tournament.players.ranked.second.try(:name) || "None"
+        %td
+          = tournament.players.ranked.third.try(:name) || "None"
+        %td
+          %a(href="/tournaments/#{tournament.id}")
+            View Logs
+            %i.icon.icon-chevron-right

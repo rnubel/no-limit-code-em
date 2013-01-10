@@ -1,0 +1,13 @@
+.span12
+  .registration
+    %h2 Registration
+    = form_tag("/api/players", :method => :post) do
+      - flash.each do |type, value|
+        .row
+          .alert{:class => "alert-#{type.to_s}", :"data-dismiss" => "alert"}
+            %i.icon.icon-exclamation-sign
+            = value  
+      .row
+        = text_field_tag 'name', nil, :class => "field", :placeholder => "username"
+      .row.big
+        = submit_tag "Enter Tournament", :class => "btn btn-large btn-primary"

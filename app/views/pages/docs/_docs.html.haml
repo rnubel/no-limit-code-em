@@ -1,0 +1,170 @@
+.docs
+  %h2 Server API
+  .well
+    %p Your bot will communicate with our server through HTTP requests. There are only two requests you will need to make: 
+    %ol
+      %li
+        %a{:href => '#check_status'} Check your status
+      %li
+        %a{:href => '#make_action'} Take an action
+    %p 
+      To test your bot's interaction with the API, see the 
+      %a{:href => "#sandbox", :"data-toggle" => "tab"}
+        Sandbox Testing 
+      page. For an example round, see the new
+      %a{:href => "#tips", :"data-toggle" => "tab"}
+        Tips
+      page. For some pseudocode to help see how everything should be structured, check out our
+      %a{:href => "#example", :"data-toggle" => "tab"}
+        Example bot
+      \.
+
+  %h2 Request Types
+  .well
+    %p There are 2 types of requests you will need to make to the server, GET and POST. If you aren't familiar with the terms, a GET request is the type of HTTP request your web browser makes to a server when you simply visit that page by typing in a URL. On the other hand, a POST request is the type of request made when you submit a web form. Consult your HTTP library-of-choice's documentation to see how to send a request of each type.
+
+  %a{:name => 'check_status'}
+  %h2
+    Check your status:<br/>
+    %strong GET 
+    http://no-limit-code-em.com/api/players/PLAYER_KEY 
+  .content
+    %p Retrieves the current state of the game as seen by your player.
+    Just pass your player key as part of the path. There are no querystring parameters for this request.
+
+    .title Example request:
+    %pre
+      GET http://no-limit-code-em.com/api/players/46e6b984-7166-4dd8-a763-52408278a852
+
+    .title Example response:
+    %pre
+      :preserve
+        {
+          // Your bot's name
+          "name": "Lacey Kuhic", 
+        
+          // Your stack as it was at the start of the hand 
+          // (*before* the ante)
+          "initial_stack": 500, 
+        
+          // Returns true if it is your turn and false if 
+          // it is not your turn.
+          "your_turn": false, 
+        
+          // Your current bet (this is an absolute value 
+          // from the start of the round, including the 
+          // ante).
+          "current_bet": 50, 
+        
+          // The minimum bet you must make to stay in the 
+          // round. If the current betting_phase is not deal 
+          // or post_draw, you can ignore this value.
+          "minimum_bet": 50,
+        
+          // The maximum bet that you can place (always the 
+          // same as initial_stack, since we view bets as an 
+          // absolute amount from the start of the round). We 
+          // send this parameter so that you can guarantee 
+          // your bet amount is between minimum_bet and 
+          // maximum_bet easily.
+          "maximum_bet": 500, 
+        
+          // Your five-card hand. This is an array of strings. 
+          // See the Suit Lookup tab for info on the card values.
+          "hand": ["2S", "TH", "AH", "AD", "2D"],
+        
+          // Returns the current state of the round: 
+          // Either deal, draw, post_draw, or showdown.
+          // You should bet when the betting_phase is "deal" or 
+          // "post_draw", and you should replace cards when the 
+          // betting_phase is "draw". You do not need to do 
+          // anything when the betting_phase is "showdown".
+          "betting_phase": "deal", 
+        
+          // The state of all players at the current table. If 
+          // you want to tell which players have folded, look
+          // for players with an action 'fold' in their history.
+          "players_at_table": [
+            { "player_name":    "Aida Gusikowski", 
+              "initial_stack":  250, 
+              "current_bet":    50, 
+              "actions": [
+                { "action":"ante", "amount": 20 },
+                { "action":"bet", "amount": 50 }
+              ]
+            },
+            { "player_name":    "Person Bot", 
+              "initial_stack":  220, 
+              "current_bet":    50, 
+              "actions": [
+                { "action":"ante", "amount": 20 },
+                { "action":"bet", "amount": 50 }
+              ]
+            }
+          ]
+
+          // The number of players remaining in the tournament.
+          "total_players_remaining": 100,
+
+          // The id of your table. Probably not useful for your bot.
+          "table_id": 12, 
+        
+          // The id of the current round. Useful if you're tracking 
+          // round progress on your own.
+          "round_id": 59, 
+        
+          // An array of recent rounds that your bot has played.
+          // Note that a non-negative stack change means you won or 
+          // broke even during the round, whereas a negative stack 
+          // change means you lost during the round. We will only 
+          // return the past 10 rounds' worth of history.
+          "round_history": [
+            {"round_id": 59, "table_id": 3, "stack_change": 2368}, 
+            {"round_id": 58, "table_id": 3, "stack_change": 120}
+          ]    
+        
+          // The time at which you lost. If this is non-null, you 
+          // can stop sending requests.
+          "lost_at": null
+        }
+  
+  %a{:name => 'make_action'}
+  %h2 
+    Take an action<br/>
+    %strong POST 
+    \/api/players/PLAYER_KEY/action
+  .content
+    %p Place your bet, fold your hand, or replace your cards during the draw phase.
+
+    .title Parameters
+    %table.table.table-striped.table-bordered
+      %tr
+        %td 
+          action_name
+        %td 
+          Either "bet", "fold", or "replace"
+      %tr
+        %td 
+          amount
+        %td 
+          If you are betting, set your bet (this is an absolute amount), otherwise leave it as nil when replacing.
+      %tr
+        %td 
+          cards
+        %td 
+          If you are replacing, set cards as a string-separated list of the cards you are discarding. E.g., "Ac 5s" or "4H 3D TS" or "" to replace nothing. Otherwise, leave nil or blank.
+
+    .title Example request:
+    %pre
+      POST http://no-limit-code-em.com/api/players/46e6b984-7166-4dd8-a763-52408278a852/action?action_name=bet&amount=20
+    %p or, equivalently:
+    %pre
+      :preserve
+        POST http://no-limit-code-em.com/api/players/46e6b984-7166-4dd8-a763-52408278a852/action
+        Headers:
+          Content-type: application/json
+        Body:
+          {"action_name":"bet", "amount":20}
+
+    .title Response
+    %p The response will be the same format as for the GET request, but reflecting that your action has been taken.

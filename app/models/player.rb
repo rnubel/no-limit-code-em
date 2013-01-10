@@ -9,9 +9,11 @@ class Player < ActiveRecord::Base
   attr_accessible :initial_stack, :latest_stack, :name, :key
 
   validates_presence_of :name, :key
+  validates_uniqueness_of :name, :key, :scope => [:tournament_id], :case_sensitive => true
 
   scope :ordered, order("id ASC")
   scope :playing, where("lost_at IS NULL")
+  scope :ranked, order("lost_at DESC")
 
   def self.standing
     joins("LEFT JOIN seatings ON seatings.player_id = players.id AND seatings.active").where("seatings.id IS NULL")
@@ -44,7 +46,7 @@ class Player < ActiveRecord::Base
       q = q.where("round_id < #{round.id}")
       key = "round-id/#{round.id}"
     else
-      key = "round-count/#{rounds.over.count}"
+      key = "round-count/#{rounds.over.count}/#{lost_at.nil?}"
     end
 
     Rails.cache.fetch("players/#{id}/stack/#{key}") do

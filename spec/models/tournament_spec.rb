@@ -76,26 +76,21 @@ describe Tournament do
     end
 
     describe "#current_ante" do
-      before { # Fix config to specific values.
-        AppConfig.tournament.ante.base = 20
-        AppConfig.tournament.ante.rounds_per_increase = 10
-        AppConfig.tournament.ante.increase = 20
-        AppConfig.tournament.ante.inc_power = 1.5
-      }
 
       it "starts off at the base value" do
-        subject.current_ante.should == AppConfig.tournament.ante.base 
+        subject.current_ante.should == 10
       end
 
-      context "when 30 rounds have passed" do
+      context "when 2 players remain" do
         before {
-          subject.stubs(:rounds).returns(
-            mock("rel", :count => 30)
-          )
+          subject.players[0..2].each do |player|
+            player.lost_at = DateTime.now
+            player.save!
+          end
         }
 
-        it "returns the ante as 120" do
-          subject.current_ante.should == 120
+        it "returns the ante as 50" do
+          subject.current_ante.should == 50
         end
       end
     end

@@ -6,6 +6,13 @@ GIT
       ruby-poker
 
 GIT
+  remote: https://github.com/baroquebobcat/rack-throttle.git
+  revision: 3706324225c5c4d3d218aa3350e4898ae7e38900
+  specs:
+    rack-throttle (0.3.0)
+      rack (>= 1.0.0)
+
+GIT
   remote: https://github.com/robolson/ruby-poker.git
   revision: 7bdd90cfddfcaaaf5c3925b0592e7999c5cb859c
   specs:
@@ -236,6 +243,7 @@ DEPENDENCIES
   pg (= 0.13.2)
   poker_table (= 0.2.0)!
   pry
+  rack-throttle!
   rails
   rspec-rails
   ruby-poker!

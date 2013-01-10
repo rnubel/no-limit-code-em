@@ -1,30 +1,18 @@
-- @player.rounds.each do |r|
-  %h2= "Round: #{r.id}"
-  %table
-    %thead
+.docs
+  %h2
+    For player: 
+    %strong= @player.name
+  .content
+    %table.table.striped
       %tr
-        %th Round
-        %th Player
-        %th Action
-        %th Amount
-    %tbody
-      - r.initial_state && r.initial_state.simulate!.players.each do |p|
+        %th Round ID
+        %th Outcome
+      - @player.round_players.order(:id).each do |r|
         %tr
-          %td{:colspan=>2}= @players[p[:id]] && @players[p[:id]].name
-          %td dealt
-          %td= p[:hand] && p[:hand].join(" ")
-      - r.state && r.state.log && r.state.log.each do |log|
-        %tr
-          - if log[:round]
-            %td{:colspan => 4, :style => "font-size:24px"}= log[:round]  # Aww yeah Pete. Aww yeah. -Robert
-          - else
-            %td{:colspan => 2}
-              - if log[:player_id] && log[:player_id] == @player.id
-                %strong
-                  =player_name(log[:player_id])
-              - else
-                =player_name(log[:player_id])
-            %td 
-              %strong= log[:action]
-            %td 
-              %strong= log[:amount] || log[:cards] && log[:cards].join(" ")
+          %td
+            = link_to "#{r.round_id}", round_path(r.round), :style => "display:block"
+          %td
+            - if r.stack_change
+              = r.stack_change < 0 ? "Lost #{r.stack_change.abs}" : "Won #{r.stack_change}"
+            - else
+              Didn't finish

@@ -1,10 +1,9 @@
 - if (@tournament.playing? || @tournament.open?)
   %p Sorry, this tournament is not available to view
 - else
-  .span4
+  .span12
     %aside#sidebar
       %h2 
-        Players
+        By Player
         .loader
-      .scoreboard_wrapper
-        = render :partial => "players", :locals => {:players => @tournament.players}
+      = render :partial => "players", :locals => {:players => @tournament.players.ranked }
