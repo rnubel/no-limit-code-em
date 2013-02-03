@@ -13,5 +13,12 @@ module ApplicationHelper
       "<i class='chip chip-#{color} #{"chip-bordered" if border}'></i>".html_safe
     }.join
   end
- 
+
+  def nlce_active?
+    !!ENV['NLCE_ACTIVE']
+  end
+
+  def irc_link
+    ENV['IRC_LINK']
+  end
 end
