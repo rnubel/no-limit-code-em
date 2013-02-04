@@ -11,7 +11,7 @@ gem 'thin'
 gem 'rack-throttle', :git => 'https://github.com/baroquebobcat/rack-throttle.git'
 gem 'dalli'
 
-gem 'poker_table', '0.2.0', :git => 'git://github.com/rnubel/poker_table'
+gem 'poker_table', '0.3.0', :git => 'git://github.com/rnubel/poker_table', :branch => 'relative_betting'
 gem 'ruby-poker', :git => 'https://github.com/robolson/ruby-poker.git'
 
 gem 'figgy'

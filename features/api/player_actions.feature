@@ -66,7 +66,7 @@ Feature: Player actions in a tournament
     And I am not the dealer
     And I POST to "/api/players/{{@player.key}}/action" with:
       | action_name | bet |
-      | amount      | 25  |
+      | amount      | 0  |
     Then the table's first round should be in the "draw" betting round
     When I am the dealer  
     And I POST to "/api/players/{{@player.key}}/action" with:
