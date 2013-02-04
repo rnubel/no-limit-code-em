@@ -101,13 +101,13 @@ describe PlayerPresenter do
       end
 
       it "knows the latest bet" do
-        player.take_action! action: "bet", amount: "50"
+        player.take_action! action: "bet", amount: "30"
 
         subject.players_at_table
           .should == [ { :player_name => player.name, 
                          :initial_stack => player.stack,
-                         :current_bet => 50,
-                         :actions => antes + [{:action => "bet", :amount => 50}]},
+                         :current_bet => @table.current_round.ante + 30,
+                         :actions => antes + [{:action => "bet", :amount => 30}]},
                        { :player_name => player2.name, 
                          :initial_stack => player2.stack,
                          :current_bet => @table.current_round.ante,
@@ -141,7 +141,7 @@ describe PlayerPresenter do
 
     it "knows the minimum bet" do
       subject.to_json[:minimum_bet].should == @table.current_round.ante      
-      player.take_action! action: "bet", amount: @table.current_round.ante + 1
+      player.take_action! action: "bet", amount: 1
       subject.to_json[:minimum_bet].should == @table.current_round.ante + 1
     end
 
