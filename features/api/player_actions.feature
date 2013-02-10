@@ -55,6 +55,63 @@ Feature: Player actions in a tournament
       """
     And the table's first round should not be over
 
+  Scenario: Calling
+    Given a tournament is open
+    And 2 players are registered
+    And the tournament starts
+    And I am the dealer
+    And I POST to "/api/players/{{@player.key}}/action" with:
+      | action_name | bet |
+      | amount      | 5   |
+    And I am not the dealer
+    And I POST to "/api/players/{{@player.key}}/action" with:
+      | action_name | call |
+    Then the table's first round should be in the "draw" betting round
+
+  Scenario: Raising
+    Given a tournament is open
+    And 2 players are registered
+    And the tournament starts
+    And I am the dealer
+    And I POST to "/api/players/{{@player.key}}/action" with:
+      | action_name | raise |
+      | amount      | 5   |
+    And I am not the dealer
+    And I POST to "/api/players/{{@player.key}}/action" with:
+      | action_name | call |
+    Then the table's first round should be in the "draw" betting round
+
+  Scenario: Checking
+    Given a tournament is open
+    And 2 players are registered
+    And the tournament starts
+    And I am the dealer
+    And I POST to "/api/players/{{@player.key}}/action" with:
+      | action_name | bet |
+      | amount      | 25  |
+    And I am not the dealer
+    And I POST to "/api/players/{{@player.key}}/action" with:
+      | action_name | bet |
+      | amount      | 0  |
+    And I am the dealer  
+    And I POST to "/api/players/{{@player.key}}/action" with:
+      | action_name | replace |
+      | cards       | {{@player.hand.first}} {{@player.hand.second}}  |
+    And I am not the dealer  
+    And I POST to "/api/players/{{@player.key}}/action" with:
+      | action_name | replace |
+      | cards       | {{@player.hand.first}} {{@player.hand.second}} {{@player.hand.third.downcase}} |
+    When I am the dealer  
+    And I POST to "/api/players/{{@player.key}}/action" with:
+      | action_name | check |
+    Then the response status should be 200
+    When I am not the dealer  
+    And I POST to "/api/players/{{@player.key}}/action" with:
+      | action_name | check |
+    Then the response status should be 200
+    Then the table's first round should be in the "showdown" betting round
+
+
   Scenario: Replacement
     Given a tournament is open
     And 2 players are registered

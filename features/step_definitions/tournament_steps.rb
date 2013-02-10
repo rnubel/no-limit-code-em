@@ -34,7 +34,7 @@ end
 
 
 Then /the table's first round should be in the "(.*)" betting round/ do |round|
-  @tournament.tables.first.rounds.first.betting_round.should == round
+  @tournament.tables.first.rounds.ordered.first.betting_round.should == round
 end
 
 When /^table (\d) loses (\d+) players?$/ do |id, n|
