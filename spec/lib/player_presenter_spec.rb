@@ -1,20 +1,18 @@
 require 'spec_helper'
 
 describe PlayerPresenter do
+  let(:player){ FactoryGirl.create(:player, :registered) }
   subject { PlayerPresenter.new(player) }
 
   describe("#to_json") {
     let(:player){ FactoryGirl.create(:player, :registered) }
 
     it "has the needed keys" do
-      subject.to_json.keys.should =~ [:name, :initial_stack, :your_turn, :players_at_table, :total_players_remaining, :hand, :betting_phase, :table_id, :round_id, :round_history, :minimum_bet, :current_bet, :maximum_bet, :lost_at]
+      subject.to_json.keys.should =~ [:name, :initial_stack, :your_turn, :players_at_table, :total_players_remaining, :hand, :betting_phase, :table_id, :round_id, :round_history, :call_amount, :current_bet, :stack, :lost_at]
     end
   }
 
   describe "#hand" do
-    subject { PlayerPresenter.new(player) }
-    let(:player){ FactoryGirl.create(:player, :registered) }
-    
     it "handles nils" do
       subject.hand.should == ""
     end
@@ -25,32 +23,22 @@ describe PlayerPresenter do
     end
   end
 
-  describe "#minimum_bet" do
-    subject { PlayerPresenter.new(player) }
-    let(:player){ FactoryGirl.create(:player, :registered) }
-
-    context "when player has more chips than the current bet" do
-      it "returns the current bet" do
-        player.expects(:current_game_state).with(:minimum_bet).returns 20
-        player.expects(:stack).returns(25)
-
-        subject.minimum_bet.should == 20
-      end
+  describe "#call_amount" do
+    context "when no bets have been placed" do
+      its(:call_amount) { should == 0 }
     end
+    
+    context "when a bet has been placed for 10" do
+      before {
+        player.stubs(:current_bet).returns(5)
+        subject.stubs(:minimum_bet).returns(15)
+      }
 
-    context "when player has less chips than the current bet" do
-      it "returns the players stack indicating they must go all-in" do
-        player.expects(:current_game_state).with(:minimum_bet).returns 20
-        player.expects(:stack).returns(5)
-
-        subject.minimum_bet.should == 5
-      end
+      its(:call_amount) { should == 10 }
     end
   end
 
   describe "#round_history" do
-    subject { PlayerPresenter.new(player) }
-    let(:player){ FactoryGirl.create(:player, :registered) }
 
     before { player.round_players.create(:round => FactoryGirl.create(:round), :stack_change => 10)}
 
@@ -139,14 +127,15 @@ describe PlayerPresenter do
       subject.to_json[:current_bet].should == @table.current_round.ante      
     end
 
-    it "knows the minimum bet" do
-      subject.to_json[:minimum_bet].should == @table.current_round.ante      
+    it "knows the call amount" do
+      subject.to_json[:call_amount].should == 0
       player.take_action! action: "bet", amount: 1
-      subject.to_json[:minimum_bet].should == @table.current_round.ante + 1
+      player2.take_action! action: "bet", amount: 1
+      subject.to_json[:call_amount].should == 1
     end
 
-    it "knows the maximum bet" do
-      subject.to_json[:maximum_bet].should == player.initial_stack
+    it "knows the player's stack" do
+      subject.to_json[:stack].should == player.initial_stack - @table.current_round.ante
     end
   end
 end
