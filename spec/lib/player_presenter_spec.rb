@@ -80,10 +80,14 @@ describe PlayerPresenter do
           .should == [ { :player_name => player.name, 
                          :initial_stack => player.stack,
                          :current_bet => @table.current_round.ante,
+                         :folded => false,
+                         :stack => player.stack - @table.current_round.ante,
                          :actions => antes},
                        { :player_name => player2.name, 
                          :initial_stack => player2.stack,
                          :current_bet => @table.current_round.ante,
+                         :folded => false,
+                         :stack => player2.stack - @table.current_round.ante,
                          :actions => antes}
                      ]
       end
@@ -95,10 +99,14 @@ describe PlayerPresenter do
           .should == [ { :player_name => player.name, 
                          :initial_stack => player.stack,
                          :current_bet => @table.current_round.ante + 30,
+                         :folded => false,
+                         :stack => player.stack - @table.current_round.ante - 30,
                          :actions => antes + [{:action => "bet", :amount => 30}]},
                        { :player_name => player2.name, 
                          :initial_stack => player2.stack,
                          :current_bet => @table.current_round.ante,
+                         :folded => false,
+                         :stack => player2.stack - @table.current_round.ante,
                          :actions => antes}
                      ]
       end

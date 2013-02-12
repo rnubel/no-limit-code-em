@@ -83,15 +83,20 @@ class PlayerPresenter
     if table
       table.active_players.collect { |p|
         next unless player_property(p.id, :id)
+        initial_stack = player_property(p.id, :initial_stack)
+        current_bet = player_property(p.id, :current_bet)
+        # These are the *actual* actions as seen by
+        # PokerTable for this player. It may be different
+        # from what they entered, but is more accurate.
+        actions = state.log.select { |a| a[:player_id] == p.id }
+                           .map    { |a| a.except(:player_id) }
 
         { :player_name => p.name,
-          :initial_stack => player_property(p.id, :initial_stack),
-          :current_bet => player_property(p.id, :current_bet),
-          # These are the *actual* actions as seen by
-          # PokerTable for this player. It may be different
-          # from what they entered, but is more accurate.
-          :actions => state.log.select { |a| a[:player_id] == p.id }
-                                   .map { |a| a.except(:player_id) }
+          :initial_stack => initial_stack,
+          :current_bet => current_bet,
+          :stack => initial_stack - current_bet,
+          :folded => actions.any? { |a| a[:action] == "fold" },
+          :actions => actions 
         }
       }.compact
     else
