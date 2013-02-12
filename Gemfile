@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.11'
+gem 'rails', '3.2.12'
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
@@ -11,7 +11,7 @@ gem 'thin'
 gem 'rack-throttle', :git => 'https://github.com/baroquebobcat/rack-throttle.git'
 gem 'dalli'
 
-gem 'poker_table', '0.3.1', :git => 'git://github.com/rnubel/poker_table', :branch => 'relative_betting'
+gem 'poker_table', '0.3.1', :git => 'git://github.com/rnubel/poker_table'
 gem 'ruby-poker', :git => 'https://github.com/robolson/ruby-poker.git'
 
 gem 'figgy'
