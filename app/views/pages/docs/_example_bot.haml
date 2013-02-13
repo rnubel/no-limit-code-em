@@ -1,10 +1,10 @@
 .docs
   %h2 Example Bot Code
   .content
-    %pre
+    Here's some pseudocode to give you an idea of how to structure your bot. Don't expect it to run!
+    %pre{:style => 'margin-top:10px'}
       :preserve
         def dumb_poker_player(MY_PLAYER_KEY)
-
           # Infinite Loop
           while true 
             
@@ -23,20 +23,16 @@
             # Logic!!
             # This logic is boring. But, yours should be more epic!
             if turn_data["your_turn"]
-            
-              # Check if you are supposed to bet
-              if turn_data["betting_phase"] == "deal" or turn_data["betting_phase"] == "post_draw"
+              action = params = discards = nil
 
-                # Action is always set to bet
-                action = "bet"
-
-                # Params is the amount you betting. Remember this is an absolute bet
-                params = turn_data["minimum_bet"]
-            
-              # Check if you are supposed to replace	
+              # Is it a betting round? Let's always call.
+              if  turn_data["betting_phase"] == "deal" ||
+                  turn_data["betting_phase"] == "post_draw"
+                action = "call"
+                params = nil
+                          
+              # Is it the replacement phase? Replace our first card.
               elsif turn_data["betting_phase"] == "draw"
-
-                # Action is always set to replace
                 action = "replace"
             
                 # Sort through your cards and pick cards to replace
@@ -54,10 +50,10 @@
 
         # GET
         def game_state(key)
-          do a get request to http://no-limit-code-em.com/api/players/key
+          # do a get request to http://no-limit-code-em.com/api/players/:key
         end
 
         # POST
         def player_action(key, params)
-          do a post request to http://no-limit-code-em.com/api/players/key/action
+          # do a post request to http://no-limit-code-em.com/api/players/:key/action
         end
