@@ -100,6 +100,8 @@ i.chip {
 .docs #poker_tables { padding: 20px 20px 10px 20px; }
 .docs .table th, .docs .table td { border-left: 1px solid #ddd; }
 .docs h4 { padding: 0; margin: 0 }
+.docs table.params td:first-child { font-family: "Courier", "Monospace"; color: #44f; font-weight: bold }
+.docs table.params td:nth-child(3) { font-family: "Courier", "Monospace" }
 
 .dropdown-menu { margin-top: 5px; @include border-radius(4px); }
 .dropdown-menu a { padding: 5px 15px; }

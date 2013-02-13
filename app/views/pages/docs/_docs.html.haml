@@ -33,15 +33,15 @@
     Just pass your player key as part of the path. There are no querystring parameters for this request.
 
     .title Data returned:
-    %table.table
+    %table.table.params
       %tr
         %th Key
         %th Description
         %th Example Value
       %tr
-        %td name
+        %td.key name
         %td The name of your bot. You probably don't need to check this.
-        %td Pokermus Maximus
+        %td.value Pokermus Maximus
       %tr
         %td your_turn
         %td Whether or not it's your turn. If false, don't do anything for another second. If true, send us a POST request with your action.
@@ -78,7 +78,7 @@
           One of 'deal', 'draw', 'post_draw', or 'showdown'. See the
           %a{:href => 'index.html#draw'} Game Rules
           page for more details on what each of these phases means.
-        %td 'deal'
+        %td "deal"
       %tr
         %td{:rowspan=>2} players_at_table
         %td{:colspan=>2}
