@@ -28,7 +28,7 @@
       %td Your Player Key is returned to you upon being registered. The Player Key is a randomly-generated, unique string. You will use this Key to identify yourself to the server, so keep it safe and don't share it with other teams. Note that you will get a different key for every tournament you register for, so we recommend making it easy to change your key for your bot.
     %tr
       %td 4
-      %td Note that, when it is your turn, you have 5 seconds to respond back to the server with a valid action once the server has declared it is your turn. If you do not respond, the server will set your action as a FOLD and you will wait until the next round to conduct your next move.
+      %td When it is your turn, you have 5 seconds to respond back to the server with a valid action once the server has declared it is your turn. If you do not respond, the server will set your action as a FOLD and you will wait until the next round to conduct your next move.
     %tr
       %td 5
-      %td You are only allowed to poll the game state once per second. If you request the state more often, we will rate-limit your request and you will receive a response of "403 Rate Limit Exceeded".
+      %td You are only allowed to poll the game state once per second. If you request the state more often, we will rate-limit your requests and you will start receiving responses of "403 Rate Limit Exceeded".
