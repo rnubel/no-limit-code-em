@@ -4,8 +4,6 @@ class CreateSeatings < ActiveRecord::Migration
       t.integer :player_id
       t.integer :table_id
       t.boolean :active, default: true
-
-      t.timestamps
     end
   end
 end
