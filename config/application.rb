@@ -23,7 +23,7 @@ class ClientLimiter < Rack::Throttle::Interval
     t1 = request_start_time(request)
     t0 = cache_get(key = cache_key(request)) rescue nil
     allowed = !t0 || (dt = t1 - t0.to_f) >= minimum_interval
-    Rails.logger.info "RATE LIMIT CHECK FOR key=#{client_identifier(request)} with delta #{dt} versus #{minimum_interval}"
+    Rails.logger.info "RATE LIMIT CHECK FOR key=#{client_identifier(request)} with t1=#{t1} t0=#{t0.to_f} delta #{dt} versus #{minimum_interval}, allowed=#{allowed}"
     begin
       cache_set(key, t1) if allowed
       allowed
