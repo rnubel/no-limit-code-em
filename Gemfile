@@ -5,9 +5,9 @@ gem 'rails', '3.2.12'
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
+gem 'bundler'
 gem 'pg', '0.13.2'
 gem 'json'
-gem 'thin'
 gem 'rack-throttle', :git => 'https://github.com/baroquebobcat/rack-throttle.git'
 gem 'dalli'
 
