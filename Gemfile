@@ -21,6 +21,7 @@ gem 'httpclient'
 gem 'hirb'
 
 gem 'newrelic_rpm'
+gem 'heroku-true-relic' # Hopefully, better request queuing stats.
 
 # Gems used only for assets and not required
 # in production environments by default.
