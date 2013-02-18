@@ -8,6 +8,7 @@ gem 'rails', '3.2.12'
 gem 'bundler'
 gem 'pg', '0.13.2'
 gem 'json'
+gem 'unicorn'
 gem 'rack-throttle', :git => 'https://github.com/baroquebobcat/rack-throttle.git'
 gem 'dalli'
 
