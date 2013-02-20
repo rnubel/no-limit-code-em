@@ -33,7 +33,7 @@ class Bot
     if ENV['log'] then logger.info "[#{@name}] (#{Time.now}) Polling status..." end
     start = Time.now
     response = http_client.get("#{base_uri}/api/players/#{key}")
-    if ENV['log'] then logger.info "[#{@name}] (#{Time.now}) Polling status took #{Time.now - start}s" end
+    if ENV['log'] then logger.info "[#{@name}] (#{Time.now}) [#{response.status}] Polling status took #{Time.now - start}s" end
     json = JSON.parse(response.body)
   end
 
@@ -51,12 +51,12 @@ class Bot
       if n < 50
         action(:action_name => "fold")
       else
-        if n < 80 # Call
-          action(:action_name => "bet", :amount => s["minimum_bet"])
+        if n < 80 || s["stack"] <= s["call_amount"] # Call
+          action(:action_name => "call")
         elsif n < 95 # Raise small
-          action(:action_name => "bet", :amount => [s["minimum_bet"] + rand(1..20), s["maximum_bet"]].min)
+          action(:action_name => "raise", :amount => rand(1..20) )
         else # All-in baby
-          action(:action_name => "bet", :amount => s["maximum_bet"])
+          action(:action_name => "raise", :amount => s["stack"] - s["call_amount"])
         end
       end
     else
@@ -80,7 +80,10 @@ class Bot
         logger.error "#{e.inspect} #{e.backtrace}"
       end
 
+      logger.info "Sleeping #{@delay}s..." if ENV['log']
+      t0 = Time.now
       sleep @delay
+      logger.info "Slept #{Time.now - t0}s." if ENV['log']
     end
   end
 end
