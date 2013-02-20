@@ -9,7 +9,7 @@ $(function() {
   if(refresh == "true") {
     setInterval(function() {
       reload_page();
-    }, 7000);
+    }, 1000);
   }
 })
 
