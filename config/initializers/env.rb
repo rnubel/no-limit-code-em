@@ -1,1 +1,1 @@
-ENV['NLCE_ACTIVE'] ||= "true"
+ENV['NLCE_ACTIVE'] ||= "1"
