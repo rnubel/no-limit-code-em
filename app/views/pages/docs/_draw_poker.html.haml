@@ -65,23 +65,23 @@
           When 2 players are at a table
           Given the deck favors both players
           When player 1 bets 80
-          And player 2 bets 0
+          And player 2 calls
           And all players replace no cards
-          And player 1 bets 0
-          And player 2 bets 50
-          And player 1 bets 0
+          And player 1 checks
+          And player 2 raises 50
+          And player 1 calls
           Then player 1 and player 2 split the pot
         
         Scenario: 2 players split the pot at a larger table
           When 3 players are at a table
           Given the deck favors player 1 and player 2
           When player 1 bets 80
-          And player 2 bets 0
-          And player 3 bets 0
+          And player 2 calls
+          And player 3 calls
           And all players replace no cards
-          And player 1 bets 0
-          And player 2 bets 0
-          And player 3 bets 0
+          And player 1 checks
+          And player 2 checks
+          And player 3 checks
           Then player 1 and player 2 split the pot
 
         Scenario: A player cannot meet the ante but wins

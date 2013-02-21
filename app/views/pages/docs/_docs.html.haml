@@ -163,7 +163,7 @@
     %strong POST 
     \/api/players/PLAYER_KEY/action
   .content
-    %p Place your bet, fold your hand, or replace your cards during the draw phase.
+    %p When it's your bot's turn, this action lets you place your bet, fold your hand, or replace your cards.
 
     .title Parameters
     %table.table.table-striped.table-bordered
@@ -171,17 +171,21 @@
         %td 
           action_name
         %td 
-          Either "bet", "fold", or "replace"
+          Either "bet", "raise", "call", "check", "fold", or "replace"
       %tr
         %td 
           amount
         %td 
-          If you are betting, set your bet (this is an absolute amount), otherwise leave it as nil when replacing.
+          If you are raising, pass the amount you wish to raise by.
+          %div.alert.alert-info{:style => 'margin-top:8px;'}
+            Only send this parameter when action_name is '<b>bet</b>' or '<b>raise</b>'
       %tr
         %td 
           cards
         %td 
-          If you are replacing, set cards as a string-separated list of the cards you are discarding. E.g., "Ac 5s" or "4H 3D TS" or "" to replace nothing. Otherwise, leave nil or blank.
+          If you are replacing, set cards as a string-separated list of the cards you are discarding. E.g., "Ac 5s" or "4H 3D TS", or "" to replace nothing.
+          %div.alert.alert-info{:style => 'margin-top:8px;'}
+            Only send this parameter when action_name is '<b>replace</b>'.
 
     .title Example request:
     %pre
@@ -197,3 +201,40 @@
 
     .title Response
     %p The response will be the same format as for the GET request, but reflecting that your action has been taken.
+    .title Appendix: Action Semantics
+    %table.table.table-striped.table-bordered
+      %tr
+        %th
+          Action name
+        %th
+          Semantics
+      %tr
+        %td 
+          bet
+        %td 
+          Call the previous player's bet, if there is one, and bet an additional <em>amount</em>.
+      %tr
+        %td 
+          raise
+        %td 
+          Synonym for 'bet'. 
+      %tr
+        %td
+          call
+        %td
+          Call the previous player's bet. Synonymous to raise 0.
+      %tr
+        %td
+          check
+        %td
+          When there is no amount to call by, don't raise. Same as raise 0, but is invalid if call_amount is not zero.
+      %tr
+        %td
+          fold
+        %td
+          Fold your hand, giving up anything you've bet already and staying out for the rest of the round.
+      %tr
+        %td
+          replace
+        %td
+          Replace the cards in your hand matching those you pass in via the <em>cards</em> parameters.

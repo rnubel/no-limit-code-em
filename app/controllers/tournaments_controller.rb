@@ -21,4 +21,24 @@ class TournamentsController < ApplicationController
       @scoreboard, @tables = p.scoreboard, p.tables
     end
   end
+
+  def scoreboard
+    tournament = Tournament.last
+    @scoreboard = []
+    if tournament
+      p = TournamentPresenter.new(tournament)
+      @scoreboard = p.scoreboard
+    end
+    render :json => @scoreboard
+  end
+
+  def tables
+    tournament = Tournament.last
+    @tables = []
+    if tournament
+      p = TournamentPresenter.new(tournament)
+      @tables = p.tables
+    end
+    render :json => @tables
+  end
 end

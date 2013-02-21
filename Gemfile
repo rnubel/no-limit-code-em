@@ -9,6 +9,7 @@ gem 'bundler'
 gem 'pg', '0.13.2'
 gem 'json'
 gem 'unicorn'
+gem 'thin'
 gem 'rack-throttle', :git => 'https://github.com/baroquebobcat/rack-throttle.git'
 gem 'dalli'
 
