@@ -247,4 +247,10 @@ table-bordered thead:first-child tr:first-child th:first-child, .table-bordered 
 .docs ul { border-top: 2px solid #ddd; list-style: none; margin:0; padding: 0 } 
 .docs ul li { line-height: 1.5; padding: 10px 15px; }
 .docs ul li:nth-child(even) { background: #f1f1f1 }
-.docs ol li { line-height: 1.5; padding: 10px 15px; }
+.docs ol li { line-height: 17px; padding: 10px 15px; }
+
+  .cards { margin: 10px 0px; }
+  .card { background:#fff; display: inline; padding: 5px 3px 5px 5px; margin-right: -2px; border: 1px solid #ddd; color: #000; -webkit-border-radius: 5px; }
+    .suit { display: inline; padding: 0px 2px; }
+    .red { color: red; }
+    .black { color: black; }
