@@ -14,13 +14,35 @@ $(function() {
 function reload_tables() {
   $.ajax({
     url: '/tournaments/refresh',
-    type: 'POST',
+    type: 'GET',
     success: function(e) {
       console.log(e);
     }
   });
 }
 function reload_scoreboard() {
+
+}
+function table(hash) {
+  number = hash.table_id;
+  players = hash.players
+  count = 0;
+  html = "<div class='poker_table'>
+            <h3>
+              <div class='pull_left'>Table " + number + "</div>
+              <div class='clearfix'></div>
+            </h3>
+            <table class='players'>
+              <tr>";
+  $.each(players, function(player) {
+    count += 1;
+    if(count == 3)
+    html += "<td" + bottom ">
+              <span class='name'>" + player.name + "</span>
+              <span class='stack'>" + player.name + "</span>
+            </td>"
+
+  });
 
 }
 function getURLParameter(name) {
