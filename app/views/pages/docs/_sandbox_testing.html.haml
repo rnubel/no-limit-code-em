@@ -9,16 +9,26 @@
         http://no-limit-code-em.com/sandbox/players/SANDBOX_KEY
       (notice the /sandbox/ instead of /api/). Then, your bot will receive a state based on the value of the sandbox key.
     %p
-      To receive a game state where you must respond with a bet, use 
-      %strong fc2455f8-1879-4ad4-8012-1f337c2869f2
+      To replicate each of the three main phases of a game, use each of these three keys.
+    %p
+      To simulate how the game would look after the initial deal, use
+      %strong initial-deal-key
       as SANDBOX_KEY.
     %p
-      To receive a game state where you must respond with a replacement of cards, use
-      %strong 728f53dd-a5dc-4582-8864-be37576b9592
+      To simulate how the game would look where you need to replace cards, use
+      %strong replacement-stage-key
       as SANDBOX_KEY.
-
     %p
-      To test the action, have your bot post to 
+      To simulate how the game would look in the final betting phase, use
+      %strong final-bet-key
+      as SANDBOX_KEY.
+    %p
+      You can use these keys in two different ways - both GET and POST. A GET will show what the game will look like if you were to ask for the game state during that time. A POST will return the game state and two additional parameters called "sandbox_result" and "validity". These will give you clues to see what you sent our server, and if it is a valid move or not.
+    %p
+      GETs are made to the following URL:
+      %pre
+        http://no-limit-code-em.com/sandbox/players/SANDBOX_KEY
+    %p
+      POSTs are made to the following URL:
       %pre
         http://no-limit-code-em.com/sandbox/players/SANDBOX_KEY/action
-      with the parameters it would make for that action. If your action is valid, you will be returned a game state that mirrors the effect of that action.
