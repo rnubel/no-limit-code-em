@@ -22,6 +22,7 @@ class TournamentPresenter
                                                         :name => p.name, 
                                                         :initial_stack => p.current_player_state(:initial_stack),
                                                         :stack => p.current_player_state(:stack), 
+                                                        :hand => p.current_player_state(:hand),
                                                         :current_bet => p.current_player_state(:current_bet) }},
         :latest_winners => table.rounds
                                 .ordered
