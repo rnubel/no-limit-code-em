@@ -18,9 +18,15 @@ function reload_tables() {
     success: function(e) {
       $('#poker_tables').html("");
       e = e.sort(function(a,b){return a-b});
-      $.each(e, function() {
-        $('#poker_tables').append(table($(this)[0]))
-      });
+      if(superlength(e) == 1) {
+        $('#poker_tables').addClass('big');
+        $('#poker_tables').append(table(e[0], true));
+      } else {
+        $('#poker_tables').removeClass('big');
+        $.each(e, function() {
+          $('#poker_tables').append(table($(this)[0]))
+        });
+      }
     }
   });
 }
@@ -46,7 +52,7 @@ function scoreboard(hash) {
           "</tr>";
   return html; 
 }
-function table(hash) {
+function table(hash, big) {
   var number = hash.table_id;
   var players = hash.players;
   var c = 0;
@@ -57,23 +63,22 @@ function table(hash) {
             "</h3>" +
             "<table class='players'>";
   for(var i=0; i<6; i++) {
+    var hands = "";
     var name = "<span class='name lost'>empty seat</span>";
     var stack = "<span class='stack lost'>0</span>";
     if(i < superlength(players)) {
+      if(big == true) {
+        hands = "<span class='cards'>" + players[i].hand + "</span>";
+      }
       name = "<span class='name'>" + players[i].name + "</span>";
       stack = "<span class='stack'>" + players[i].stack + "</span>";
     }
     c += 1;
-    if(c <= 3) {
-      html += "<td>" + name + stack + "</td>";
-    }
-    if(c == 3) {
-      html += "</tr><tr><td class='pot_middle' colspan='3'>" +
+    if(c <= 3) { html += "<td>" + name + stack + hands + "</td>"; }
+    if(c == 3) { html += "</tr><tr><td class='pot_middle' colspan='3'>" +
                 hash.pot + " in the pot</td></tr><tr>";
     }
-    if(c > 3) {
-      html += "<td class='bottom'>" + stack + name + "</td>";
-    }
+    if(c > 3) { html += "<td class='bottom'>" + hands + stack + name + "</td>"; }
   }
   html += "</tr></table>"
   html += "<div class='clearfix'>"

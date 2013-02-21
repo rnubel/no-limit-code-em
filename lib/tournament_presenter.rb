@@ -22,10 +22,10 @@ class TournamentPresenter
       {
         :table_id => table.id,
         :players => table.active_players.collect { |p| {:player_id => p.id, 
-                                                        :name => p.name.first(12) + (p.name.length > 13 ? "..." : ""),
+                                                        :name => p.name.first(12) + (p.name.length > 14 ? "..." : ""),
                                                         :initial_stack => p.current_player_state(:initial_stack),
                                                         :stack => stack_display(p.current_player_state(:stack),false), 
-                                                        :hand => p.current_player_state(:hand),
+                                                        :hand => build_hand(p.current_player_state(:hand)),
                                                         :current_bet => p.current_player_state(:current_bet) }},
         :latest_winners => table.rounds
                                 .ordered
@@ -61,5 +61,25 @@ class TournamentPresenter
     html += initial.to_s
   end
 
+  def build_card(number, suit_code)
+    card = "<div class='card'>"
+    card << (number == "T" ? "10" : number)
+    case suit_code
+      when "C" 
+        card << "<div class='suit black'>&clubs;</div>"
+      when "S" 
+        card << "<div class='suit black'>&spades;</div>"
+      when "D" 
+        card << "<div class='suit red'>&diams;</div>"
+      when "H" 
+        card << "<div class='suit red'>&hearts;</div>"
+    end
+    card << "</div>"
+    card
+  end
+
+  def build_hand(cards)
+    cards.collect { |c| build_card(c[0..0], c[1..1].upcase) }.join(" ")
+  end 
  
 end
