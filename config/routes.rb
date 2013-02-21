@@ -22,14 +22,6 @@ NoLimitV2::Application.routes.draw do
     end
   end
 
-  namespace :sandbox2 do
-    resources :players do
-      member do
-        post 'action'
-      end
-    end
-  end
-
   namespace :api do
     resources :players do
       member do
