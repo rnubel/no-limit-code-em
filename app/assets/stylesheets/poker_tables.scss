@@ -2,8 +2,8 @@
   padding: 20px;
 
   .poker_table {
-    float: left;
     font-size: 0.8em;
+    display: block;
     width: 48%;
     margin-right: 20px;
     margin-bottom: 20px; 
@@ -14,6 +14,12 @@
     @include transition(all 0.3s linear);
 
     &:nth-child(even) { margin-right: 0 }
+
+    &.top {
+      width: 100% !important;
+      .players { width: 100%; }
+    }
+
     &.hover {
       @include box-shadow(0px 3px 12px 2px rgba(0,0,0,0.5));
       top: -2px;
@@ -34,7 +40,8 @@
         }
 
         &.pot_middle {
-          font-size: 1.4em;
+          font-size: 1.3em;
+          font-weight: bold;
           text-align: center;
           padding: 10px;
           text-shadow: 0px 1px 0px rgba(0,0,0,0.7);
