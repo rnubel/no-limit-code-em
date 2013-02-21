@@ -48,6 +48,7 @@ class TournamentPresenter
   end
 
   def stack_display(chips, border=true)
+    chips ||= 0
     colors = {:white=>1, :red=>5, :green=>25, :black=>100, :purple=>500, :yellow=>1000, :gray=>5000}
     initial = chips
     chip_types = colors.to_a.sort_by{|c|c.last}.reverse.reduce([]) do |list, (color, value)|
