@@ -13,10 +13,10 @@
         i.chip {
           margin-left: -13px;
         }
-
       }
       td.chips {
         padding-left: 20px;
+        i:last-child { margin-right: 2px; };
       } 
     }
   }

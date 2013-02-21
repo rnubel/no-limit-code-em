@@ -10,10 +10,11 @@ class TournamentPresenter
     @scoreboard = tournament.players.each_with_index.collect { |p, i|
       {
         :name => p.name,
-        :stack => p.stack,
-        :lost_at => p.lost_at
+        :stack => stack_display(p.stack, true),
+        :lost_at => p.lost_at,
+        :real_stack => p.stack
       }
-    }.sort_by { |p| [p[:stack], p[:lost_at]] }.reverse
+    }.sort_by { |p| [p[:real_stack], p[:lost_at]] }.reverse
   end
 
   def tables
@@ -21,7 +22,7 @@ class TournamentPresenter
       {
         :table_id => table.id,
         :players => table.active_players.collect { |p| {:player_id => p.id, 
-                                                        :name => p.name, 
+                                                        :name => p.name.first(12) + (p.name.length > 13 ? "..." : ""),
                                                         :initial_stack => p.current_player_state(:initial_stack),
                                                         :stack => stack_display(p.current_player_state(:stack),false), 
                                                         :hand => p.current_player_state(:hand),
@@ -29,7 +30,7 @@ class TournamentPresenter
         :latest_winners => table.rounds
                                 .ordered
                                 .where(:playing => false)
-                                .last(4)
+                                .last(3)
                                 .collect(&:winners) # At this point, list of hashes of winners
                                 .map { |winners_hash| 
                                   winners_hash.collect { |(player, w) | 
@@ -38,25 +39,26 @@ class TournamentPresenter
                                 }
                                 .flatten
       }
-    end
+    end.sort_by { |t| t[:table_id] }
 
     @tables.each do |t|
-      t[:pot] = t[:players].sum {|h| h[:current_bet]}
+      t[:pot] = stack_display(t[:players].sum {|h| h[:current_bet]}).html_safe
     end
+
   end
 
   def stack_display(chips, border=true)
     colors = {:white=>1, :red=>5, :green=>25, :black=>100, :purple=>500, :yellow=>1000, :gray=>5000}
-
+    initial = chips
     chip_types = colors.to_a.sort_by{|c|c.last}.reverse.reduce([]) do |list, (color, value)|
       list += [color.to_s] * (chips / value)
       chips = chips % value
       list
     end.uniq
-
-    chip_types.map { |color|
+    html = chip_types.map { |color|
       "<i class='chip chip-#{color} #{"chip-bordered" if border}'></i>".html_safe
     }.join
+    html += initial.to_s
   end
 
  

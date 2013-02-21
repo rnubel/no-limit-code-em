@@ -7,18 +7,15 @@
 - if nlce_active?
   .span4
     %aside#sidebar
-      %h2 
-        Scoreboard
-        .loader
+      %h2 Scoreboard
       .scoreboard_wrapper
-        = render :partial => "tournaments/scoreboard", :locals => {:scoreboard => @scoreboard} if @scoreboard
+        = render :partial => "tournaments/scoreboard"
   .span8
     %section#content
-      %h2 
-        Tables
-        .loader
+      %h2 Tables
       .poker_tables_wrapper
         #poker_tables
+      .clearfix
 - else
   .docs
     %h2 No Limit Code 'Em
