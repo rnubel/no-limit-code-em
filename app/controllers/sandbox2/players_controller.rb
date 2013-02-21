@@ -4,30 +4,36 @@ module Sandbox2
 
     # GET /sandbox/players/:id
     def show
-      case params[id]
+      return_hash = nil
+      case params[:id]
       when "initial-deal-key"
-        return initial_deal_response.to_json
+        return_hash = initial_deal_response
       when "replacement-stage-key"
-        return replacement_stage_response.to_json
+        return_hash = replacement_stage_response
       when "final-bet-key"
-        return final_bet_response.to_json
+        return_hash = final_bet_response
       else
         render_not_found "This is an invalid key. To view the different stages of the round, use initial-deal-key, replacement-stage-key, or final-bet-key to see current state."
+        return
       end
+      render :json => return_hash
     end
 
     # POST /sandbox/players/:id/action
     def action
+      return_hash = nil
       case params[:id]
       when "initial-deal-key"
-        initial_deal_processing(params).to_json
+        return_hash = initial_deal_processing(params)
       when "replacement-stage-key"
-        replacement_stage_processing(params).to_json
+        return_hash = replacement_stage_processing(params)
       when "final-bet-key"
-        final_bet_processing(params).to_json
+        return_hash = final_bet_processing(params).to_json
       else
-        test
+        render_not_found "This is an invalid key. To view the different stages of the round, use initial-deal-key, replacement-stage-key, or final-bet-key to see current state."
+        return
       end
+      render :json => return_hash
     end
     
     private
