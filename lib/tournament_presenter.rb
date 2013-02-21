@@ -1,4 +1,6 @@
 class TournamentPresenter
+  include ActiveSupport::Inflector
+
   attr_reader :tournament
   def initialize(tournament)
     @tournament = tournament
@@ -21,13 +23,13 @@ class TournamentPresenter
         :players => table.active_players.collect { |p| {:player_id => p.id, 
                                                         :name => p.name, 
                                                         :initial_stack => p.current_player_state(:initial_stack),
-                                                        :stack => p.current_player_state(:stack), 
+                                                        :stack => stack_display(p.current_player_state(:stack),false), 
                                                         :hand => p.current_player_state(:hand),
                                                         :current_bet => p.current_player_state(:current_bet) }},
         :latest_winners => table.rounds
                                 .ordered
                                 .where(:playing => false)
-                                .last(3)
+                                .last(4)
                                 .collect(&:winners) # At this point, list of hashes of winners
                                 .map { |winners_hash| 
                                   winners_hash.collect { |(player, w) | 
@@ -42,4 +44,20 @@ class TournamentPresenter
       t[:pot] = t[:players].sum {|h| h[:current_bet]}
     end
   end
+
+  def stack_display(chips, border=true)
+    colors = {:white=>1, :red=>5, :green=>25, :black=>100, :purple=>500, :yellow=>1000, :gray=>5000}
+
+    chip_types = colors.to_a.sort_by{|c|c.last}.reverse.reduce([]) do |list, (color, value)|
+      list += [color.to_s] * (chips / value)
+      chips = chips % value
+      list
+    end.uniq
+
+    chip_types.map { |color|
+      "<i class='chip chip-#{color} #{"chip-bordered" if border}'></i>".html_safe
+    }.join
+  end
+
+ 
 end

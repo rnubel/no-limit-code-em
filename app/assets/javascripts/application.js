@@ -13,37 +13,59 @@ $(function() {
 })
 function reload_tables() {
   $.ajax({
-    url: '/tournaments/refresh',
+    url: '/tournaments/tables',
     type: 'GET',
     success: function(e) {
-      console.log(e);
+      $('#poker_tables').html("");
+      $.each(e, function() {
+        $('#poker_tables').append(table($(this)[0]))
+      });
     }
   });
 }
 function reload_scoreboard() {
-
+  $.ajax({
+    url: '/tournaments/scoreboard',
+    type: 'GET',
+    success: function(e) {
+    }
+  });
 }
 function table(hash) {
-  number = hash.table_id;
-  players = hash.players
-  count = 0;
-  html = "<div class='poker_table'>
-            <h3>
-              <div class='pull_left'>Table " + number + "</div>
-              <div class='clearfix'></div>
-            </h3>
-            <table class='players'>
-              <tr>";
-  $.each(players, function(player) {
+  var number = hash.table_id;
+  var players = hash.players;
+  var count = 0;
+  var html = "<div class='poker_table'>"+
+            "<h3>"+
+              "<div class='pull_left'>Table " + number + "</div>"+
+              "<div class='clearfix'></div>" +
+            "</h3>" +
+            "<table class='players'>";
+  for(var i in players) {
+    var player = players[i];
     count += 1;
-    if(count == 3)
-    html += "<td" + bottom ">
-              <span class='name'>" + player.name + "</span>
-              <span class='stack'>" + player.name + "</span>
-            </td>"
-
+    if(count <= 3) {
+      html += "<td class='bottom'>" +
+                "<span class='name'>" + player.name + "</span>" +
+                "<span class='stack'>" + player.stack + "</span>" +
+                "<span class='hand'>" + player.hand + "</span>" +
+              "</td>";
+    } else {
+      html += "<td>"
+                "<span class='hand'>" + player.hand + "</span>" +
+                "<span class='stack'>" + player.stack + "</span>" +
+                "<span class='name'>" + player.name + "</span>" +
+              "</td>"
+    }
+  }
+  html += "</tr></table>"
+  html += "<div class='clearfix' style='margin-bottom:10px;'>"
+  html += "<div class='last_winner'>"
+  $.each(hash.latest_winners, function() {
+    var winner = $(this)[0];
+    html += "<span>" + winner.name + " won " + winner.winnings + "</span>";    
   });
-
+  return html;
 }
 function getURLParameter(name) {
   return decodeURI(
