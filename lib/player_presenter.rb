@@ -55,7 +55,7 @@ class PlayerPresenter
   end
 
   def hand
-    @player.current_player_state(:hand) || ""
+    @player.current_player_state(:hand) || []
   end
 
   def betting_phase
