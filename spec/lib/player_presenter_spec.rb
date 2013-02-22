@@ -13,8 +13,8 @@ describe PlayerPresenter do
   }
 
   describe "#hand" do
-    it "handles nils" do
-      subject.hand.should == ""
+    it "presents a nil hand as an array" do
+      subject.hand.should == []
     end
 
     it "handles actual cards" do
