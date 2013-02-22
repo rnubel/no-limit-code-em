@@ -149,7 +149,7 @@ module Sandbox
       when "bet", "raise", "call", "fold", "check"
         problems << "You may only replace cards during this round."
       when "replace"
-        hand = ["AC", "10D", "9D", "QD", "3D"]
+        hand = ["AC", "TD", "9D", "QD", "3H"]
         cards = cards_value(opts[:cards])
         problems << "You can only replace a maximum of 3 cards." if cards.length > 3
         cards.each do |card|
