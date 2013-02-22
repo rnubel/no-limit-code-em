@@ -37,7 +37,9 @@ class TournamentPresenter
                                     { :name => player.name, :winnings => w } 
                                   }
                                 }
+                                .last(3)
                                 .flatten
+                                .reverse
       }
     end.sort_by { |t| t[:table_id] }
 

@@ -17,11 +17,12 @@ body {
 
 a { &:hover { text-decoration: none; } }
 
-.container { width: 900px !important; }
+.container { width: 930px !important; }
 .span4 { width: 240px !important; }
+.span8 { width: 650px !important; }
 .navbar {
   .container {
-    width: 900px;
+    width: 930px;
   }
   .navbar-inner {
     padding: 8px 0px;

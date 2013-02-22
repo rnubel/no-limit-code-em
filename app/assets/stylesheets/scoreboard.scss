@@ -3,7 +3,7 @@
   thead {
     tr { 
       th { border-left: 1px solid #ddd; }
-      th:first-child { border-left: none } 
+      th:first-child { width: 60% !important; border-left: none } 
     }
   }
   tbody {

@@ -1,6 +1,6 @@
 require 'ruby-poker'
 
-class SmartBot < Bot
+class TurtleBot < Bot
 
   def initialize(opts)
     @name = opts[:name] || ("Pete's Mom" + rand(100000).to_s)
@@ -11,10 +11,10 @@ class SmartBot < Bot
   def decide_action!(s)
     hand = PokerHand.new(s["hand"])
     pot = s["players_at_table"].map { |p| p["current_bet"] }.sum
-    if s["call_amount"] > 0
-      potodds = pot.to_f / (pot.to_f + (s["call_amount"].to_f))
+    if s["current_bet"] && s["current_bet"] != s["minimum_bet"]
+      potodds = pot.to_f / (pot.to_f + (s["minimum_bet"] - s["current_bet"].to_f))
     else
-      potodds = pot.to_f / (pot.to_f + s["current_bet"].to_f)
+      potodds = pot.to_f / (pot.to_f + s["minimum_bet"].to_f)
     end
     case s["betting_phase"]
     when 'deal'
@@ -23,21 +23,21 @@ class SmartBot < Bot
       when "Two pair"
         @discards = hand.score[1].split(/ /).last
         #logger.info "hand: #{hand.to_s}, discard: #{@discards}, bet: #{s["maximum_bet"]}"
-        action(:action_name => "bet", :amount => s["stack"])
+        action(:action_name => "bet", :amount => s["maximum_bet"])
       when "Three of a kind"
         @discards = hand.score[1].split(/ /)[3..4]
         #logger.info "hand: #{hand.to_s}, discard: #{@discards}, bet: #{s["maximum_bet"]}"
-        action(:action_name => "bet", :amount => s["stack"])
+        action(:action_name => "bet", :amount => s["maximum_bet"])
       when "Straight", "Flush", "Full house", "Four of a kind", "Straight Flush", "Royal Flush"
         @discards = ""
         #logger.info "hand: #{hand.to_s}, discard: #{@discards}, bet: #{s["maximum_bet"]}"
-        action(:action_name => "bet", :amount => s["stack"])
+        action(:action_name => "bet", :amount => s["maximum_bet"])
       else
         if hand.rank == "Pair"
           @discards = hand.score[1].split(/ /)[2..4].join(" ")
           if potodds >= 0.5
             #logger.info "hand: #{hand.to_s}, discard: #{@discards}, bet: #{s["minimum_bet"]}, pot: #{pot}"
-            action(:action_name => "bet", :amount => s["call_amount"])
+            action(:action_name => "bet", :amount => s["minimum_bet"])
           else
             #logger.info "hand: #{hand.to_s}, discard: #{@discards}, pot: #{pot}, minbet: #{s["minimum_bet"]}, fold"
             action(:action_name => "fold")
@@ -49,7 +49,7 @@ class SmartBot < Bot
           elsif possible_straight_flush?(hand) && potodds >= 0.32
             @discards = hand.by_suit.to_a.group_by { |c| c.suit }.select { |k,v| v.size == 1 }.values[0][0]
             #logger.info "possible straight flush - hand: #{hand.to_s}, discard: #{@discards}, bet: #{[s["maximum_bet"], (0.32 * pot).to_i].min}"
-            action(:action_name => "bet", :amount => [s["stack"], (0.32 * pot).to_i].min)
+            action(:action_name => "bet", :amount => [s["maximum_bet"], (0.32 * pot).to_i].min)
           elsif possible_straight?(hand) && potodds >= 0.17
             if hand.by_face.to_a[0].face - hand.by_face.to_a[1].face == 1
               @discards = hand.by_face.to_a.last
@@ -57,15 +57,15 @@ class SmartBot < Bot
               @discards = hand.by_face.to_a.first
             end
             #logger.info "possible straight - hand: #{hand.to_s}, discard: #{@discards}, bet: #{[s["maximum_bet"], (0.17 * pot).to_i].min}"
-            action(:action_name => "bet", :amount => [s["stack"], (0.17 * pot).to_i].min)
+            action(:action_name => "bet", :amount => [s["maximum_bet"], (0.17 * pot).to_i].min)
           elsif possible_flush?(hand) && potodds >= 0.19
             @discards = hand.by_suit.to_a.group_by { |c| c.suit }.select { |k,v| v.size == 1 }.values[0][0]
             #logger.info "possible flush - hand: #{hand.to_s}, discard: #{@discards}, bet: #{[s["maximum_bet"], (0.19 * pot).to_i].min}"
-            action(:action_name => "bet", :amount => [s["stack"], (0.19 * pot).to_i].min)
+            action(:action_name => "bet", :amount => [s["maximum_bet"], (0.19 * pot).to_i].min)
           elsif potodds >= 0.1
             @discards = hand.score[1].split(/ /)[2..4].join(" ")
             #logger.info "ace high - hand: #{hand.to_s}, discard: #{@discards}, pot: #{pot}, minbet: #{s["minimum_bet"]}, bet: #{s["minimum_bet"]}"
-            action(:action_name => "bet", :amount => s["call_amount"])
+            action(:action_name => "bet", :amount => s["minimum_bet"])
           else
             #logger.info "ace high - hand: #{hand.to_s}, discard: #{@discards}, pot: #{pot}, minbet: #{s["minimum_bet"]}, fold"
             action(:action_name => "fold")
@@ -78,10 +78,10 @@ class SmartBot < Bot
       case hand.rank
       when "Two pair", "Three of a kind", "Straight", "Flush", "Full house", "Four of a kind", "Straight Flush", "Royal Flush"
         #logger.info "hand: #{hand.to_s}, go all in"
-        action(:action_name => "bet", :amount => s["stack"])
+        action(:action_name => "bet", :amount => s["maximum_bet"])
       when "Pair"
         if potodds >= 0.3
-          action(:action_name => "bet", :amount => s["call_amount"])
+          action(:action_name => "bet", :amount => s["minimum_bet"])
         else
           action(:action_name => "fold")
         end
@@ -116,9 +116,9 @@ class SmartBot < Bot
   def possible_flush?(hand)
     hand.by_suit.each_cons(4) do |run|
       if run.map(&:suit).uniq.size == 1
-        return true 
+        return true
       end
     end
     return false
   end
-end
+end 
