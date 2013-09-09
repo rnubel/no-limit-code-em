@@ -37,7 +37,7 @@ describe Round do
   end
 
   it "records valid actions" do
-    PokerTable.any_instance.expects(:valid_action?).returns true
+    DrawPokerTable.any_instance.expects(:valid_action?).returns true
     subject.take_action! player: subject.players.second,
                            action: "bet",
                            amount: 1
@@ -51,7 +51,7 @@ describe Round do
   end
 
   it "rejects invalid actions" do
-    PokerTable.any_instance.expects(:valid_action?).returns false
+    DrawPokerTable.any_instance.expects(:valid_action?).returns false
 
     expect {
      subject.take_action!(player: subject.players.first,
@@ -67,8 +67,8 @@ describe Round do
       end
     end
 
-    it "simulates all actions via PokerTable" do
-      PokerTable.any_instance.expects(:simulate!)
+    it "simulates all actions via DrawPokerTable" do
+      DrawPokerTable.any_instance.expects(:simulate!)
 
       subject.state
     end
@@ -97,7 +97,7 @@ describe Round do
 
   describe "when being closed" do
     it "updates its round_players with their stack change" do
-      PokerTable.any_instance.stubs(:stack_changes).returns({
+      DrawPokerTable.any_instance.stubs(:stack_changes).returns({
         subject.players[0].id => -10,
         subject.players[1].id => -10,
         subject.players[2].id => 20,
@@ -111,7 +111,7 @@ describe Round do
     end
 
     it "provides a list of winners" do
-      PokerTable.any_instance.expects(:winners).returns [
+      DrawPokerTable.any_instance.expects(:winners).returns [
         { :player_id => subject.players.second.id, :winnings => 20 }
       ]
 
@@ -120,7 +120,7 @@ describe Round do
     end
 
     it "provides a list of kicked players to be removed" do
-      PokerTable.any_instance.expects(:losers).returns [
+      DrawPokerTable.any_instance.expects(:losers).returns [
         { :player_id => subject.players.first.id }
       ]
 

@@ -1,4 +1,4 @@
-require 'poker_table'
+require 'draw_poker_table'
 
 class Round < ActiveRecord::Base
   belongs_to :table
@@ -98,9 +98,9 @@ class Round < ActiveRecord::Base
   end
 
   def initial_state
-    PokerTable.new players: player_list,
-                   ante:    ante,
-                   deck:    deck
+    DrawPokerTable.new players: player_list,
+                       ante:    ante,
+                       deck:    deck
   end
 
   def player_list

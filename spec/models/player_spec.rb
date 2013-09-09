@@ -64,7 +64,7 @@ describe Player do
       end
 
       it "can check its current game state" do
-        subject.current_game_state.should be_a PokerTable
+        subject.current_game_state.should be_a DrawPokerTable
       end
       
       its(:current_player_state) {
