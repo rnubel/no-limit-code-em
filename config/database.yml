@@ -1,0 +1,9 @@
+development: &development
+  adapter: postgresql
+  encoding: unicode
+  database: no_limit 
+  pool: 5
+  username: no_limit 
+  password:
+
+
