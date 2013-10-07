@@ -8,7 +8,7 @@ describe PlayerPresenter do
     let(:player){ FactoryGirl.create(:player, :registered) }
 
     it "has the needed keys" do
-      subject.to_json.keys.should =~ [:name, :initial_stack, :your_turn, :players_at_table, :total_players_remaining, :hand, :betting_phase, :table_id, :round_id, :round_history, :call_amount, :current_bet, :stack, :lost_at]
+      subject.to_json.keys.should =~ [:name, :initial_stack, :your_turn, :players_at_table, :total_players_remaining, :hand, :betting_phase, :table_id, :round_id, :round_history, :call_amount, :current_bet, :stack, :lost_at, :community_cards]
     end
   }
 
