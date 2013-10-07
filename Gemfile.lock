@@ -1,8 +1,8 @@
 GIT
   remote: git://github.com/rnubel/poker_table
-  revision: 47f4cc5058a6d35c55422c157ed9ae3ef5d66e4f
+  revision: bcbddc712e1dbbdf074144aad5938c82f94915db
   specs:
-    poker_table (0.3.1)
+    poker_table (0.5.1)
       ruby-poker
 
 GIT
@@ -247,7 +247,7 @@ DEPENDENCIES
   mocha
   newrelic_rpm
   pg (= 0.13.2)
-  poker_table (= 0.3.1)!
+  poker_table (= 0.5.1)!
   pry
   rack-throttle!
   rails (= 3.2.12)

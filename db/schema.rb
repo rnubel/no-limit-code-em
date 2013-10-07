@@ -19,8 +19,8 @@ ActiveRecord::Schema.define(:version => 20121023204958) do
     t.string   "cards"
     t.integer  "player_id"
     t.integer  "round_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   add_index "actions", ["player_id"], :name => "index_actions_on_player_id"
@@ -29,8 +29,8 @@ ActiveRecord::Schema.define(:version => 20121023204958) do
   create_table "players", :force => true do |t|
     t.string   "name"
     t.string   "key"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
     t.integer  "lock_version",  :default => 0
     t.integer  "tournament_id"
     t.integer  "initial_stack"
@@ -44,8 +44,8 @@ ActiveRecord::Schema.define(:version => 20121023204958) do
   create_table "registrations", :force => true do |t|
     t.integer  "player_id"
     t.integer  "tournament_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.integer  "purse"
     t.integer  "current_stack"
   end
@@ -72,8 +72,8 @@ ActiveRecord::Schema.define(:version => 20121023204958) do
     t.boolean  "playing"
     t.string   "player_order"
     t.string   "deck"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
     t.integer  "ante"
     t.integer  "dealer_id"
     t.integer  "lock_version", :default => 0
@@ -83,11 +83,9 @@ ActiveRecord::Schema.define(:version => 20121023204958) do
   add_index "rounds", ["table_id"], :name => "index_rounds_on_table_id"
 
   create_table "seatings", :force => true do |t|
-    t.integer  "player_id"
-    t.integer  "table_id"
-    t.boolean  "active",     :default => true
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "player_id"
+    t.integer "table_id"
+    t.boolean "active",    :default => true
   end
 
   add_index "seatings", ["active"], :name => "index_seatings_on_active"
@@ -98,8 +96,8 @@ ActiveRecord::Schema.define(:version => 20121023204958) do
     t.integer  "tournament_id"
     t.boolean  "playing"
     t.string   "seat_order"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
     t.integer  "lock_version",  :default => 0
   end
 
@@ -110,14 +108,14 @@ ActiveRecord::Schema.define(:version => 20121023204958) do
     t.integer  "player_id"
     t.integer  "round_id"
     t.float    "idle_time"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "tournaments", :force => true do |t|
     t.boolean  "open"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
     t.integer  "lock_version", :default => 0
     t.boolean  "playing",      :default => false
   end
