@@ -1,9 +1,15 @@
 development: &development
   adapter: postgresql
   encoding: unicode
-  database: no_limit 
+  database: no_limit_development
   pool: 5
-  username: no_limit 
+  username: no_limit
   password:
 
+test: &test
+  <<: *development
+  database: no_limit_test
+
+cucumber:
+  <<: *test
 
