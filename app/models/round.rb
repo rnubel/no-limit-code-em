@@ -117,4 +117,8 @@ class Round < ActiveRecord::Base
         cards: a.cards && a.cards.split(" ") }
     end
   end
+
+  def community_cards
+    state.community_cards
+  end
 end
