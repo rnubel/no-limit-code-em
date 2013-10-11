@@ -20,7 +20,8 @@ class PlayerPresenter
       :table_id         => table && table.id,
       :round_id         => round && round.id,
       :round_history    => round_history,
-      :lost_at          => @player.lost_at
+      :lost_at          => @player.lost_at,
+      :community_cards  => round && round.community_cards
     }
   end
 

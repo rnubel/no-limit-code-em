@@ -118,6 +118,10 @@ class Round < ActiveRecord::Base
     end
   end
 
+  def community_cards
+    state.community_cards
+  end
+
   private
   def simulator_class
     case tournament.game_type
