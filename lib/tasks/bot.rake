@@ -1,5 +1,6 @@
 require 'bot'
 require 'smart_bot'
+require 'hold_em_bot'
 
 namespace :bot do
   task :run do
@@ -8,7 +9,7 @@ namespace :bot do
         klass = Kernel.const_get(ENV['bot'] || "Bot")
         b = klass.new(
           :name => (name = (ENV['name'] || Faker::Name.name)),
-          :delay => ENV['delay'] || 0.2,
+          :delay => ENV['delay'] || 1,
           :logger => Logger.new("tmp/bot.#{i}.#{name}.log")
         ).run!
       end
