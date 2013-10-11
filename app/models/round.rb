@@ -98,9 +98,9 @@ class Round < ActiveRecord::Base
   end
 
   def initial_state
-    DrawPokerTable.new players: player_list,
-                       ante:    ante,
-                       deck:    deck
+    simulator_class.new players: player_list,
+                        ante:    ante,
+                        deck:    deck
   end
 
   def player_list
@@ -115,6 +115,18 @@ class Round < ActiveRecord::Base
         action: a.action, 
         amount: a.amount,
         cards: a.cards && a.cards.split(" ") }
+    end
+  end
+
+  private
+  def simulator_class
+    case tournament.game_type
+    when :draw_poker
+      DrawPokerTable
+    when :hold_em
+      HoldEmPokerTable
+    else
+      raise NotImplementedError, "Tournament type #{tournament.game_type} is not implemented"
     end
   end
 end

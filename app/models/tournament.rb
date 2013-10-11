@@ -84,6 +84,10 @@ class Tournament < ActiveRecord::Base
     ante = (ante_percent * avg_chipstack).to_i.round(-1)
   end
 
+  def game_type
+    :draw_poker
+  end
+
   def table_size
     config.table_size
   end
