@@ -22,6 +22,16 @@ When /^player (\d+) bets (\d+)$/ do |id, amount|
   @player.take_action!(:action => "bet", :amount => amount.to_i)
 end
 
+When /^player (\d+) calls$/ do |id|
+  @player = @table.players[id.to_i-1]
+  @player.take_action!(:action => "call")
+end
+
+When /^player (\d+) checks$/ do |id|
+  @player = @table.players[id.to_i-1]
+  @player.take_action!(:action => "check")
+end
+
 When /^player (\d+) folds$/ do |id|
   @player = @table.players[id.to_i-1]
   @player.take_action!(:action => "fold")
@@ -59,13 +69,24 @@ When /^all players replace no cards$/ do
 end
 
 Given /^the deck favors player 1$/ do
-  @round.deck = "Ac 5d 2c 3d 3c 9s 4c 8h 5c Kh"
-  @round.save
+  if @tournament.game_type == 'draw_poker'
+    @round.deck = "Ac 5d 2c 3d 3c 9s 4c 8h 5c Kh 2s 3s 5s 6s"
+  else
+    #              P1 P2 P1 P2 X  F  F  F  X  T  X  R
+    @round.deck = "Ac 5d 2c 8d 7s 3c 4c 5c 6s 7s 7s 9s"
+  end
+
+  @round.save!
 end
 
 Given /^the deck favors player 2$/ do
-  @round.deck = "Ac 5d 2c 3d 3c 9s 4c 8h 5c Kh".split(" ").reverse.join(" ")
-  @round.save
+  if @tournament.game_type == 'draw_poker'
+    @round.deck = "Ac 5d 2c 3d 3c 9s 4c 8h 5c Kh 2s 3s 5s 6s".split(" ").reverse.join(" ")
+  else
+    @round.deck = "5d Ac 8d 2c 7s 3c 4c 5c 6s 7s 7s 9s"
+  end
+
+  @round.save!
 end
 
 Then /^player (\d+) is unseated/ do |id|
@@ -86,6 +107,12 @@ Then /^player (\d+) and player (\d+) split the pot$/ do |p1_id, p2_id|
 end
 
 Given /^the deck favors player 1 and player 2$/ do 
-  @round.deck = "Ac Ad Ah 2c 2d 2h 3c 3d 3h 4c 4d 4h 5c 5d 6d"
-  @round.save
+  if @tournament.game_type == 'draw_poker'
+    @round.deck = "Ac Ad Ah 2c 2d 2h 3c 3d 3h 4c 4d 4h 5c 5d 6d"
+  else
+    #              P1 P2 P3 P1 P2 P3 X  F  F  F  X  T  X  R
+    @round.deck = "Ac Ad 9s As Ah 8c 7c 3c 3d 4c 4d 4h 5c 5d"
+  end
+
+  @round.save!
 end

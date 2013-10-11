@@ -1,4 +1,5 @@
 require 'draw_poker_table'
+require 'hold_em_poker_table'
 
 class Round < ActiveRecord::Base
   belongs_to :table
@@ -77,8 +78,8 @@ class Round < ActiveRecord::Base
     state.round == 'showdown'
   end
 
-  def state
-    Rails.cache.fetch("round/#{id}/state/#{actions.count}") do
+  def state(reload = false)
+    Rails.cache.fetch("round/#{id}/state/#{actions.count}", force: reload) do
       s = initial_state
       s.simulate! action_list
     end

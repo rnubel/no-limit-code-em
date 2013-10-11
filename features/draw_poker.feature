@@ -1,9 +1,9 @@
-Feature: Action steps
-  We want to describe all of the possible sequences of actions in 5 card draw poker
+Feature: Draw poker
+  Because hold'em was so late 2012
 
   Background:
-  Given a tournament is open
-  
+    Given a tournament is open
+
   Scenario: Simplest table
     When 2 players are at a table
     And player 1 bets 24
@@ -14,11 +14,11 @@ Feature: Action steps
     When 2 players are at a table
     And player 1 bets 50
     Then player 2 cannot bet 1000
-  
+
   Scenario: Betting below minimum bet
     When 2 players are at a table
     Then player 1 cannot bet -1
-  
+
   Scenario: Going all in
     When 2 players are at a table with initial stacks [50, 100]
     Given the deck favors player 1
@@ -27,7 +27,7 @@ Feature: Action steps
     And all players replace no cards
     Then player 1 wins 100
     And player 2 wins 50
- 
+
   Scenario: Dealer goes all in
     When 2 players are at a table with initial stacks [100, 50]
     Given the deck favors player 2
