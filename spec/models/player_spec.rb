@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe Player do
   it "should be able to register in a tournament" do
-    t = Tournament.create
-    p = FactoryGirl.create :player, :tournament => t
+    t = FactoryGirl.create :tournament
+    p = FactoryGirl.create :player    , :tournament => t
 
     p.tournament.should == t
   end
@@ -41,7 +41,7 @@ describe Player do
               :tournament => subject.tournament,
               :players => [subject,
                            FactoryGirl.create(:player, :registered, 
-                                              :tournament => subject.tournament)
+                                              tournament: subject.tournament)
                           ]) }
 
     specify { subject.table.should_not be_nil }

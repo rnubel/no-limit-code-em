@@ -1,5 +1,6 @@
 FactoryGirl.define do
   factory :tournament do
+    game_type 'draw_poker'
     open  true
   end
 

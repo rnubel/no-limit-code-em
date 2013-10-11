@@ -125,9 +125,9 @@ class Round < ActiveRecord::Base
   private
   def simulator_class
     case tournament.game_type
-    when :draw_poker
+    when 'draw_poker'
       DrawPokerTable
-    when :hold_em
+    when 'hold_em'
       HoldEmPokerTable
     else
       raise NotImplementedError, "Tournament type #{tournament.game_type} is not implemented"

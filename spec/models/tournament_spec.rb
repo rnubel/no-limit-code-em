@@ -1,24 +1,25 @@
 require 'spec_helper'
 
 describe Tournament do
+  subject { Tournament.create game_type: 'draw_poker', open: true }
+
   it "is open or closed" do
-    Tournament.create(open: true).open?.should be_true
-    Tournament.create(open: false).open?.should be_false
+    Tournament.create(game_type: 'draw_poker',  open: true  ).should be_open
+    Tournament.create(game_type: 'hold_em',     open: false ).should_not be_open
   end
 
   it "starts out as not playing" do
-    Tournament.create(open: true).should_not be_playing
+    subject.should_not be_playing
   end
 
   it "allows players to register" do
-    t = Tournament.create
+    t = Tournament.create game_type: 'draw_poker'
     t.register_player!(FactoryGirl.create(:player))
 
     t.players.size.should == 1
   end
 
   context "small tournament" do
-    subject { Tournament.create open: true }
 
     before :each do
       Tournament.any_instance.stubs(:table_size).returns(4)
@@ -76,7 +77,6 @@ describe Tournament do
     end
 
     describe "#current_ante" do
-
       it "starts off at the base value" do
         subject.current_ante.should == 10
       end
@@ -97,8 +97,6 @@ describe Tournament do
   end
 
   describe "larger tournament" do
-    subject { Tournament.create open: true }
-
     before {
       11.times do
         subject.players << FactoryGirl.create(:player, :tournament => subject)
