@@ -4,8 +4,8 @@ class Tournament < ActiveRecord::Base
   has_many :tables
   has_many :rounds, :through => :tables
 
-  scope :open, where(:open => true)
-  scope :playing, where(:playing => true)
+  scope :open,    -> { where(:open => true)     }
+  scope :playing, -> { where(:playing => true)  }
 
   def start!
     self.open = false

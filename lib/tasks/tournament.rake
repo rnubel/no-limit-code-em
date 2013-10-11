@@ -23,7 +23,11 @@ namespace :tournament do
   task :create => :environment do
     raise "A tournament is already open!" unless Tournament.open.empty?
 
-    t = Tournament.create :open => true
+    game_type = ENV['game_type'] || 'draw_poker'
+
+    raise "Invalid game type '#{game_type}'" unless %w(hold_em draw_poker).include? game_type
+
+    t = Tournament.create open: true, game_type: game_type
 
     puts "Tournament #{t.inspect} has opened for registration."
   end
@@ -49,19 +53,37 @@ namespace :tournament do
     t = Tournament.playing.last
     raise "No tournament playing!" unless t
 
-    TournamentPrinter.new.print_tables(t.tables.includes(:seatings))
+    printer = TournamentPrinter.new
+    freq    = ENV['freq'] && ENV['freq'].to_i || 5
+
     until t.players.playing.count == 1
+      printer.print_tables(t.tables.includes(:seatings))
+
       t.timeout_players!(*[ENV['timeout']].compact)
       t.balance_tables!
 
-      TournamentPrinter.new.print_tables(t.tables.includes(:seatings))
-      sleep 5
+      sleep freq
     end
 
     puts "Tournament over! Winners:"
 
     t.players.order("lost_at DESC").each_with_index do |p, i|
       puts "#{i+1}\t#{p.stack}\t#{p.name}"
+    end
+  end
+
+  task :abort => :environment do
+    t = Tournament.last
+
+    if t.playing?
+      t.end!
+      puts "Tournament #{t.id} ended."
+    elsif t.open?
+      t.start!
+      t.end!
+      puts "Tournament #{t.id} started, then ended."
+    else
+      puts "No need to do anything; latest tournament (id: #{t.id}) is closed and not playing."
     end
   end
 
