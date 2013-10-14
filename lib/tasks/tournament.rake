@@ -1,3 +1,5 @@
+default_game_type = 'hold_em'
+
 class TournamentPrinter
   include Hirb::Console
 
@@ -23,7 +25,7 @@ namespace :tournament do
   task :create => :environment do
     raise "A tournament is already open!" unless Tournament.open.empty?
 
-    game_type = ENV['game_type'] || 'draw_poker'
+    game_type = ENV['game_type'] || default_game_type
 
     raise "Invalid game type '#{game_type}'" unless %w(hold_em draw_poker).include? game_type
 

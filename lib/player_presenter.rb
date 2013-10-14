@@ -85,7 +85,7 @@ class PlayerPresenter
       table.active_players.collect { |p|
         next unless player_property(p.id, :id)
         initial_stack = player_property(p.id, :initial_stack)
-        current_bet = player_property(p.id, :current_bet)
+        current_bet = player_property(p.id, :current_bet) || 0
         # These are the *actual* actions as seen by
         # PokerTable for this player. It may be different
         # from what they entered, but is more accurate.

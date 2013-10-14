@@ -1,7 +1,7 @@
 class HoldEmBot < Bot
   def decide_action!(s)
     logger.info "[#{@name}] (#{Time.now}) #{s.inspect}"
-    if %w(deal flop turn river).include(s["betting_phase"])
+    if %w(deal flop turn river).include?(s["betting_phase"])
       n = rand(100)
       if n < 50
         action(:action_name => "fold")
