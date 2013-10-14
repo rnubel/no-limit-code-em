@@ -5,7 +5,6 @@
     .poker_table {width: 100% !important;} 
     .players { width: 100%; }
   }
- 
 
   .poker_table {
     font-size: 0.8em;
@@ -14,8 +13,8 @@
     margin-right: 20px;
     margin-bottom: 20px; 
     background: image-url('pattern.png');
-    -webkit-background-clip: padding-box;
-    @include border-radius(8px);
+    background-clip: padding-box;
+    border-radius: 8px;
     @include box-shadow(#{0 0 2px rgba(0, 0, 0, 0.3), 0 2px 6px rgba(0, 0, 0, 0.5)});
     @include transition(all 0.3s linear);
 
@@ -71,7 +70,7 @@
       background: image-url('wood.png') rgba(0,0,0,0.5);
       text-align: center;
       text-shadow: 0px 1px 0px rgba(0,0,0,0.7);
-      @include border-radius(8px 8px 0px 0px);
+      border-radius: 8px 8px 0 0;
       border-bottom: 2px solid rgba(0,0,0,0.7);
       i { margin-top: 2px }
     }
@@ -90,7 +89,7 @@
     }
 
     .last_winner { 
-      @include border-radius(0 0 8px 8px);
+      border-radius: 0 0 8px 8px;
       background: rgba(0,0,0,0.1);
       border-bottom: none;
       text-shadow: none;

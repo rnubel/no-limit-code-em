@@ -1,47 +1,13 @@
-/*= require_self */
-
 @import "bootstrap";
-@import "google-buttons";
-
 @import "scoreboard";
 @import "poker_tables";
 @import "registration";
 
 body {
   font: 1em Helvetica, Arial, sans-serif;
-  background: image-url('background.gif');
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: none;
   color: #666;
-}
-
-a { &:hover { text-decoration: none; } }
-
-.container { width: 930px !important; }
-.span4 { width: 240px !important; }
-.span8 { width: 650px !important; }
-.navbar {
-  .container {
-    width: 930px;
-  }
-  .navbar-inner {
-    padding: 8px 0px;
-    background: #fff;
-    .logo {
-      background: image-url('logo.jpg') no-repeat 0% 50%;
-      height: 80px;
-      display: block;
-      opacity: 1;
-      line-height: 80px;
-      padding-left: 210px;
-      font-size: 1.3em;
-      float: left;
-    } 
-    .pull-right {
-      margin-top: 20px;
-
-    }
-  }
 }
 
 .loader {
@@ -51,28 +17,6 @@ a { &:hover { text-decoration: none; } }
   float: right;
   display: none;
   background: image-url('loader.gif') no-repeat;
-}
-
-#content, #sidebar, .registration {
-  background: white;
-  border-radius: 4px;
-  @include box-shadow(#{0 0 1px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.2)});
-
-  h2 { 
-    background: #fff;
-    background: -moz-linear-gradient(top, white 0%, #f4f4f4 100%);
-    background: -webkit-linear-gradient(top, white 0%, #f4f4f4 100%);
-    background: linear, to bottom, white 0%, #f4f4f4 100%;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 4px 4px 0 0;
-    color: #444;
-    font-size: 1.25em;
-    font-weight: 400;
-    line-height: 1.4;
-    margin: 0;
-    padding: .3em 1em;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
-  }
 }
 
 i.chip {
@@ -86,172 +30,33 @@ i.chip {
   background-position: 0 0;
   margin-left: -13px;
 
-  &.chip-bordered { background: image-url('chip_sprite_bordered.png') no-repeat; }
-  &.chip-white{ background-position: 0 0 }
-  &.chip-red{ background-position: -20px 0 }
-  &.chip-green{ background-position: -40px 0 }
-  &.chip-black{ background-position: -60px -20px }
-  &.chip-purple{ background-position: -60px 0 }
-  &.chip-yellow{ background-position: 0 -20px }
-  &.chip-gray{ background-position: -60px 0 }
+  &.chip-bordered {
+    background: image-url('chip_sprite_bordered.png') no-repeat;
+  }
+  &.chip-white { background-position: 0 0 }
+  &.chip-red { background-position: -20px 0 }
+  &.chip-green { background-position: -40px 0 }
+  &.chip-black { background-position: -60px -20px }
+  &.chip-purple { background-position: -60px 0 }
+  &.chip-yellow { background-position: 0 -20px }
+  &.chip-gray { background-position: -60px 0 }
 }   
 
-.docs .span8 { margin: 0 auto; float: none; margin-bottom: 30px; }
-.docs #poker_tables { padding: 20px 20px 10px 20px; }
-.docs .table th, .docs .table td { border-left: 1px solid #ddd; }
-.docs h4 { padding: 0; margin: 0 }
-.docs table.params td:first-child { font-family: "Courier", "Monospace"; color: #44f; font-weight: bold }
-.docs table.params td:nth-child(3) { font-family: "Courier", "Monospace" }
-
-.dropdown-menu { margin-top: 5px; @include border-radius(4px); }
-.dropdown-menu a { padding: 5px 15px; }
-.dropdown-menu li > a:hover,
-.dropdown-menu li > a:focus,
-.dropdown-submenu:hover > a {
-  text-decoration: none;
-  color: #444;
-  background-color: #f1f1f1;
-  background-image: none;
+.cards {
+  margin: 10px 0px;
 }
-.btn-group a { cursor: pointer; }
-.btn-group > .btn:first-child { @include border-radius(4px 0 0 4px !important); }
-.btn-group > .btn:last-child { @include border-radius(0px 4px 4px 0px !important); }
-
-.social {
-  margin: 0 auto;
-  li {
-    float: left;
-    list-style: none;
-    a {
-      display: block;
-      width: 30px;
-      @include opacity(0.1);
-      @include transition(0.3s all linear);
-      height: 30px;
-      margin-left: 5px;
-      margin-top: 7px;
-      &:hover { @include opacity(0.2); }
-      &.twitter { background: image-url('twitter.png') no-repeat; }
-      &.linked_in { background: image-url('facebook.png') no-repeat; }
-      &.facebook { background: image-url('linked_in.png') no-repeat; }
-    }
-  }
-} 
-
-.doc { 
-  margin: 0;
-  padding: 5px 10px;
-  font-size: 22px;
-  @include border-radius(8px 8px 0px 0px);
-  background: -moz-linear-gradient(top, white 0%, #f4f4f4 100%);
-  background: -webkit-linear-gradient(top, white 0%, #f4f4f4 100%);
-  background: linear, to bottom, white 0%, #f4f4f4 100%; 
-  border: 1px solid #ddd;
-  font-weight: normal; 
-}
-.well {
-  line-height: 1.5;
-  background: #fff !important;
-  font-size: 16px;
-}
-.bs-docs-sidenav {
-  width: 228px;
-  padding: 0;
-  background-color: #fff;
-  -webkit-border-radius: 6px;
-     -moz-border-radius: 6px;
-          border-radius: 6px;
-  -webkit-box-shadow: 0 1px 4px rgba(0,0,0,.065);
-     -moz-box-shadow: 0 1px 4px rgba(0,0,0,.065);
-          box-shadow: 0 1px 4px rgba(0,0,0,.065);
-}
-.bs-docs-sidenav > li > a {
-  display: block;
-  *width: 190px;
-  font-size: 14px;
-  margin: 0 0 -1px;
-  padding: 8px 14px;
-  border: 1px solid #e5e5e5;
-}
-.bs-docs-sidenav > li:first-child > a {
-  -webkit-border-radius: 6px 6px 0 0;
-     -moz-border-radius: 6px 6px 0 0;
-          border-radius: 6px 6px 0 0;
-}
-.bs-docs-sidenav > li:last-child > a {
-  -webkit-border-radius: 0 0 6px 6px;
-     -moz-border-radius: 0 0 6px 6px;
-          border-radius: 0 0 6px 6px;
-}
-.bs-docs-sidenav > .active > a {
-  position: relative;
-  z-index: 2;
-  padding: 9px 15px;
-  border: 0;
-  -webkit-box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
-     -moz-box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
-          box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
-}
-/* Chevrons */
-.bs-docs-sidenav .icon-chevron-right {
-  float: right;
-  margin-top: 2px;
-  margin-right: -6px;
-  opacity: .25;
-}
-.bs-docs-sidenav > li > a:hover {
-}
-.bs-docs-sidenav a:hover .icon-chevron-right {
-  opacity: .5;
-}
-
-.bs-docs-sidenav .active .icon-chevron-right {
-  background-image: url("/assets/glyphicons-halflings.png") !important;
-}
-.bs-docs-sidenav .active .icon-chevron-right,
-.bs-docs-sidenav .active a:hover .icon-chevron-right {
-  opacity: 1;
-}
-.bs-docs-sidenav.affix {
-  top: 40px;
-}
-.bs-docs-sidenav.affix-bottom {
-  position: absolute;
-  top: auto;
-  bottom: 270px;
-}
-.docs h2 {
+.card {
   background: #fff;
-  background: -moz-linear-gradient(top, white 0%, #f4f4f4 100%);
-  background: -webkit-linear-gradient(top, white 0%, #f4f4f4 100%);
-  background: linear, to bottom, white 0%, #f4f4f4 100%;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 4px 4px 0 0;
-  color: #444;
-  font-size: 1.25em;
-  font-weight: 400;
-  margin: 0;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5); 
-  margin: 0;
-  padding: 5px 10px;
-  border-radius: 8px 8px 0px 0px;
-  border: 1px solid #ddd; @include border-radius(8px 8px 0px 0px !important); 
+  display: inline;
+  padding: 5px 3px 5px 5px;
+  margin-right: -2px;
+  border: 1px solid #ddd;
+  color: #000;
+  border-radius: 5px;
 }
-.docs .table-bordered { @include border-radius(0px !important); }
-.docs .table { font-size: 14px; margin-bottom: 0 }
-.docs table th, .docs .table td { background: #fff; }
-.table-bordered thead:last-child tr:last-child th:first-child, .table-bordered tbody:last-child tr:last-child td:first-child, .table-bordered tfoot:last-child tr:last-child td:first-child,
-table-bordered thead:first-child tr:first-child th:first-child, .table-bordered tbody:first-child tr:first-child td:first-child { @include border-radius(0); }
-.docs .content { margin-bottom: 30px; border-bottom: 1px solid #ddd; padding: 20px; background: #fff;  border-left: 1px solid #ddd; border-right: 1px solid #ddd; }
-.title { font-size: 16px; font-weight: bold; border-top: 1px dashed #ddd; margin-top: 20px;  padding: 20px 0px; }
-.docs { line-height: 1.5; }
-.docs ul { border-top: 2px solid #ddd; list-style: none; margin:0; padding: 0 } 
-.docs ul li { line-height: 1.5; padding: 10px 15px; }
-.docs ul li:nth-child(even) { background: #f1f1f1 }
-.docs ol li { line-height: 17px; padding: 10px 15px; }
-
-  .cards { margin: 10px 0px; }
-  .card { background:#fff; display: inline; padding: 5px 3px 5px 5px; margin-right: -2px; border: 1px solid #ddd; color: #000; -webkit-border-radius: 5px; }
-    .suit { display: inline; padding: 0px 2px; }
-    .red { color: red; }
-    .black { color: black; }
+.suit {
+  display: inline;
+  padding: 0px 2px;
+}
+.red { color: red; }
+.black { color: black; }

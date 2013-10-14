@@ -1,6 +1,6 @@
 //= require jquery
-//= require bootstrap-tab
-//= require_self
+//= require bootstrap 
+
 $(function() {
   reload_tables();
   reload_scoreboard();

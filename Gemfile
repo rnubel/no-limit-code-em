@@ -34,9 +34,8 @@ group :assets do
 end
 
 gem 'jquery-rails'
-gem 'bootstrap-sass'
+gem 'bootstrap-sass', :git => 'https://github.com/thomas-mcdonald/bootstrap-sass'
 gem 'haml'
-gem 'google-buttons-sass'
 
 gem 'high_voltage', '1.2.0'
 
