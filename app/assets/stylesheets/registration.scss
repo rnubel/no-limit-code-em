@@ -64,9 +64,17 @@ $form-width: 450px;
 
       &.big {
         margin-bottom: 0px;
-        margin-top: 15px;
+        margin-top: 10px;
 
         input { width: 100%; padding: 12px 0; margin-top: 0px; }
+      }
+
+      &.small {
+        margin-top: 25px;
+        margin-bottom: 0px;
+
+        font-size: .9em;
+        color: #999;
       }
     }
   }

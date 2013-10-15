@@ -8,6 +8,11 @@
             %i.icon.icon-exclamation-sign
             = value  
       .row
-        = text_field_tag 'name', nil, :class => "field", :placeholder => "username"
+        Choose a unique name for your bot!
+      .row
+        = text_field_tag 'name', nil, :class => "field", :placeholder => "playername"
       .row.big
         = submit_tag "Enter Tournament", :class => "btn btn-large btn-primary"
+      .row.small
+        %p Remember to only register once per team per tournament. Save the key we return you, as your bot will have to send us this key with every request.
+        %p Make a mistake? Ask the nearest Enova person for help.

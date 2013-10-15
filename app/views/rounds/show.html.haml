@@ -8,7 +8,7 @@
         %tr
           %td{:colspan=>2}= @players[p[:id]] && @players[p[:id]].name
           %td dealt
-          %td= p[:hand] && p[:hand].join(" ")
+          %td!= p[:hand] && p[:hand].map { |c| html_card(c) }.join(" ")
       - r.state && r.state.log && r.state.log.each do |log|
         %tr
           - if log[:round]
@@ -16,7 +16,7 @@
           - elsif log[:community_cards]
             %tr
               %td{colspan: 3} Community cards dealt:
-              %td= log[:community_cards].join(" ")
+              %td!= log[:community_cards].map { |c| html_card(c) }.join(" ")
           - else
             %td{:colspan => 2}
               = player_name(log[:player_id])
@@ -28,12 +28,12 @@
         %td{:colspan => 4, :style => "background:#fff;color:#000;font-size:24px"} Final Hands
       %tr
         %td{:colspan => 2} Board:
-        %td{:colspan => 2}= r.community_cards.join(" ")
+        %td{:colspan => 2}!= r.community_cards.map { |c| html_card(c) }.join(" ")
       - r.state.players.each do |p|
         %tr
           %td{:colspan => 2}
             = player_name(p[:id])
           %td
-            = p[:hand].join(" ")
+            != p[:hand].map { |c| html_card(c) }.join(" ")
           %td
             = PokerHand.new(p[:hand] + r.community_cards).rank
