@@ -22,6 +22,7 @@ class TournamentPrinter
 end
 
 namespace :tournament do
+  desc "Creates a new tournament, open for registration but not yet playing. Args: game_type=(hold_em|draw_poker)"
   task :create => :environment do
     raise "A tournament is already open!" unless Tournament.open.empty?
 
@@ -40,6 +41,8 @@ namespace :tournament do
     puts t.players.inspect
   end
 
+
+  desc "Starts the current tournament's play. Also invokes tournament:run to run the tournament."
   task :start => :environment do
     raise "No tournament found to start!" unless Tournament.open.first
 
@@ -51,6 +54,8 @@ namespace :tournament do
     Rake::Task['tournament:run'].invoke
   end
 
+
+  desc "Runs the tournament, looping every few seconds to time out and balance players."
   task :run => :environment do
     t = Tournament.playing.last
     raise "No tournament playing!" unless t
@@ -74,6 +79,8 @@ namespace :tournament do
     end
   end
 
+
+  desc "Ends the current tournament, whether running or not."
   task :abort => :environment do
     t = Tournament.last
 
@@ -89,6 +96,8 @@ namespace :tournament do
     end
   end
 
+
+  desc "Ends the current tournament, opening up the logs."
   task :end => :environment do
     t = Tournament.playing.last
     raise "No tournament found to end!" unless t

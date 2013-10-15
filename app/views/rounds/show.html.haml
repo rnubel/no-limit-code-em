@@ -1,6 +1,7 @@
 .docs
   - r = @round
   %h2= "Round: #{r.id}"
+  %div{:align => 'center'}
   %table.table.table-bordered.table-striped{:style => "margin-bottom:20px;background:#fff;"}
     %tbody
       - r.initial_state && r.initial_state.simulate!.players.each do |p|
@@ -12,20 +13,27 @@
         %tr
           - if log[:round]
             %td{:colspan => 4, :style => "background:#fff;color:#000;font-size:24px"}= log[:round].humanize
+          - elsif log[:community_cards]
+            %tr
+              %td{colspan: 3} Community cards dealt:
+              %td= log[:community_cards].join(" ")
           - else
             %td{:colspan => 2}
               = player_name(log[:player_id])
-            %td 
+            %td
               = log[:action]
-            %td 
+            %td
               = log[:amount] || log[:cards] && log[:cards].join(" ")
       %tr
         %td{:colspan => 4, :style => "background:#fff;color:#000;font-size:24px"} Final Hands
-        - r.state.players.each do |p|
-          %tr 
-            %td{:colspan => 2} 
-              = player_name(p[:id]) 
-            %td
-              = p[:hand].join(" ")
-            %td
-              = PokerHand.new(p[:hand]).rank 
+      %tr
+        %td{:colspan => 2} Board:
+        %td{:colspan => 2}= r.community_cards.join(" ")
+      - r.state.players.each do |p|
+        %tr
+          %td{:colspan => 2}
+            = player_name(p[:id])
+          %td
+            = p[:hand].join(" ")
+          %td
+            = PokerHand.new(p[:hand] + r.community_cards).rank

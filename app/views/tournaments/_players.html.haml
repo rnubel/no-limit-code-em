@@ -10,7 +10,7 @@
       %tr
       %td
         %p
-          #{ordinalize(i+1)} - 
+          #{(i+1).ordinalize} - 
           %a(href="/players/#{p.id}")= p.name
       %td
         = p.round_players.count
