@@ -1,6 +1,4 @@
 #poker_tables {
-  margin-left: 15px;
-
   &.big {
     .poker_table {width: 100% !important;} 
     .players { width: 100%; }
@@ -8,49 +6,75 @@
 
   .poker_table {
     display: inline-block;
-    width: 49%;
-    margin-right: 15px;
+    width: 50%;
+    padding: 0 10px;
     margin-bottom: 15px;
-    @include box-sizing(border-box);
-    background: $table-bg;
     @include transition(all 0.3s linear);
 
-    &:nth-child(even) { margin-right: 0 }
-
     .players {
-      margin: 10px 0px;
       width: 100%;
       padding: 0;
+      background: $table-bg;
+
       td { 
         span {
           text-align: center;
-          padding: 5px 10px;
           display: block;
+
           &.name {
-            font-weight: bold;
             color: #fff;
+            overflow: hidden;
+            height: 18px;
+            font-weight: bold;
           }
           &.stack { 
             color: #fff; 
-            font-weight: bold;
-            i:last-child { margin-right: 3px; }
+            i:last-child {
+              margin-right: 6px;
+            }
           }
         }
 
         &.pot_middle {
           font-weight: bold;
           text-align: center;
-          padding: 15px 10px;
+          width: 100%;
+          padding: 10px 10px;
+          background: rgba(0,0,0,0.1);
           text-shadow: 0px 1px 0px rgba(0,0,0,0.7);
-          background: rgba(0,0,0,0.4);
           color: #fff;
-          i { margin-right: 3px; }
+
+         .the_pot {
+            background: rgba(0,0,0,0.5);
+            display: inline-block;
+            position: relative;
+            padding: 5px 10px 5px 20px;
+            border-radius: 18px;
+            i:last-child {
+              margin-right: 5px; 
+            }
+          }
+          .cards {
+            margin-top: 5px;
+            .card {
+              width: 35px;
+            }
+          }
         }
+
         .lost {
           @include opacity(0.3);
         }
+
         &.bottom { 
           margin-bottom: 0px; 
+        }
+      }
+
+      td:not(.pot_middle) {
+        .cards {
+          .card { font-size: 12px; }
+          .suit { font-size: 16px; }
         }
       }
     }
@@ -59,11 +83,17 @@
       margin: 0;
       padding: 5px 10px;
       line-height: 24px;
+      border-radius: $table-radius $table-radius 0 0;
       color: #444;
       text-align: center;
+      text-transform: uppercase;
+      font-weight: bold;
+      font-size: 16px;
       background: #48CFAD;
       border-bottom: 2px solid #159071;
-      i { margin-top: 2px }
+      i {
+        margin-top: 2px;
+      }
     }
 
     .pot {
@@ -79,16 +109,15 @@
     }
 
     .last_winner { 
-      background: rgba(0,0,0,0.2);
+      background: darken($table-bg, 7%);
       border-bottom: none;
       text-shadow: none;
-      line-height: 24px;
-      font-size: 1em;
       text-align: left;
-      min-height: 78px !important;
       padding: 3px 9px; 
       margin: 0;
       color: rgba(255,255,255,0.4);
+      border-radius: 0 0 $table-radius $table-radius;
+
       span { display: block; }
       span:first-child { color: rgba(255,255,255,0.8); }
       span:last-child { color: rgba(255,255,255,0.2); }

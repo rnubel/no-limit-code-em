@@ -24,7 +24,7 @@ class TournamentPresenter
         :table_id => table.id,
         :community_cards => build_hand(table.current_round.community_cards),
         :players => table.active_players.collect { |p| {:player_id => p.id, 
-                                                        :name => p.name.first(12) + (p.name.length > 14 ? "..." : ""),
+                                                        :name => p.name.first(14) + (p.name.length > 14 ? "..." : ""),
                                                         :initial_stack => p.current_player_state(:initial_stack),
                                                         :stack => stack_display(p.current_player_state(:stack),false), 
                                                         :hand => build_hand(p.current_player_state(:hand)),

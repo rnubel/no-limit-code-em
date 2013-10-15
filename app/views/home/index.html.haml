@@ -1,20 +1,5 @@
-- if irc_link
-  .alert.alert-info
-    Join us in IRC! Click here:
-    %a{:href => irc_link}
-      = irc_link 
-  
-- if nlce_active?
-
-  #content
-    %h2 Tables
-    .poker_tables_wrapper
-      #poker_tables
-    .clearfix
-
-- else
-
-  #content
-    %h2 No Limit Code 'Em
-    .content
-      %h3 Coming Soon
+#content
+  - if nlce_active?
+    #poker_tables
+  - else
+    %h3 Hold your horses...
