@@ -5,19 +5,16 @@
       = irc_link 
   
 - if nlce_active?
-  .span4
-    %aside#sidebar
-      %h2 Scoreboard
-      .scoreboard_wrapper
-        = render :partial => "tournaments/scoreboard"
-  .span8
-    %section#content
-      %h2 Tables
-      .poker_tables_wrapper
-        #poker_tables
-      .clearfix
+
+  #content
+    %h2 Tables
+    .poker_tables_wrapper
+      #poker_tables
+    .clearfix
+
 - else
-  .docs
+
+  #content
     %h2 No Limit Code 'Em
     .content
       %h3 Coming Soon

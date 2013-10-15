@@ -6,8 +6,8 @@ $(function() {
   reload_scoreboard();
   var refresh = getURLParameter("refresh");
   var delay = (getURLParameter("delay") == "pete" ? 1000 : 10000);
-  setInterval(function() { reload_tables(); }, delay);
-  setInterval(function() { reload_scoreboard(); }, 5000);
+  //setInterval(function() { reload_tables(); }, delay);
+  //setInterval(function() { reload_scoreboard(); }, 5000);
 })
 function reload_tables() {
   $.ajax({
@@ -60,7 +60,7 @@ function table(hash, big) {
               "<div class='clearfix'></div>" +
             "</h3>" +
             "<table class='players'>";
-  for(var i=0; i<6; i++) {
+  for(var i=0; i<8; i++) {
     var hands = "";
     var name = "<span class='name lost'>empty seat</span>";
     var stack = "<span class='stack lost'>0</span>";
@@ -72,11 +72,11 @@ function table(hash, big) {
       stack = "<span class='stack'>" + players[i].stack + "</span>";
     }
     c += 1;
-    if(c <= 3) { html += "<td>" + name + stack + hands + "</td>"; }
-    if(c == 3) { html += "</tr><tr><td class='pot_middle' colspan='3'>" +
+    if(c <= 8) { html += "<td>" + name + stack + hands + "</td>"; }
+    if(c == 8) { html += "</tr><tr><td class='pot_middle' colspan='3'>" +
                 hash.pot + " in the pot</td></tr><tr>";
     }
-    if(c > 3) { html += "<td class='bottom'>" + hands + stack + name + "</td>"; }
+    if(c > 8) { html += "<td class='bottom'>" + hands + stack + name + "</td>"; }
   }
   html += "</tr></table>"
   html += "<div class='clearfix'>"
