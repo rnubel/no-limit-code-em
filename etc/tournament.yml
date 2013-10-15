@@ -1,4 +1,4 @@
-table_size: 6
+table_size: 8
 initial_stack: 250
 ante:
   base: 20
