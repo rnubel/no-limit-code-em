@@ -57,8 +57,11 @@
       %tr
         %td current_bet
         %td
-          How many chips you've put into the pot so far this hand. Note that the following invariant always holds true:
-          %pre current_bet + stack = initial_stack
+          How many chips you've put into the pot so far this hand.
+          .alert.alert-info
+            Note that the following invariant always holds true:
+            %pre{style: "font-size: 10px; padding:0px; margin-top:5px;"}
+              current_bet + stack = initial_stack
         %td 50
       %tr
         %td call_amount
@@ -68,15 +71,24 @@
         %td hand
         %td
           The cards in your hand. This is an array of cards like "AS" (Ace of Spades). See the
-          %a{:href => "index.html#suite"}
+          %a{:href => "index.html#suite", "data-toggle"=> "tab"}
+            Card Suits and Rankings
+          page for more info. Since we are playing Texas Hold'Em, there will only ever be two cards in your hand (your pocket cards). This value does not include the community cards.
+        %td ["AS", "2C"]
+      %tr
+        %td community_cards
+        %td
+          The cards available to all players to make the best individual hand of 5 cards. This is an array of cards like "AS" (Ace of Spades). See the
+          %a{:href => "index.html#suite", "data-toggle"=> "tab"}
             Card Suits and Rankings
           page for more info.
-        %td ["AS", "2C"]
+        %td ["AS", "2C", "TH", "KD", "QS"]
+
       %tr
         %td betting_phase
         %td
           One of 'deal', 'flop', 'turn', 'river', or 'showdown'. See the
-          %a{:href => 'index.html#draw'} Game Rules
+          %a{:href => 'index.html#draw', "data-toggle"=> "tab"} Game Rules
           page for more details on what each of these phases means.
         %td "deal"
       %tr
@@ -127,7 +139,7 @@
                 "actions":[{"action":"ante", "amount":50},{"action":"bet", "amount":10}]
                }]
       %tr
-        %td total_players_remaining
+        %td total_players_<br/>remaining
         %td How many players remain in the tournament. This controls the ante value.
         %td 12
       %tr
@@ -147,14 +159,6 @@
         %td lost_at
         %td If you haven't lost yet, this is null. If you have lost, it's the time when you lost (and if it's not null, you can stop sending GET requests...)
         %td "2013-02-23 19:45:10 -0500"
-      %tr
-        %td community_cards
-        %td
-          The cards available to all players to make the best individual hand of 5 cards. This is an array of cards like "AS" (Ace of Spades). See the
-          %a{:href => "index.html#suite"}
-            Card Suits and Rankings
-          page for more info.
-        %td ["AS", "2C", "TH", "KD", "QS"]
 
     .title Example request:
     %pre

@@ -1,16 +1,16 @@
 .docs
   %h2 Server API
   .well
-    %p Your bot will communicate with our server through HTTP requests. There are only two requests you will need to make: 
+    %p Your bot will communicate with our server through HTTP requests. There are only two requests you will need to make:
     %ol
       %li
         %a{:href => '#check_status'} Check your status
       %li
         %a{:href => '#make_action'} Take an action
-    %p 
-      To test your bot's interaction with the API, see the 
+    %p
+      To test your bot's interaction with the API, see the
       %a{:href => "#sandbox", :"data-toggle" => "tab"}
-        Sandbox Testing 
+        Sandbox Testing
       page. For an example round, see the new
       %a{:href => "#tips", :"data-toggle" => "tab"}
         Tips
@@ -26,8 +26,8 @@
   %a{:name => 'check_status'}
   %h2
     Check your status:<br/>
-    %strong GET 
-    http://no-limit-code-em.com/api/players/PLAYER_KEY 
+    %strong GET
+    http://no-limit-code-em.com/api/players/PLAYER_KEY
   .content
     %p Retrieves the current state of the game as seen by your player.
     Just pass your player key as part of the path. There are no querystring parameters for this request.
@@ -57,8 +57,10 @@
       %tr
         %td current_bet
         %td
-          How many chips you've put into the pot so far this hand. Note that the following invariant always holds true:
-          %pre current_bet + stack = initial_stack
+          How many chips you've put into the pot so far this hand.
+          .alert.alert-info
+            Note that the following invariant always holds true:
+            %pre current_bet + stack = initial_stack
         %td 50
       %tr
         %td call_amount
@@ -105,7 +107,7 @@
                 List of actions that this player has done during the round.
                 %strong Note:
                 Actions like 'raise', 'call', and 'check' are all mapped to just
-                'bet' with an amount of '0 for call and check. This should simplify 
+                'bet' with an amount of '0 for call and check. This should simplify
                 the logic in processing these actions, if you choose to do so.
       %tr
         %td{:colspan => 2}
@@ -156,11 +158,11 @@
     %pre
       :preserve
         {"name":"Bill13","your_turn":true,"initial_stack":250,"stack":215,"current_bet":35,"call_amount":0,"hand":["AH","JD","QD","7D","KH"],"betting_phase":"draw","players_at_table":[{"player_name":"Bill12","initial_stack":250,"current_bet":35,"stack":215,"folded":false,"actions":[{"action":"ante","amount":10},{"action":"bet","amount":25},{"action":"replace","cards":["6S","AD"]}]},{"player_name":"Bill13","initial_stack":250,"current_bet":35,"stack":215,"folded":false,"actions":[{"action":"ante","amount":10},{"action":"bet","amount":0}]}],"total_players_remaining":2,"table_id":766,"round_id":823,"round_history":[{"round_id":823,"table_id":766,"stack_change":null}],"lost_at":null}
-  
+
   %a{:name => 'make_action'}
-  %h2 
+  %h2
     Take an action<br/>
-    %strong POST 
+    %strong POST
     \/api/players/PLAYER_KEY/action
   .content
     %p When it's your bot's turn, this action lets you place your bet, fold your hand, or replace your cards.
@@ -168,21 +170,21 @@
     .title Parameters
     %table.table.table-striped.table-bordered
       %tr
-        %td 
+        %td
           action_name
-        %td 
+        %td
           Either "bet", "raise", "call", "check", "fold", or "replace"
       %tr
-        %td 
+        %td
           amount
-        %td 
+        %td
           If you are raising, pass the amount you wish to raise by.
           %div.alert.alert-info{:style => 'margin-top:8px;'}
             Only send this parameter when action_name is '<b>bet</b>' or '<b>raise</b>'
       %tr
-        %td 
+        %td
           cards
-        %td 
+        %td
           If you are replacing, set cards as a string-separated list of the cards you are discarding. E.g., "Ac 5s" or "4H 3D TS", or "" to replace nothing.
           %div.alert.alert-info{:style => 'margin-top:8px;'}
             Only send this parameter when action_name is '<b>replace</b>'.
@@ -209,15 +211,15 @@
         %th
           Semantics
       %tr
-        %td 
+        %td
           bet
-        %td 
+        %td
           Call the previous player's bet, if there is one, and bet an additional <em>amount</em>.
       %tr
-        %td 
+        %td
           raise
-        %td 
-          Synonym for 'bet'. 
+        %td
+          Synonym for 'bet'.
       %tr
         %td
           call
