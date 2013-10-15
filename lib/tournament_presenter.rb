@@ -1,5 +1,6 @@
 class TournamentPresenter
   include ActiveSupport::Inflector
+  include CardHelper
 
   attr_reader :tournament
   def initialize(tournament)
@@ -65,25 +66,8 @@ class TournamentPresenter
     html += initial.to_s
   end
 
-  def build_card(number, suit_code)
-    card = "<div class='card'>"
-    card << (number == "T" ? "10" : number)
-    case suit_code
-      when "C" 
-        card << "<div class='suit black'>&clubs;</div>"
-      when "S" 
-        card << "<div class='suit black'>&spades;</div>"
-      when "D" 
-        card << "<div class='suit red'>&diams;</div>"
-      when "H" 
-        card << "<div class='suit red'>&hearts;</div>"
-    end
-    card << "</div>"
-    card
-  end
-
   def build_hand(cards)
     cards.collect { |c| build_card(c[0..0], c[1..1].upcase) }.join(" ")
-  end 
- 
+  end
+
 end
