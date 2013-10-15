@@ -1,10 +1,25 @@
+@import "https://fonts.googleapis.com/css?family=Roboto:400,400italic,700,700italic,300,300italic";
+
+$font-family-sans-serif: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif !default;
+
+$body-bg: #d7d7d7;
+//$body-bg: #31353d;
+//$body-bg: #1c1d21;
+$text-color: #666;
+
+$navbar-default-bg: #272727;
+//$navbar-default-bg: #1c1d21;
+//$navbar-default-bg: #31353d;
+$navbar-default-link-color: #aaa;
+$navbar-default-link-hover-color: #ddd;
+$navbar-default-link-active-color: #eee;
+
 @import "bootstrap";
 @import "scoreboard";
 @import "poker_tables";
 @import "registration";
 
 body {
-  font: 1em Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: none;
   color: #666;
@@ -17,6 +32,34 @@ body {
   float: right;
   display: none;
   background: image-url('loader.gif') no-repeat;
+}
+
+.navbar {
+  margin-bottom: 0;
+  border-bottom: none;
+
+  li a {
+    font-weight: bold;
+  }
+}
+
+.navbar-brand {
+  padding: 10px 15px 0 15px;
+  img {
+    width: 95px;
+  }
+
+  $card-bg: #005286;
+  &.navbar-cards {
+    padding: 5px 5px 5px 10px;
+    background: $card-bg;
+    &:hover {
+      background: $card-bg;
+    }
+    img {
+      width: 132px;
+    }
+  }
 }
 
 i.chip {

@@ -2,20 +2,27 @@
 %html
   %head
     %title No Limit Code 'Em
-    = javascript_include_tag  "application"
-    = stylesheet_link_tag "application", :media => "all"
+    = javascript_include_tag  'application'
+    = stylesheet_link_tag 'application', :media => 'all'
     = csrf_meta_tags
   %body
-    .navbar
-      .navbar-inner
-        .container
-          %a.logo{:href => "/"} No Limit Code 'Em
-          .pull-right{:style => "margin-right: 20px"}
-            .btn-group
-              - if nlce_active?
-                %a.btn{:href => "/pages/docs/index.html"} Docs
-                %a.btn{:href => "/pages/registration"} Register
-                %a.btn{:href => "/tournaments"} Tournament Logs
-    .container
-      .row
-        = yield
+    .navbar.navbar-default.navbar-fixed-top
+      %a.navbar-brand.navbar-cards{href: '#'}
+        = image_tag 'no_limit.png'
+
+      %ul.nav.navbar-nav
+        %li.active
+          %a{href: '#'} Tables 
+        %li
+          %a{href: '#about'} Docs 
+        %li
+          %a{href: '#contact'} Register 
+        %li
+          %a{href: '#contact'} Tournament Logs 
+
+      .pull-right
+        %a.navbar-brand{href: '#'}
+          = image_tag 'logo.png'
+
+    .content
+      = yield
