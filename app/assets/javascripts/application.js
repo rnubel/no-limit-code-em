@@ -63,12 +63,11 @@ function table(hash, big) {
 
   var html = 
     "<div class='poker_table'>" +
-      "<h3>" + "<div>Table " + number + "</div>" + "</h3>" +
       "<table class='players'>";
 
   for(var i = 0; i < 8; i++) {
     var hands = "",
-        name  = "<span class='name lost'>empty seat</span>",
+        name  = "",
         stack = "<span class='stack lost'></span>";
 
     if(i < superlength(players)) {
@@ -80,21 +79,24 @@ function table(hash, big) {
     c += 1;
 
     if(c <= 4) {
-      html += "<td>" + name + stack + hands + "</td>";
+      html += "<td><div class='player'>" + name + stack + hands + "</div></td>";
     }
 
     if(c == 4) { 
+      if(hash.community_cards == "") {
+        hash.community_cards = '<div class="card blank"><div class="suit">#</div>#</div><div class="card blank"><div class="suit">#</div>#</div><div class="card blank"><div class="suit">#</div>#</div>'
+      }
       html += 
-      "<tr>" +
-        "<td class='pot_middle' colspan='6'>" +
-          "<span class='the_pot'>" + hash.pot + "</span>" +
-          "<span class='cards'>" + hash.community_cards + "</span>" +
-        "</td>" +
-      "</tr>";
+        "<tr>" +
+          "<td class='pot_middle' colspan='6'>" +
+            "<span class='the_pot'>" + hash.pot + "</span>" +
+            "<span class='community_cards'>" + hash.community_cards + "</span>" +
+          "</td>" +
+        "</tr>";
     }
 
     if(c > 4) {
-      html += "<td class='bottom'>" + hands + stack + name + "</td>";
+      html += "<td class='bottom'><div class='player'>" + hands + stack + name + "</div></td>";
     }
   }
 
@@ -103,7 +105,7 @@ function table(hash, big) {
   html += "<div class='last_winner'>"
   $.each(hash.latest_winners, function() {
     var winner = $(this)[0];
-    html += "<span>" + winner.name + " won " + winner.winnings + "</span>";    
+    html += "<span>" + winner.name + " won $" + winner.winnings + "</span>";    
   });
 
   return html;

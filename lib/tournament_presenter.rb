@@ -36,7 +36,7 @@ class TournamentPresenter
                                 .collect(&:winners) # At this point, list of hashes of winners
                                 .map { |winners_hash| 
                                   winners_hash.collect { |(player, w) | 
-                                    { :name => player.name, :winnings => w } 
+                                    { :name => player.name.first(14) + (player.name.length > 14 ? "..." : ""), :winnings => w } 
                                   }
                                 }
                                 .flatten
@@ -63,7 +63,7 @@ class TournamentPresenter
     html = chip_types.map { |color|
       "<i class='chip chip-#{color} #{"chip-bordered" if border}'></i>".html_safe
     }.join
-    html += initial.to_s
+    html += "$" + initial.to_s
   end
 
   def build_hand(cards)
