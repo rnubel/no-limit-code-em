@@ -1,10 +1,7 @@
 #poker_tables
   - tables.each do |data|
     .poker_table
-      %h3 
-        .pull-left
-          Table #{data[:table_id]}
-        .clearfix
+      %h3 Table #{data[:table_id]}
       %table.players
         - data[:players].each_slice(3).each_with_index do |players, row|
           %tr

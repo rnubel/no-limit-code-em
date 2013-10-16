@@ -1,34 +1,24 @@
-%h2.doc Welcome to Enova's No Limit Code 'Em
-.well
+.page-header
+  %h1 Welcome to Enova's No Limit Code 'Em
+
+%p.lead.well
   Your challenge for tonight is to write a poker bot which is capable of communicating with our server ("the house") and playing a mean hand of poker. On these help pages you'll find all the information you need to understand the protocol for communicating your actions and receiving the game state, as well as the actual rules of the game. Feel free to ask any of the Enova staff wandering around for help, too!
 
-.docs
-  %h2 Overview
-  .well
-    You can write your bot in whatever language you want. The basic function of your bot is to perform these three steps:
-    %ol
-      %li Make an HTTP "GET" request to our server to get the game state. We will return the game state in JSON format, so make sure your language of choice can parse JSON (we recommend Ruby or Python).
-      %li If the state indicates it's your bot's turn, make an HTTP "POST" request to our server to tell us what your action (raise, fold, etc) is.
-      %li Go back to step 1!
+%h3 Overview
+%p.lead You can write your bot in whatever language you want. The basic function of your bot is to perform these three steps:
+%ol.overview
+  %li Make an HTTP "GET" request to our server to get the game state. We will return the game state in JSON format, so make sure your language of choice can parse JSON (we recommend Ruby or Python).
+  %li If the state indicates it's your bot's turn, make an HTTP "POST" request to our server to tell us what your action (raise, fold, etc) is.
+  %li Go back to step 1!
 
-  %h2 Rules
-  %table.table.table-striped.table-bordered
-    %tr
-      %td 1
-      %td Only 1 student can register per team. Teams must have 1 or 2 people.
-    %tr
-      %td 2
-      %td 
-        Every time registration opens (whether for a test tournament or a real tournament), go to 
-        %a{:href=>'http://no-limit-code-em.com/pages/registration'}
-          http://no-limit-code-em.com/pages/registration
-        and enter your team name. Your team name can be whatever you want, but keep it short and make it unique.
-    %tr
-      %td 3
-      %td Your Player Key is returned to you upon being registered. The Player Key is a randomly-generated, unique string. You will use this Key to identify yourself to the server, so keep it safe and don't share it with other teams. Note that you will get a different key for every tournament you register for, so we recommend making it easy to change your key for your bot.
-    %tr
-      %td 4
-      %td When it is your turn, you have 5 seconds to respond back to the server with a valid action once the server has declared it is your turn. If you do not respond, the server will set your action as a FOLD and you will wait until the next round to conduct your next move.
-    %tr
-      %td 5
-      %td You are only allowed to poll the game state once per second. If you request the state more often, we will rate-limit your requests and you will start receiving responses of "403 Rate Limit Exceeded".
+%h3 Rules
+%ul.list-group
+  %li.list-group-item Only 1 student can register per team. Teams must have 1 or 2 people.
+  %li.list-group-item
+    Every time registration opens (whether for a test tournament or a real tournament), go to 
+    %a{:href=>'http://nolimitcodeem.com/pages/registration'}
+      http://nolimitcodeem.com/pages/registration
+    and enter your team name. Your team name can be whatever you want, but keep it short and make it unique.
+  %li.list-group-item Your Player Key is returned to you upon being registered. The Player Key is a randomly-generated, unique string. You will use this Key to identify yourself to the server, so keep it safe and don't share it with other teams. Note that you will get a different key for every tournament you register for, so we recommend making it easy to change your key for your bot.
+  %li.list-group-item When it is your turn, you have 5 seconds to respond back to the server with a valid action once the server has declared it is your turn. If you do not respond, the server will set your action as a FOLD and you will wait until the next round to conduct your next move.
+  %li.list-group-item You are only allowed to poll the game state once per second. If you request the state more often, we will rate-limit your requests and you will start receiving responses of "403 Rate Limit Exceeded".
