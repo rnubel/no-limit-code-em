@@ -25,7 +25,7 @@
           &.name {
             color: #fff;
             text-shadow: 0px 1px 0px #000;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.8);
             border-radius: 18px;
             overflow: hidden;
             height: 18px;
@@ -48,14 +48,38 @@
           }
         }
 
+        &:nth-child(2):not(.bottom) {
+          .player {
+            position: relative;
+            top: -10px;
+          }
+        }
+
+        &:nth-child(3):not(.bottom) {
+          .player {
+            position: relative;
+            top: -10px;
+          }
+        }
+
         &:first-child:not(.bottom) { 
-          .player { -webkit-transform: rotate(-30deg); }
+          .player {
+            -webkit-transform: rotate(-30deg);
+            position: relative;
+            left: -10px;
+          }
           .cards { position: absolute; top: 50px; left: 40px; }
           .stack { position: absolute; top: 30px; left: 50px; }
         }
 
         &:last-child:not(.bottom) { 
-          .player { -webkit-transform: rotate(30deg); }
+          .player {
+            -webkit-transform: rotate(30deg);
+            position: relative;
+            right: -10px;
+            top: -10px;
+
+          }
           .cards { position: absolute; top: 50px; left: 30px; }
           .stack { position: absolute; top: 30px; left: 40px; }
         }
@@ -72,8 +96,8 @@
             .player {
               -webkit-transform: rotate(50deg);
               position: relative;
-              top: -50px;
-              left: -30px;
+              top: -30px;
+              left: -40px;
             }
             .cards { position: absolute; top: -75px; left: 25px; }
             .stack { position: absolute; top: -30px; left: 35px; }
@@ -81,10 +105,10 @@
 
           &:last-child {
             .player {
-              -webkit-transform: rotate(-50deg);
+              -webkit-transform: rotate(-60deg);
               position: relative;
               top: -60px;
-              right: -40px;
+              right: -50px;
             }
             .cards { position: absolute; top: -75px; left: 30px; }
             .stack { position: absolute; top: -30px; left: 40px; }
@@ -94,7 +118,7 @@
             .player {
               -webkit-transform: rotate(10deg);
               position: relative;
-              left: -70px;
+              left: -60px;
               top: 5px;
             }
           }
@@ -103,7 +127,7 @@
             .player {
               -webkit-transform: rotate(-10deg);
               position: relative;
-              right: -68px;
+              right: -80px;
               top: 5px;
             }
           }
@@ -191,7 +215,7 @@
       position: absolute;
       font-size: 12px;
       left: 35%;
-      bottom: 10%;
+      bottom: 16%;
       span { display: block; }
       span:first-child { color: rgba(255,255,255,1); }
       span:last-child { color: rgba(255,255,255,0.2); }

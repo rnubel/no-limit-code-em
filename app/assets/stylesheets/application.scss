@@ -24,7 +24,6 @@ body {
   -webkit-text-size-adjust: none;
   color: #666;
   overflow-x: hidden;
-  overflow-y: hidden;
 }
 
 .loader {
@@ -86,7 +85,7 @@ i.chip {
 .card {
   background: #fff;
   display: inline-block;
-  padding: 0px 8px;
+  padding: 0px 5px;
   margin-right: 1px;
   border: 1px solid #444;
   color: #000;
