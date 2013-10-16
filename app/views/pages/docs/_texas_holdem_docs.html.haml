@@ -30,7 +30,7 @@
   %strong GET 
   http://no-limit-code-em.com/api/players/PLAYER_KEY 
 
-%p Retrieves the current state of the game as seen by your player.<br> Just pass your player key as part of the path. There are no querystring parameters for this request.
+%p.lead Retrieves the current state of the game as seen by your player.<br> Just pass your player key as part of the path. There are no querystring parameters for this request.
 
 %h4.title Example request:
 %pre
@@ -175,52 +175,56 @@
 %hr/
 
 %a{:name => 'make_action'}
+
 %h3.api
   Take an action<br/>
   %strong POST 
   http://no-limit-code-em.com/api/players/PLAYER_KEY/action
-.content
-  %p When it's your bot's turn, this action lets you place your bet or fold your hand.
 
-  %h4.title Example request:
-  %pre
-    POST http://no-limit-code-em.com/api/players/46e6b984-7166-4dd8-a763-52408278a852/action?action_name=bet&amount=20
+%p.lead When it's your bot's turn, this action lets you place your bet or fold your hand.
 
-  %p or, equivalently:
+%h4.title Example request:
+%pre
+  POST http://no-limit-code-em.com/api/players/46e6b984-7166-4dd8-a763-52408278a852/action?action_name=bet&amount=20
 
-  %pre
-    :preserve
-      POST http://no-limit-code-em.com/api/players/46e6b984-7166-4dd8-a763-52408278a852/action
-      Headers:
-        Content-type: application/json
-      Body:
-        {"action_name":"bet", "amount":20}
+%p or, equivalently:
 
-  %br/
+%pre
+  :preserve
+    POST http://no-limit-code-em.com/api/players/46e6b984-7166-4dd8-a763-52408278a852/action
+    Headers:
+      Content-type: application/json
+    Body:
+      {"action_name":"bet", "amount":20}
 
-  %h4.title Parameters
+%br/
 
-  %table.table.table-bordered
-    %tr
-      %td 
-        action_name
-      %td 
-        Either <code>bet</code>, <code>raise</code>, <code>call</code>, <code>check</code>, or <code>fold</code>
-    %tr
-      %td 
-        amount
-      %td 
-        If you are raising, pass the amount you wish to raise by.
-        %div.alert.alert-danger
-          Only send this parameter when action_name is '<b>bet</b>' or '<b>raise</b>'
+%h4.title Parameters
 
-  %h4.title Response
-  %p The response will be the same format as for the <a href='#check_status'>GET</a> request, but reflecting that your action has been taken.
+%table.table.table-bordered
+  %tr
+    %td 
+      action_name
+    %td 
+      Either <code>bet</code>, <code>raise</code>, <code>call</code>, <code>check</code>, or <code>fold</code>
+  %tr
+    %td 
+      amount
+    %td 
+      If you are raising, pass the amount you wish to raise by.
+      %div.alert.alert-danger
+        Only send this parameter when action_name is '<b>bet</b>' or '<b>raise</b>'
 
-%hr/
+%h4.title Response
+%p The response will be the same format as for the <a href='#check_status'>GET</a> request, but reflecting that your action has been taken.
+
+%hr
 
 %h2 Appendix: Action Semantics
-%p In poker, some actions have synonyms. Saying you're going to <code>check</code>, means the same as saying you're going to <code>raise 0</code>. Below is a list of actions you have at your disposal:
+
+.bs-callout.bs-callout-warning
+  %p In poker, some actions have synonyms. Saying you're going to <code>check</code>, means the same as saying you're going to <code>raise 0</code>. Below is a list of actions you have at your disposal:
+
 %table.table.table-bordered
   %tr
     %th

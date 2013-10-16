@@ -3,59 +3,62 @@
 .page-header
   %h1 Card Reference 
 
-%h3 Suit Lookup
-%table.table.table-bordered
-  %thead
+.panel.panel-default
+  .panel-heading Suit Lookup
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Code
+        %th Suit
     %tr
-      %th Code
-      %th Suit
-  %tr
-    %td 'c'
-    %td Club
-  %tr
-    %td 'd'
-    %td Diamond
-  %tr
-    %td 'h'
-    %td Heart
-  %tr
-    %td 's'
-    %td Spade
-
-%h3 Face Values
-%table.table.table-bordered
-  %thead
+      %td 'c'
+      %td Club
     %tr
-      %th Code
-      %th Value
-  %tr
-    %td '2', '3', '4', '5', '6', '7', '8', '9'
-    %td Same as Face value
-  %tr
-    %td 'T'
-    %td 10
-  %tr
-    %td 'J'
-    %td Jack
-  %tr
-    %td 'Q'
-    %td Queen
-  %tr
-    %td 'K'
-    %td King
-  %tr
-    %td 'A'
-    %td Ace
+      %td 'd'
+      %td Diamond
+    %tr
+      %td 'h'
+      %td Heart
+    %tr
+      %td 's'
+      %td Spade
 
-%h3 Examples
-%table.table.table-bordered
-  %tr
-    %td AS
-    %td Ace of Spades
-  %tr
-    %td TH
-    %td 10 of Hearts
-  %tr
-    %td Jd
-    %td Jack of Diamonds
+.panel.panel-default
+  .panel-heading Face Values 
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Code
+        %th Value
+    %tr
+      %td '2', '3', '4', '5', '6', '7', '8', '9'
+      %td Same as Face value
+    %tr
+      %td 'T'
+      %td 10
+    %tr
+      %td 'J'
+      %td Jack
+    %tr
+      %td 'Q'
+      %td Queen
+    %tr
+      %td 'K'
+      %td King
+    %tr
+      %td 'A'
+      %td Ace
+
+.panel.panel-default
+  .panel-heading Examples 
+  %table.table.table-striped
+    %tr
+      %td AS
+      %td Ace of Spades
+    %tr
+      %td TH
+      %td 10 of Hearts
+    %tr
+      %td Jd
+      %td Jack of Diamonds
 

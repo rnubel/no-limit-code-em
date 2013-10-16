@@ -18,11 +18,17 @@ h3.api {
   border-left: 5px solid #000;
   color: #fff;
   margin-top: 0;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
 }
 
 .lead {
   font-size: 18px;
+}
+
+h3.api + p.lead {
+  padding: 10px;
+  border: 1px solid #ddd; 
+  margin-bottom: 30px;
 }
 
 ol.overview li {
@@ -58,27 +64,27 @@ table.params td {
   padding-top: 10px;
   padding-bottom: 10px;
   text-shadow: 0 1px 0 #fff;
-  background-color: #f7f5fa;
+  background-color: #f7f7f7;
   border-radius: 5px;
 }
-.bs-sidebar .nav > li > a {
+.bs-sidenav > li > a {
   display: block;
   color: #716b7a;
   padding: 5px 20px;
 }
-.bs-sidebar .nav > li > a:hover,
-.bs-sidebar .nav > li > a:focus {
+.bs-sidenav > li > a:hover,
+.bs-sidenav > li > a:focus {
   text-decoration: none;
-  background-color: #e5e3e9;
+  background-color: #e5e5e5;
   border-right: 1px solid #dbd8e0;
 }
-.bs-sidebar .nav > .active > a,
-.bs-sidebar .nav > .active:hover > a,
-.bs-sidebar .nav > .active:focus > a {
+.bs-sidenav > .active > a,
+.bs-sidenav > .active:hover > a,
+.bs-sidenav > .active:focus > a {
   font-weight: bold;
-  color: #563d7c;
+  color: #005286;
   background-color: transparent;
-  border-right: 1px solid #563d7c;
+  border-right: 1px solid #005286;
 }
 
 .docs {
