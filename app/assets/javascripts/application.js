@@ -6,7 +6,7 @@ $(function() {
   reload_scoreboard();
   var refresh = getURLParameter("refresh");
   var delay = (getURLParameter("delay") == "pete" ? 1000 : 10000);
-  //setInterval(function() { reload_tables(); }, delay);
+  setInterval(function() { reload_tables(); }, delay);
   //setInterval(function() { reload_scoreboard(); }, 5000);
 })
 
