@@ -5,7 +5,7 @@
     = javascript_include_tag  'application'
     = stylesheet_link_tag 'application', :media => 'all'
     = csrf_meta_tags
-  %body
+  %body{:class => controller_name}
     .navbar.navbar-default
       %a.navbar-brand.navbar-cards{href: '#'}
         = image_tag 'no_limit.png'

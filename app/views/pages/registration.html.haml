@@ -1,18 +1,17 @@
-.span12
-  .registration
-    %h2 Registration
-    = form_tag("/api/players", :method => :post) do
-      - flash.each do |type, value|
-        .row
-          .alert{:class => "alert-#{type.to_s}", :"data-dismiss" => "alert"}
-            %i.icon.icon-exclamation-sign
-            = value  
+.registration
+  %h2 Registration
+  = form_tag("/api/players", :method => :post) do
+    - flash.each do |type, value|
       .row
-        Choose a unique name for your bot!
-      .row
-        = text_field_tag 'name', nil, :class => "field", :placeholder => "playername"
-      .row.big
-        = submit_tag "Enter Tournament", :class => "btn btn-large btn-primary"
-      .row.small
-        %p Remember to only register once per team per tournament. Save the key we return you, as your bot will have to send us this key with every request.
-        %p Make a mistake? Ask the nearest Enova person for help.
+        .alert{:class => "alert-#{type.to_s}", :"data-dismiss" => "alert"}
+          %i.icon.icon-exclamation-sign
+          = value  
+    .row
+      Choose a unique name for your bot!
+    .row
+      = text_field_tag 'name', nil, :class => "form-control", :placeholder => "playername"
+    .row.big
+      = submit_tag "Enter Tournament", :class => "btn btn-large btn-primary"
+    .row.small
+      %p Remember to only register once per team per tournament. Save the key we return you, as your bot will have to send us this key with every request.
+      %p Make a mistake? Ask the nearest Enova person for help.
