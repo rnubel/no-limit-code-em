@@ -48,19 +48,6 @@
           }
         }
 
-        &:nth-child(2):not(.bottom) {
-          .player {
-            position: relative;
-            top: -10px;
-          }
-        }
-
-        &:nth-child(3):not(.bottom) {
-          .player {
-            position: relative;
-            top: -10px;
-          }
-        }
 
         &:first-child:not(.bottom) { 
           .player {
@@ -78,10 +65,23 @@
             position: relative;
             right: -10px;
             top: -10px;
-
           }
           .cards { position: absolute; top: 50px; left: 30px; }
           .stack { position: absolute; top: 30px; left: 40px; }
+        }
+
+        &:nth-child(2):not(.bottom) {
+          .player {
+            position: relative;
+            top: -10px;
+          }
+        }
+
+        &:nth-child(3):not(.bottom) {
+          .player {
+            position: relative;
+            top: -10px;
+          }
         }
 
         &.bottom {
@@ -208,13 +208,13 @@
     .last_winner { 
       border-bottom: none;
       text-shadow: none;
-      text-align: left;
+      text-align: center;
       padding: 3px 9px; 
       margin: 0;
       color: rgba(255,255,255,0.4);
       position: absolute;
       font-size: 12px;
-      left: 35%;
+      left: 34%;
       bottom: 16%;
       span { display: block; }
       span:first-child { color: rgba(255,255,255,1); }
