@@ -1,33 +1,36 @@
-%table.table
-  %thead
-    %tr
-      %th
-        Date/time
-      %th
-        Participants
-      %th
-        First place
-      %th
-        Second place
-      %th
-        Third place
-      %th
-        &nbsp;
-  %tbody
-    - @tournaments.each do |tournament|
+- if nlce_active?
+  %table.table
+    %thead
       %tr
-      - if !(tournament.playing? || tournament.open?)
-        %td
-          %a(href="/tournaments/#{tournament.id}")= tournament.created_at.localtime.strftime("%d %b %I:%M %p")
-        %td
-          = tournament.players.count
-        %td
-          = tournament.players.ranked.first.try(:name) || "None"
-        %td
-          = tournament.players.ranked.second.try(:name) || "None"
-        %td
-          = tournament.players.ranked.third.try(:name) || "None"
-        %td
-          %a(href="/tournaments/#{tournament.id}")
-            View Logs
-            %i.icon.icon-chevron-right
+        %th
+          Date/time
+        %th
+          Participants
+        %th
+          First place
+        %th
+          Second place
+        %th
+          Third place
+        %th
+          &nbsp;
+    %tbody
+      - @tournaments.each do |tournament|
+        %tr
+        - if !(tournament.playing? || tournament.open?)
+          %td
+            %a(href="/tournaments/#{tournament.id}")= tournament.created_at.localtime.strftime("%d %b %I:%M %p")
+          %td
+            = tournament.players.count
+          %td
+            = tournament.players.ranked.first.try(:name) || "None"
+          %td
+            = tournament.players.ranked.second.try(:name) || "None"
+          %td
+            = tournament.players.ranked.third.try(:name) || "None"
+          %td
+            %a(href="/tournaments/#{tournament.id}")
+              View Logs
+              %i.icon.icon-chevron-right
+- else
+  %h3 Coming soon
