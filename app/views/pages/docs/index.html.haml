@@ -1,63 +1,58 @@
-.span4
-  %ul.bs-docs-sidenav.nav
-    %li.active
-      %a{:href => "#rules", :"data-toggle" => "tab"} 
-        %i.icon.icon-chevron-right
-        Overview
-    %li
-      %a{:href => "#api", :"data-toggle" => "tab"} 
-        %i.icon.icon-chevron-right
-        API
-    %li
-      %a{:href => "#draw", :"data-toggle" => "tab"}
-        %i.icon.icon-chevron-right
-        Game Rules
-    %li
-      %a{:href => "#suite", :"data-toggle" => "tab"}
-        %i.icon.icon-chevron-right
-        Card Suits and Values
-    %li
-      %a{:href => "#ranking", :"data-toggle" => "tab"}
-        %i.icon.icon-chevron-right
-        Hand Rankings 
-    %li
-      %a{:href => "#ante", :"data-toggle" => "tab"}
-        %i.icon.icon-chevron-right
-        Ante Progression
-    %li
-      %a{:href => "#example", :"data-toggle" => "tab"}
-        %i.icon.icon-chevron-right
-        Example Bot
-    %li
-      %a{:href => "#sandbox", :"data-toggle" => "tab"}
-        %i.icon.icon-chevron-right
-        Sandbox Testing
-    %li
-      %a{:href => "#tips", :"data-toggle" => "tab"}
-        %i.icon.icon-chevron-right
-        Tips
+.container 
+  .col-md-3
+    %ul.nav.bs-sidenav
+      %li.active
+        %a{:href => "#rules", :"data-toggle" => "tab"} 
+          Overview
+      %li
+        %a{:href => "#api", :"data-toggle" => "tab"} 
+          API
+      %li
+        %a{:href => "#draw", :"data-toggle" => "tab"}
+          Game Rules
+      %li
+        %a{:href => "#suite", :"data-toggle" => "tab"}
+          Card Suits and Values
+      %li
+        %a{:href => "#ranking", :"data-toggle" => "tab"}
+          Hand Rankings 
+      %li
+        %a{:href => "#ante", :"data-toggle" => "tab"}
+          Ante Progression
+      %li
+        %a{:href => "#example", :"data-toggle" => "tab"}
+          Example Bot
+      %li
+        %a{:href => "#sandbox", :"data-toggle" => "tab"}
+          Sandbox Testing
+      %li
+        %a{:href => "#tips", :"data-toggle" => "tab"}
+          Tips
 
-.span8
-  .tab-content
-    #rules.tab-pane.active
-      = render :partial => "pages/docs/rules"
-    #suite.tab-pane
-      = render :partial => "pages/docs/help"
-    #api.tab-pane
-      = render :partial => "pages/docs/texas_holdem_docs"
-    #draw.tab-pane
-      = render :partial => "pages/docs/texas_holdem_poker"
-    #actions.tab-pane
-      = render :partial => "pages/docs/player_actions"
-    #tournament.tab-pane
-      = render :partial => "pages/docs/tournament_seating"
-    #ante.tab-pane
-      = render :partial => "pages/docs/ante_progression"
-    #example.tab-pane
-      = render :partial => "pages/docs/texas_holdem_example_bot" 
-    #sandbox.tab-pane
-      = render :partial => "pages/docs/sandbox_testing" 
-    #ranking.tab-pane
-      = render :partial => "pages/docs/ranking_five_card" 
-    #tips.tab-pane
-      = render :partial => "pages/docs/texas_holdem_tips" 
+  .col-md-9
+    .tab-content
+      #rules.tab-pane.active
+        = render :partial => "pages/docs/rules"
+      #suite.tab-pane
+        = render :partial => "pages/docs/help"
+      #api.tab-pane
+        = render :partial => "pages/docs/texas_holdem_docs"
+      #draw.tab-pane
+        = render :partial => "pages/docs/texas_holdem_poker"
+      #actions.tab-pane
+        = render :partial => "pages/docs/player_actions"
+      #tournament.tab-pane
+        = render :partial => "pages/docs/tournament_seating"
+      #ante.tab-pane
+        = render :partial => "pages/docs/ante_progression"
+      #example.tab-pane
+        = render :partial => "pages/docs/texas_holdem_example_bot" 
+      #sandbox.tab-pane
+        = render :partial => "pages/docs/sandbox_testing" 
+      #ranking.tab-pane
+        = render :partial => "pages/docs/ranking_five_card" 
+      #tips.tab-pane
+        = render :partial => "pages/docs/texas_holdem_tips" 
+
+:javascript
+  $('body').addClass('doc');

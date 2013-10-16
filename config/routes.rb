@@ -1,6 +1,7 @@
 NoLimitV2::Application.routes.draw do
   get "/" => 'home#index', :as => :root
   get "/registration" => redirect('/pages/registration'), :as => :registration
+  get "/scoreboard" => 'home#scoreboard', :as => :scoreboard
   
   resources :tournaments do
     collection do

@@ -1,73 +1,72 @@
-.docs
-  %h2 Tips
-  .content
-    %p Here are some tips from Enova to help you out:
-    %ol
-      %li Focus on getting your communication with the server working <b>first</b>. Players who wait until the final stage to get their actual requests working often never get them working, resulting in a lot of wasted effort. A bot who just checks and folds has a better chance of winning than a bot with a complicated strategy but never makes a valid action!
-      %li Use a scripting language, like Ruby, Python, PHP, or Perl. Trying to use Java, C#, Objective-C, C++, etc., will result in a lot of wasted time dealing with implementation details and leave you less time to write poker logic.
+.page-header
+  %h1 Tips
+%p.lead Here are some tips from Enova to help you out:
+%ol.overview
+  %li Focus on getting your communication with the server working <b>first</b>. Players who wait until the final stage to get their actual requests working often never get them working, resulting in a lot of wasted effort. A bot who just checks and folds has a better chance of winning than a bot with a complicated strategy but never makes a valid action!
+  %li Use a scripting language, like Ruby, Python, PHP, or Perl. Trying to use Java, C#, Objective-C, C++, etc., will result in a lot of wasted time dealing with implementation details and leave you less time to write poker logic.
+  %li
+    Make sure you understand how betting works. Here's an example, including a full set of actions for a round to make it clear:
+    %ol.spaced
+      %li Bob, Joe, and Alice are at a table. Bob is the dealer, so Joe puts in the small blind of 10, and Alice puts in the big blind of 20. The round begins in the 'deal' phase, and all players may wager.
+      %li 
+        Bob goes first, and he has an awesome hand. Bob wants to play the hand and raise the bet to a total of 50, which is 30 more than the big blind (the minimum bet to play). He can send either of these equivalent requests:
+        .div{:style => "padding:8px"}
+          <code>{ "action_name": "bet", "amount": 30 }</code>
+        .div{:style => "padding:8px"}
+          <code>{ "action_name": "raise", "amount": 30 }</code>
       %li
-        Make sure you understand how betting works. Here's an example, including a full set of actions for a round to make it clear:
-        %ol.spaced
-          %li Bob, Joe, and Alice are at a table. Bob is the dealer, so Joe puts in the small blind of 10, and Alice puts in the big blind of 20. The round begins in the 'deal' phase, and all players may wager.
-          %li 
-            Bob goes first, and he has an awesome hand. Bob wants to play the hand and raise the bet to a total of 50, which is 30 more than the big blind (the minimum bet to play). He can send either of these equivalent requests:
-            .div{:style => "padding:8px"}
-              <code>{ "action_name": "bet", "amount": 30 }</code>
-            .div{:style => "padding:8px"}
-              <code>{ "action_name": "raise", "amount": 30 }</code>
-          %li
-            Joe goes next, and has some pretty terrible cards. He wants to fold. He sends the following request:
-            .div{:style => "padding:8px"}
-              <code>{ "action_name": "fold" }</code>
-          %li
-            Alice goes next, and has a pretty good hand. She wants to keep playing, but not put any more in. She can call by sending any of these equivalent requests:
-            .div{:style => "padding:8px"}
-              <code>{ "action_name": "bet", "amount": 0 }</code>
-              <code>{ "action_name": "raise", "amount": 0 }</code>
-              <code>{ "action_name": "call" }</code>
-          %li
-            The phase now moves to the 'flop'. When asking for the game status, three community cards are now visible to everyone. A new betting round begins.
-          %li
-            Alice is first to bet, as she is left of the dealer, and decides to check. She can do any of the following requests:
-            .div{:style => "padding:8px"}
-              <code>{ "action_name": "bet", "amount": 0 }</code>
-              <code>{ "action_name": "raise", "amount": 0 }</code>
-              <code>{ "action_name": "check" }</code>
-          %li
-            Bob does the same.
-            .div{:style => "padding:8px"}
-              <code>{ "action_name": "bet", "amount": 0 }</code>
-              <code>{ "action_name": "raise", "amount": 0 }</code>
-              <code>{ "action_name": "check" }</code>
-          %li
-            The phase now moves to the 'turn'. When asking for the game status, an additional community card (for a total of four) are now visible to everyone. A new betting round begins.
-          %li
-            Alice is first to bet, and decides to check. She can do any of the following requests:
-            .div{:style => "padding:8px"}
-              <code>{ "action_name": "bet", "amount": 0 }</code>
-              <code>{ "action_name": "raise", "amount": 0 }</code>
-              <code>{ "action_name": "check" }</code>
-          %li
-            Bob decides to raise by 10 chips.
-            .div{:style => "padding:8px"}
-              <code>{ "action_name": "bet", "amount": 10 }</code>
-              <code>{ "action_name": "raise", "amount": 10 }</code>
-          %li
-            Alice decides to call.
-            .div{:style => "padding:8px"}
-              <code>{ "action_name": "bet", "amount": 0 }</code>
-              <code>{ "action_name": "raise", "amount": 0 }</code>
-              <code>{ "action_name": "call" }</code>
-          %li
-            The phase now moves to the 'river'. When asking for the game status, an additional community card (for a total of five) are now visible to everyone. A new betting round begins.
-          %li
-            Alice decides to raise by 100 chips. Wow!
-            .div{:style => "padding:8px"}
-              <code>{ "action_name": "bet", "amount": 100 }</code>
-              <code>{ "action_name": "raise", "amount": 100 }</code>
-          %li
-            Bob decides to fold.
-            .div{:style => "padding:8px"}
-              <code>{ "action_name": "fold" }</code>
-          %li
-            The round ends. Joe loses 10 chips to Alice, which was his small blind. Bob loses 60 chips to Alice. Alice wins a total of 70 chips.
+        Joe goes next, and has some pretty terrible cards. He wants to fold. He sends the following request:
+        .div{:style => "padding:8px"}
+          <code>{ "action_name": "fold" }</code>
+      %li
+        Alice goes next, and has a pretty good hand. She wants to keep playing, but not put any more in. She can call by sending any of these equivalent requests:
+        .div{:style => "padding:8px"}
+          <code>{ "action_name": "bet", "amount": 0 }</code>
+          <code>{ "action_name": "raise", "amount": 0 }</code>
+          <code>{ "action_name": "call" }</code>
+      %li
+        The phase now moves to the 'flop'. When asking for the game status, three community cards are now visible to everyone. A new betting round begins.
+      %li
+        Alice is first to bet, as she is left of the dealer, and decides to check. She can do any of the following requests:
+        .div{:style => "padding:8px"}
+          <code>{ "action_name": "bet", "amount": 0 }</code>
+          <code>{ "action_name": "raise", "amount": 0 }</code>
+          <code>{ "action_name": "check" }</code>
+      %li
+        Bob does the same.
+        .div{:style => "padding:8px"}
+          <code>{ "action_name": "bet", "amount": 0 }</code>
+          <code>{ "action_name": "raise", "amount": 0 }</code>
+          <code>{ "action_name": "check" }</code>
+      %li
+        The phase now moves to the 'turn'. When asking for the game status, an additional community card (for a total of four) are now visible to everyone. A new betting round begins.
+      %li
+        Alice is first to bet, and decides to check. She can do any of the following requests:
+        .div{:style => "padding:8px"}
+          <code>{ "action_name": "bet", "amount": 0 }</code>
+          <code>{ "action_name": "raise", "amount": 0 }</code>
+          <code>{ "action_name": "check" }</code>
+      %li
+        Bob decides to raise by 10 chips.
+        .div{:style => "padding:8px"}
+          <code>{ "action_name": "bet", "amount": 10 }</code>
+          <code>{ "action_name": "raise", "amount": 10 }</code>
+      %li
+        Alice decides to call.
+        .div{:style => "padding:8px"}
+          <code>{ "action_name": "bet", "amount": 0 }</code>
+          <code>{ "action_name": "raise", "amount": 0 }</code>
+          <code>{ "action_name": "call" }</code>
+      %li
+        The phase now moves to the 'river'. When asking for the game status, an additional community card (for a total of five) are now visible to everyone. A new betting round begins.
+      %li
+        Alice decides to raise by 100 chips. Wow!
+        .div{:style => "padding:8px"}
+          <code>{ "action_name": "bet", "amount": 100 }</code>
+          <code>{ "action_name": "raise", "amount": 100 }</code>
+      %li
+        Bob decides to fold.
+        .div{:style => "padding:8px"}
+          <code>{ "action_name": "fold" }</code>
+      %li
+        The round ends. Joe loses 10 chips to Alice, which was his small blind. Bob loses 60 chips to Alice. Alice wins a total of 70 chips.

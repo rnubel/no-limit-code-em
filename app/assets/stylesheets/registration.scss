@@ -7,9 +7,13 @@ $form-width: 450px;
   margin-right: auto;
   margin-left: auto;
   width: $form-width;
+  border: 1px solid #aaa;
 
-  form {
+  h2 {
     padding: 20px;
+  }
+  form {
+    padding: 5px 20px;
     margin: 0px;
 
     .row {

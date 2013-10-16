@@ -1,240 +1,258 @@
-.docs
-  %h2 Server API
-  .well
-    %p Your bot will communicate with our server through HTTP requests. There are only two requests you will need to make: 
-    %ol
-      %li
-        %a{:href => '#check_status'} Check your status
-      %li
-        %a{:href => '#make_action'} Take an action
-    %p 
-      To test your bot's interaction with the API, see the 
-      %a{:href => "#sandbox", :"data-toggle" => "tab"}
-        Sandbox Testing 
-      page. For an example round, see the new
-      %a{:href => "#tips", :"data-toggle" => "tab"}
-        Tips
-      page. For some pseudocode to help see how everything should be structured, check out our
-      %a{:href => "#example", :"data-toggle" => "tab"}
-        Example bot
-      \.
+.page-header
+  %h1 Server API
 
-  %h2 Request Types
-  .well
-    %p There are 2 types of requests you will need to make to the server, GET and POST. If you aren't familiar with the terms, a GET request is the type of HTTP request your web browser makes to a server when you simply visit that page by typing in a URL. On the other hand, a POST request is the type of request made when you submit a web form. Consult your HTTP library-of-choice's documentation to see how to send a request of each type.
+%p Your bot will communicate with our server through HTTP requests. There are only two requests you will need to make: 
 
-  %a{:name => 'check_status'}
-  %h2
-    Check your status:<br/>
-    %strong GET 
-    http://no-limit-code-em.com/api/players/PLAYER_KEY 
-  .content
-    %p Retrieves the current state of the game as seen by your player.
-    Just pass your player key as part of the path. There are no querystring parameters for this request.
+%ol
+  %li
+    %a{:href => '#check_status'} Check your status
+  %li
+    %a{:href => '#make_action'} Take an action
 
-    .title Data returned:
-    %table.table.params
-      %tr
-        %th Key
-        %th Description
-        %th Example Value
-      %tr
-        %td.key name
-        %td The name of your bot. You probably don't need to check this.
-        %td.value Pokermus Maximus
-      %tr
-        %td your_turn
-        %td Whether or not it's your turn. If false, don't do anything for another second. If true, send us a POST request with your action.
-        %td true
-      %tr
-        %td initial_stack
-        %td How many chips you had before this hand started (before the ante).
-        %td 500
-      %tr
-        %td stack
-        %td How many chips you currently have in front of you.
-        %td 450
-      %tr
-        %td current_bet
-        %td
-          How many chips you've put into the pot so far this hand.
-          .alert.alert-info
-            Note that the following invariant always holds true:
-            %pre{style: "font-size: 10px; padding:0px; margin-top:5px;"}
-              current_bet + stack = initial_stack
-        %td 50
-      %tr
-        %td call_amount
-        %td How many chips you would have to put in to meet the previous player's bet. If no one else has bet, this is zero. If this amount is higher than your stack, then you can still <i>call</i> if you wish to go all-in. Otherwise, sending an action like <i>raise 5</i> will require you to have at least <i>call_amount + 5</i> chips in your stack.
-        %td 10
-      %tr
-        %td hand
-        %td
-          The cards in your hand. This is an array of cards like "AS" (Ace of Spades). See the
-          %a{:href => "index.html#suite", "data-toggle"=> "tab"}
-            Card Suits and Rankings
-          page for more info. Since we are playing Texas Hold'Em, there will only ever be two cards in your hand (your pocket cards). This value does not include the community cards.
-        %td ["AS", "2C"]
-      %tr
-        %td community_cards
-        %td
-          The cards available to all players to make the best individual hand of 5 cards. This is an array of cards like "AS" (Ace of Spades). See the
-          %a{:href => "index.html#suite", "data-toggle"=> "tab"}
-            Card Suits and Rankings
-          page for more info.
-        %td ["AS", "2C", "TH", "KD", "QS"]
+%p 
+  To test your bot's interaction with the API, see the 
+  %a{:href => "#sandbox", :"data-toggle" => "tab"} Sandbox Testing 
+  page. For an example round, see the new
+  %a{:href => "#tips", :"data-toggle" => "tab"} Tips
+  page. For some pseudocode to help see how everything should be structured, check out our
+  %a{:href => "#example", :"data-toggle" => "tab"} Example bot
 
-      %tr
-        %td betting_phase
-        %td
-          One of 'deal', 'flop', 'turn', 'river', or 'showdown'. See the
-          %a{:href => 'index.html#draw', "data-toggle"=> "tab"} Game Rules
-          page for more details on what each of these phases means.
-        %td "deal"
-      %tr
-        %td{:rowspan=>2} players_at_table
-        %td{:colspan=>2}
-          This is a list of the players at your table, with values indicating their current state, plus a log of th eir actions during the current round. Each item in the array is a hash with the following keys:
-          %table
-            %tr
-              %td player_name
-              %td This player's name. This is guaranteed to be unique.
-            %tr
-              %td initial_stack
-              %td How many chips they had at the start of the round.
-            %tr
-              %td current_bet
-              %td How many chips they have in the pot.
-            %tr
-              %td folded
-              %td Whether or not this player has folded in this round.
-            %tr
-              %td stack
-              %td How many chips they have in front of them.
-            %tr
-              %td actions
-              %td
-                List of actions that this player has done during the round.
-                %strong Note:
-                Actions like 'raise', 'call', and 'check' are all mapped to just
-                'bet' with an amount of '0 for call and check. This should simplify 
-                the logic in processing these actions, if you choose to do so.
-      %tr
-        %td{:colspan => 2}
-          %strong Example:
-          %pre
-            :preserve
-              [{"player_name":"player one",
-                "initial_stack":100,
-                "current_bet":50,
-                "folded": true,
-                "stack":50,
-                "actions":[{"action":"ante", "amount":50},{"action":"fold"}]
-               },
-               {"player_name":"player two",
-                "initial_stack":200,
-                "current_bet":60,
-                "folded": false,
-                "stack":140,
-                "actions":[{"action":"ante", "amount":50},{"action":"bet", "amount":10}]
-               }]
-      %tr
-        %td total_players_<br/>remaining
-        %td How many players remain in the tournament. This controls the ante value.
-        %td 12
-      %tr
-        %td table_id
-        %td An integer identifying the table you're currently playing at.
-        %td 4
-      %tr
-        %td round_id
-        %td An integer identifying the hand/round you're currently playing out.
-        %td 12
-      %tr
-        %td round_history
-        %td A log of your bot's performance over the past ten rounds.
-        %td
-          [ {"round_id":1, "table_id":1, "stack_change":-10}, {"round_id":2, "table_id":1, "stack_change":30} ]
-      %tr
-        %td lost_at
-        %td If you haven't lost yet, this is null. If you have lost, it's the time when you lost (and if it's not null, you can stop sending GET requests...)
-        %td "2013-02-23 19:45:10 -0500"
+.bs-callout.bs-callout-info
+  %h4.title Request Types
+  %p There are 2 types of requests you will need to make to the server, <strong>GET</strong> and <strong>POST</strong>. If you aren't familiar with the terms, a GET request is the type of HTTP request your web browser makes to a server when you simply visit that page by typing in a URL. On the other hand, a POST request is the type of request made when you submit a web form. Consult your HTTP library-of-choice's documentation to see how to send a request of each type.
 
-    .title Example request:
-    %pre
-      GET http://no-limit-code-em.com/api/players/46e6b984-7166-4dd8-a763-52408278a852
+%hr/
 
-    .title Example response:
-    %pre
-      :preserve
-        {"name":"Bill13","your_turn":true,"initial_stack":250,"stack":215,"current_bet":35,"call_amount":0,"hand":["AH","JD"],"betting_phase":"turn","players_at_table":[{"player_name":"Bill12","initial_stack":250,"current_bet":35,"stack":215,"folded":false,"actions":[{"action":"ante","amount":10},{"action":"bet","amount":25}]},{"player_name":"Bill13","initial_stack":250,"current_bet":35,"stack":215,"folded":false,"actions":[{"action":"ante","amount":10},{"action":"bet","amount":0}]}],"total_players_remaining":2,"table_id":766,"round_id":823,"round_history":[{"round_id":823,"table_id":766,"stack_change":null}],"lost_at":null,"community_cards":["QH","5D","9D"]}
-  
-  %a{:name => 'make_action'}
-  %h2 
-    Take an action<br/>
-    %strong POST 
-    \/api/players/PLAYER_KEY/action
-  .content
-    %p When it's your bot's turn, this action lets you place your bet or fold your hand.
+%a{:name => 'check_status'}
 
-    .title Parameters
-    %table.table.table-striped.table-bordered
-      %tr
-        %td 
-          action_name
-        %td 
-          Either "bet", "raise", "call", "check", or "fold"
-      %tr
-        %td 
-          amount
-        %td 
-          If you are raising, pass the amount you wish to raise by.
-          %div.alert.alert-info{:style => 'margin-top:8px;'}
-            Only send this parameter when action_name is '<b>bet</b>' or '<b>raise</b>'
+%h3.api
+  Check your status:<br>
+  %strong GET 
+  http://no-limit-code-em.com/api/players/PLAYER_KEY 
 
-    .title Example request:
-    %pre
-      POST http://no-limit-code-em.com/api/players/46e6b984-7166-4dd8-a763-52408278a852/action?action_name=bet&amount=20
-    %p or, equivalently:
-    %pre
-      :preserve
-        POST http://no-limit-code-em.com/api/players/46e6b984-7166-4dd8-a763-52408278a852/action
-        Headers:
-          Content-type: application/json
-        Body:
-          {"action_name":"bet", "amount":20}
+%p.lead Retrieves the current state of the game as seen by your player.<br> Just pass your player key as part of the path. There are no querystring parameters for this request.
 
-    .title Response
-    %p The response will be the same format as for the GET request, but reflecting that your action has been taken.
-    .title Appendix: Action Semantics
-    %table.table.table-striped.table-bordered
-      %tr
-        %th
-          Action name
-        %th
-          Semantics
-      %tr
-        %td 
-          bet
-        %td 
-          Call the previous player's bet, if there is one, and bet an additional <em>amount</em>.
-      %tr
-        %td 
-          raise
-        %td 
-          Synonym for 'bet'. 
-      %tr
-        %td
-          call
-        %td
-          Call the previous player's bet. Synonymous to raise 0.
-      %tr
-        %td
-          check
-        %td
-          When there is no amount to call by, don't raise. Same as raise 0, but is invalid if call_amount is not zero.
-      %tr
-        %td
-          fold
-        %td
-          Fold your hand, giving up anything you've bet already and staying out for the rest of the round.
+%h4.title Example request:
+%pre
+  GET http://no-limit-code-em.com/api/players/46e6b984-7166-4dd8-a763-52408278a852
+
+%br/
+
+%h4.title Data returned:
+
+%table.table.table-bordered.params
+  %tr
+    %th Key
+    %th Description
+    %th Example Value
+  %tr
+    %td.key name
+    %td The name of your bot. You probably don't need to check this.
+    %td.value Pokermus Maximus
+  %tr
+    %td your_turn
+    %td Whether or not it's your turn. If false, don't do anything for another second. If true, send us a POST request with your action.
+    %td true
+  %tr
+    %td initial_stack
+    %td How many chips you had before this hand started (before the ante).
+    %td 500
+  %tr
+    %td stack
+    %td How many chips you currently have in front of you.
+    %td 450
+  %tr
+    %td current_bet
+    %td
+      How many chips you've put into the pot so far this hand.
+      .alert.alert-info
+        Note that the following invariant always holds true:
+        %code
+          current_bet + stack = initial_stack
+    %td 50
+  %tr
+    %td call_amount
+    %td How many chips you would have to put in to meet the previous player's bet. If no one else has bet, this is zero. If this amount is higher than your stack, then you can still <i>call</i> if you wish to go all-in. Otherwise, sending an action like <i>raise 5</i> will require you to have at least <i>call_amount + 5</i> chips in your stack.
+    %td 10
+  %tr
+    %td hand
+    %td
+      The cards in your hand. This is an array of cards like "AS" (Ace of Spades). See the
+      %a{:href => "index.html#suite", "data-toggle"=> "tab"}
+        Card Suits and Rankings
+      page for more info. Since we are playing Texas Hold'Em, there will only ever be two cards in your hand (your pocket cards). This value does not include the community cards.
+    %td ["AS", "2C"]
+  %tr
+    %td community_cards
+    %td
+      The cards available to all players to make the best individual hand of 5 cards. This is an array of cards like "AS" (Ace of Spades). See the
+      %a{:href => "index.html#suite", "data-toggle"=> "tab"}
+        Card Suits and Rankings
+      page for more info.
+    %td ["AS", "2C", "TH", "KD", "QS"]
+
+  %tr
+    %td betting_phase
+    %td
+      One of 'deal', 'flop', 'turn', 'river', or 'showdown'. See the
+      %a{:href => 'index.html#draw', "data-toggle"=> "tab"} Game Rules
+      page for more details on what each of these phases means.
+    %td "deal"
+  %tr
+    %td{:rowspan=>2} players_at_table
+    %td{:colspan=>2}
+      %p This is a list of the players at your table, with values indicating their current state, plus a log of th eir actions during the current round. Each item in the array is a hash with the following keys:
+      %table
+        %tr
+          %td player_name
+          %td This player's name. This is guaranteed to be unique.
+        %tr
+          %td initial_stack
+          %td How many chips they had at the start of the round.
+        %tr
+          %td current_bet
+          %td How many chips they have in the pot.
+        %tr
+          %td folded
+          %td Whether or not this player has folded in this round.
+        %tr
+          %td stack
+          %td How many chips they have in front of them.
+        %tr
+          %td actions
+          %td
+            List of actions that this player has done during the round.
+            %strong Note:
+            Actions like 'raise', 'call', and 'check' are all mapped to just
+            'bet' with an amount of '0 for call and check. This should simplify 
+            the logic in processing these actions, if you choose to do so.
+  %tr
+    %td{:colspan => 2}
+      %strong Example:
+      %pre
+        :preserve
+          [{"player_name":"player one",
+            "initial_stack":100,
+            "current_bet":50,
+            "folded": true,
+            "stack":50,
+            "actions":[{"action":"ante", "amount":50},{"action":"fold"}]
+           },
+           {"player_name":"player two",
+            "initial_stack":200,
+            "current_bet":60,
+            "folded": false,
+            "stack":140,
+            "actions":[{"action":"ante", "amount":50},{"action":"bet", "amount":10}]
+           }]
+  %tr
+    %td total_players_<br/>remaining
+    %td How many players remain in the tournament. This controls the ante value.
+    %td 12
+  %tr
+    %td table_id
+    %td An integer identifying the table you're currently playing at.
+    %td 4
+  %tr
+    %td round_id
+    %td An integer identifying the hand/round you're currently playing out.
+    %td 12
+  %tr
+    %td round_history
+    %td A log of your bot's performance over the past ten rounds.
+    %td
+      [ {"round_id":1, "table_id":1, "stack_change":-10}, {"round_id":2, "table_id":1, "stack_change":30} ]
+  %tr
+    %td lost_at
+    %td If you haven't lost yet, this is null. If you have lost, it's the time when you lost (and if it's not null, you can stop sending GET requests...)
+    %td "2013-02-23 19:45:10 -0500"
+
+%h4.title Example response:
+%pre
+  :preserve
+    {"name":"Bill13","your_turn":true,"initial_stack":250,"stack":215,"current_bet":35,"call_amount":0,"hand":["AH","JD"],"betting_phase":"turn","players_at_table":[{"player_name":"Bill12","initial_stack":250,"current_bet":35,"stack":215,"folded":false,"actions":[{"action":"ante","amount":10},{"action":"bet","amount":25}]},{"player_name":"Bill13","initial_stack":250,"current_bet":35,"stack":215,"folded":false,"actions":[{"action":"ante","amount":10},{"action":"bet","amount":0}]}],"total_players_remaining":2,"table_id":766,"round_id":823,"round_history":[{"round_id":823,"table_id":766,"stack_change":null}],"lost_at":null,"community_cards":["QH","5D","9D"]}
+
+%hr/
+
+%a{:name => 'make_action'}
+
+%h3.api
+  Take an action<br/>
+  %strong POST 
+  http://no-limit-code-em.com/api/players/PLAYER_KEY/action
+
+%p.lead When it's your bot's turn, this action lets you place your bet or fold your hand.
+
+%h4.title Example request:
+%pre
+  POST http://no-limit-code-em.com/api/players/46e6b984-7166-4dd8-a763-52408278a852/action?action_name=bet&amount=20
+
+%p or, equivalently:
+
+%pre
+  :preserve
+    POST http://no-limit-code-em.com/api/players/46e6b984-7166-4dd8-a763-52408278a852/action
+    Headers:
+      Content-type: application/json
+    Body:
+      {"action_name":"bet", "amount":20}
+
+%br/
+
+%h4.title Parameters
+
+%table.table.table-bordered
+  %tr
+    %td 
+      action_name
+    %td 
+      Either <code>bet</code>, <code>raise</code>, <code>call</code>, <code>check</code>, or <code>fold</code>
+  %tr
+    %td 
+      amount
+    %td 
+      If you are raising, pass the amount you wish to raise by.
+      %div.alert.alert-danger
+        Only send this parameter when action_name is '<b>bet</b>' or '<b>raise</b>'
+
+%h4.title Response
+%p The response will be the same format as for the <a href='#check_status'>GET</a> request, but reflecting that your action has been taken.
+
+%hr
+
+%h2 Appendix: Action Semantics
+
+.bs-callout.bs-callout-warning
+  %p In poker, some actions have synonyms. Saying you're going to <code>check</code>, means the same as saying you're going to <code>raise 0</code>. Below is a list of actions you have at your disposal:
+
+%table.table.table-bordered
+  %tr
+    %th
+      Action name
+    %th
+      Semantics
+  %tr
+    %td 
+      bet
+    %td 
+      Call the previous player's bet, if there is one, and bet an additional <em>amount</em>.
+  %tr
+    %td 
+      raise
+    %td 
+      Synonym for 'bet'. 
+  %tr
+    %td
+      call
+    %td
+      Call the previous player's bet. Synonymous to raise 0.
+  %tr
+    %td
+      check
+    %td
+      When there is no amount to call by, don't raise. Same as raise 0, but is invalid if call_amount is not zero.
+  %tr
+    %td
+      fold
+    %td
+      Fold your hand, giving up anything you've bet already and staying out for the rest of the round.

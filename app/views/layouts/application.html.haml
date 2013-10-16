@@ -5,20 +5,17 @@
     = javascript_include_tag  'application'
     = stylesheet_link_tag 'application', :media => 'all'
     = csrf_meta_tags
-  %body
+  %body{:class => controller_name}
     .navbar.navbar-default
       %a.navbar-brand.navbar-cards{href: '#'}
         = image_tag 'no_limit.png'
 
       %ul.nav.navbar-nav
-        %li.active
-          %a{href: '#'} Tables 
-        %li
-          %a{href: '#about'} Docs 
-        %li
-          %a{href: '#contact'} Register 
-        %li
-          %a{href: '#contact'} Tournament Logs 
+        = navbar_link 'Tables', '/'
+        = navbar_link 'Scoreboard', '/scoreboard'
+        = navbar_link 'Register', '/pages/registration.html'
+        = navbar_link 'Docs', '/pages/docs/index.html'
+        = navbar_link 'Tournament Logs', '/tournaments'
 
       .pull-right
         %a.navbar-brand{href: '#'}
