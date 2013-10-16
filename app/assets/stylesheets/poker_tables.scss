@@ -6,8 +6,9 @@
     width: 50%;
     padding: 0 10px;
     margin-bottom: 30px;
-    height: 305px;
-    background: image-url('table.png') no-repeat 10px;
+    background: image-url('table_large.png') no-repeat;
+    background-size: 98%;
+    min-height: 350px;
     @include transition(all 0.3s linear);
 
     .players {
@@ -30,6 +31,7 @@
             height: 18px;
             font-weight: bold;
             display: inline-block;
+            width: 85px;
             padding: 0px 5px;
           }
           &.stack { 
@@ -48,8 +50,8 @@
 
         &:first-child:not(.bottom) { 
           .player { -webkit-transform: rotate(-30deg); }
-          .cards { position: absolute; top: 50px; left: 30px; }
-          .stack { position: absolute; top: 30px; left: 40px; }
+          .cards { position: absolute; top: 50px; left: 40px; }
+          .stack { position: absolute; top: 30px; left: 50px; }
         }
 
         &:last-child:not(.bottom) { 
@@ -70,18 +72,18 @@
             .player {
               -webkit-transform: rotate(50deg);
               position: relative;
-              top: -30px;
+              top: -50px;
               left: -30px;
             }
-            .cards { position: absolute; top: -75px; left: 30px; }
-            .stack { position: absolute; top: -30px; left: 40px; }
+            .cards { position: absolute; top: -75px; left: 25px; }
+            .stack { position: absolute; top: -30px; left: 35px; }
           }
 
           &:last-child {
             .player {
               -webkit-transform: rotate(-50deg);
               position: relative;
-              top: -70px;
+              top: -60px;
               right: -40px;
             }
             .cards { position: absolute; top: -75px; left: 30px; }
@@ -188,8 +190,8 @@
       color: rgba(255,255,255,0.4);
       position: absolute;
       font-size: 12px;
-      left: 220px;
-      bottom: 20px;
+      left: 35%;
+      bottom: 10%;
       span { display: block; }
       span:first-child { color: rgba(255,255,255,1); }
       span:last-child { color: rgba(255,255,255,0.2); }
@@ -200,4 +202,3 @@
     }
   }
 }
- 
