@@ -68,7 +68,8 @@ describe Tournament do
 
       it "times out the player if enough time has passed" do
         fp = subject.rounds.first.ordered_players.first
-        Time.stubs(:now).returns(subject.rounds.first.created_at + 8.seconds)
+        t  = subject.rounds.first.created_at + 8.seconds
+        Time.stubs(:now).returns(t) # dammit, newrelic
 
         subject.timeout_players!
 
