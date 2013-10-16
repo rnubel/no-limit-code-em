@@ -1,21 +1,21 @@
-.docs 
-  %h2 Enova Texas Hold 'Em Poker
-  .content
-    %p The rules for Enova Texas Hold 'Em Poker are essentially the same as normal Texas Hold 'Em poker. Players are given a set amount of chips and arranged at tables with no more than eight players per table, with tables merging together as players bust out (lose all their chips).
-    %p At each table, players play out hands (also referred to as "rounds" in these docs) of draw poker. The steps of a hand are as follows:
-    %ul
-      %li The player to the left of the dealer puts down the "small blind," which is half of the ante of the hand. If they can't meet the small blind, they go all-in for what they have.
-      %li The player two spaces to the left puts down the "big blind," which is the ante of the hand. If they can't meet the big blind, they go all-in for what they have.
-      %li Each player is dealt 2 cards, face down (i.e., no one else can see these cards).
-      %li The 'deal' betting phase begins. Each player, in order (refer to the order of players as returned by the status request), gets a chance to ante in, or even raise their bet. To play the hand, they must meet the previous player's bet or ante, fold, or go all in. Once all players have gone all-in or agreed on a bet, the betting phase ends.
-      %li The 'flop' phase begins, in which all players are shown three "community cards." These cards can be used by anyone to form the best overall hand, when combined with their personal cards. After these cards are given out, another round of betting happens.
-      %li The 'turn' phase begins, in which all players are shown an additional community card, bringing the total to four. Another round of betting follows this new card.
-      %li The 'river' phase begins, in which all players are shown the fifth and final community card. Another round of betting follows this new card.
-      %li When the 'river' phase ends, the 'showdown' happens. This is when all players still in show their cards and the game determines winners.
+.page-header
+  %h1 Enova Texas Hold 'Em Poker
 
-  %h2 Examples
-  .content
-    These are some of the scenarios we used to test our server:
-    %pre{:style => "margin-top: 10px;"}
-      :preserve
-        TODO: TODO
+%p The rules for Enova Texas Hold 'Em Poker are essentially the same as normal Texas Hold 'Em poker. Players are given a set amount of chips and arranged at tables with no more than eight players per table, with tables merging together as players bust out (lose all their chips).
+%p At each table, players play out hands (also referred to as "rounds" in these docs) of draw poker. The steps of a hand are as follows:
+%ul.list-group
+  %li.list-group-item The player to the left of the dealer puts down the "small blind," which is half of the ante of the hand. If they can't meet the small blind, they go all-in for what they have.
+  %li.list-group-item The player two spaces to the left puts down the "big blind," which is the ante of the hand. If they can't meet the big blind, they go all-in for what they have.
+  %li.list-group-item Each player is dealt 2 cards, face down (i.e., no one else can see these cards).
+  %li.list-group-item The 'deal' betting phase begins. Each player, in order (refer to the order of players as returned by the status request), gets a chance to ante in, or even raise their bet. To play the hand, they must meet the previous player's bet or ante, fold, or go all in. Once all players have gone all-in or agreed on a bet, the betting phase ends.
+  %li.list-group-item The 'flop' phase begins, in which all players are shown three "community cards." These cards can be used by anyone to form the best overall hand, when combined with their personal cards. After these cards are given out, another round of betting happens.
+  %li.list-group-item The 'turn' phase begins, in which all players are shown an additional community card, bringing the total to four. Another round of betting follows this new card.
+  %li.list-group-item The 'river' phase begins, in which all players are shown the fifth and final community card. Another round of betting follows this new card.
+  %li.list-group-item When the 'river' phase ends, the 'showdown' happens. This is when all players still in show their cards and the game determines winners.
+
+%h2 Examples
+.content
+  These are some of the scenarios we used to test our server:
+  %pre{:style => "margin-top: 10px;"}
+    :preserve
+      TODO: TODO
