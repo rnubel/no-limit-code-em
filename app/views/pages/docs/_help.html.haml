@@ -1,61 +1,61 @@
-.docs 
-  %a{name: "suite", id: "suite"}
-  %h2 Suit Lookup
-  .content{:style => "padding:0;"}
-    %table.table.table-striped
-      %thead
-        %tr
-          %th Code
-          %th Suit
-      %tr
-        %td 'c'
-        %td Club
-      %tr
-        %td 'd'
-        %td Diamond
-      %tr
-        %td 'h'
-        %td Heart
-      %tr
-        %td 's'
-        %td Spade
+%a{name: "suite", id: "suite"}
 
-  %h2 Face Values
-  .content{:style => "padding:0;"}
-    %table.table.table-striped
-      %thead
-        %tr
-          %th Code
-          %th Value
-      %tr
-        %td '2', '3', '4', '5', '6', '7', '8', '9'
-        %td Same as Face value
-      %tr
-        %td 'T'
-        %td 10
-      %tr
-        %td 'J'
-        %td Jack
-      %tr
-        %td 'Q'
-        %td Queen
-      %tr
-        %td 'K'
-        %td King
-      %tr
-        %td 'A'
-        %td Ace
+.page-header
+  %h1 Card Reference 
 
-  %h2 Examples
-  .content{:style => "padding:0;"}
-    %table.table.table-striped
-      %tr
-        %td AS
-        %td Ace of Spades
-      %tr
-        %td TH
-        %td 10 of Hearts
-      %tr
-        %td Jd
-        %td Jack of Diamonds
-  
+%h3 Suit Lookup
+%table.table.table-bordered
+  %thead
+    %tr
+      %th Code
+      %th Suit
+  %tr
+    %td 'c'
+    %td Club
+  %tr
+    %td 'd'
+    %td Diamond
+  %tr
+    %td 'h'
+    %td Heart
+  %tr
+    %td 's'
+    %td Spade
+
+%h3 Face Values
+%table.table.table-bordered
+  %thead
+    %tr
+      %th Code
+      %th Value
+  %tr
+    %td '2', '3', '4', '5', '6', '7', '8', '9'
+    %td Same as Face value
+  %tr
+    %td 'T'
+    %td 10
+  %tr
+    %td 'J'
+    %td Jack
+  %tr
+    %td 'Q'
+    %td Queen
+  %tr
+    %td 'K'
+    %td King
+  %tr
+    %td 'A'
+    %td Ace
+
+%h3 Examples
+%table.table.table-bordered
+  %tr
+    %td AS
+    %td Ace of Spades
+  %tr
+    %td TH
+    %td 10 of Hearts
+  %tr
+    %td Jd
+    %td Jack of Diamonds
+

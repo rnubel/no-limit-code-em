@@ -21,9 +21,6 @@ h3.api {
   margin-bottom: 20px;
 }
 
-h4.title {
-}
-
 .lead {
   font-size: 18px;
 }
@@ -140,34 +137,4 @@ table.params td {
 .bs-callout-info {
   background-color: #f0f7fd;
   border-color: #d0e3f0;
-}
-
-
-.bs-example {
-  position: relative;
-  padding: 45px 15px 15px;
-  margin: 0 -15px 15px;
-  background-color: #fafafa;
-  box-shadow: inset 0 3px 6px rgba(0,0,0,.05);
-  border-color: #e5e5e5 #eee #eee;
-  border-style: solid;
-  border-width: 1px 0;
-}
-
-.bs-example:after {
-  content: "Example";
-  position: absolute;
-  top:  15px;
-  left: 15px;
-  font-size: 12px;
-  font-weight: bold;
-  color: #bbb;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.bs-example + .highlight {
-  margin: -15px -15px 15px;
-  border-radius: 0;
-  border-width: 0 0 1px;
 }

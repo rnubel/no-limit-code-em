@@ -1,58 +1,58 @@
-.docs
-  %h2 Example Bot Code
-  .content
-    Here's some pseudocode to give you an idea of how to structure your bot. Don't expect it to run!
-    %pre{:style => 'margin-top:10px'}
-      :preserve
-        def dumb_poker_player(MY_PLAYER_KEY)
-          # Infinite Loop
-          while true 
-            
-            # Your client should sleep 1 second.
-            # If you send too many requests at once, we will start throttling your requests.
-            # This will cause you to reach the timeout limit which will cause your player to FOLD.
-            sleep 1
+.page-header
+  %h1 Example Bot Code
+%p Here's some pseudocode to give you an idea of how to structure your bot. <strong>Don't expect it to run!</strong>
+%br/
+%pre{:style => 'margin-top:10px'}
+  :preserve
+    def dumb_poker_player(MY_PLAYER_KEY)
+      # Infinite Loop
+      while true 
+        
+        # Your client should sleep 1 second.
+        # If you send too many requests at once, we will start throttling your requests.
+        # This will cause you to reach the timeout limit which will cause your player to FOLD.
+        sleep 1
 
-            # GET request.
-            # Ask the server "What is going on?"
-            response = game_state(MY_PLAYER_KEY)
+        # GET request.
+        # Ask the server "What is going on?"
+        response = game_state(MY_PLAYER_KEY)
 
-            # Parse the response so you can use the data.
-            turn_data = JSON.parse(response.body)
-            
-            # Logic!!
-            # This logic is boring. But, yours should be more epic!
-            if turn_data["your_turn"]
-              action = params = discards = nil
+        # Parse the response so you can use the data.
+        turn_data = JSON.parse(response.body)
+        
+        # Logic!!
+        # This logic is boring. But, yours should be more epic!
+        if turn_data["your_turn"]
+          action = params = discards = nil
 
-              # Is it a betting round, but not the river? Let's always call.
-              if  turn_data["betting_phase"] == "deal" ||
-                  turn_data["betting_phase"] == "flop" ||
-                  turn_data["betting_phase"] == "turn"
-                action = "call"
-                params = nil
-                          
-              # Is it the river phase? Always bet 10 more.
-              elsif turn_data["betting_phase"] == "river"
-                action = "bet"
-                params = 10
-              end
-          
-              # Stores all your parameters in a single variable
-              my_action = {:action_name => action, :amount => params}
-            
-              # POST a request to the server
-              response = player_action(MY_PLAYER_KEY, my_action)
-            end
+          # Is it a betting round, but not the river? Let's always call.
+          if  turn_data["betting_phase"] == "deal" ||
+              turn_data["betting_phase"] == "flop" ||
+              turn_data["betting_phase"] == "turn"
+            action = "call"
+            params = nil
+                      
+          # Is it the river phase? Always bet 10 more.
+          elsif turn_data["betting_phase"] == "river"
+            action = "bet"
+            params = 10
           end
+      
+          # Stores all your parameters in a single variable
+          my_action = {:action_name => action, :amount => params}
+        
+          # POST a request to the server
+          response = player_action(MY_PLAYER_KEY, my_action)
         end
+      end
+    end
 
-        # GET
-        def game_state(key)
-          # do a get request to http://no-limit-code-em.com/api/players/:key
-        end
+    # GET
+    def game_state(key)
+      # do a get request to http://no-limit-code-em.com/api/players/:key
+    end
 
-        # POST
-        def player_action(key, params)
-          # do a post request to http://no-limit-code-em.com/api/players/:key/action
-        end
+    # POST
+    def player_action(key, params)
+      # do a post request to http://no-limit-code-em.com/api/players/:key/action
+    end
