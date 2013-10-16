@@ -66,7 +66,11 @@ class Tournament < ActiveRecord::Base
           puts "!! Timing out #{player.id} for taking #{player.idle_time} seconds to act!"
           begin
             TimeoutLog.create(:player => player, :round => table.current_round)
-            player.take_action!(:action => "fold")
+            if game_type == 'hold_em' && player.current_game_state && player.current_game_state.round == 'deal'
+              player.take_action!(:action => "call")
+            else
+              player.take_action!(:action => "fold")
+            end
           rescue
             puts "Not valid anymore."
           end
