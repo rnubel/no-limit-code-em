@@ -1,9 +1,13 @@
 - if nlce_active?
-
-  %ul#scoreboard
-    %li
-  %p 
-    Note: Rankings are based on chip count at beginning of latest round.
-
+  %table#scoreboard.table.table-striped
+    %thead
+      %tr
+        %th.rank Rank  
+        %th Name
+        %th Chips
+    %tbody.score
+    %tr.info
+      %td{:colspan=>2}
+        Note: Rankings are based on chip count at beginning of latest round.
 - else
   %h3 Coming soon
