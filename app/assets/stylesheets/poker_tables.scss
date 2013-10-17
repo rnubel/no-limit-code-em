@@ -195,6 +195,10 @@
             display: inline-block;
             .card {
               width: 35px;
+              &.blank {
+                background: image-url('card-red-big.gif') no-repeat;
+                background-size: 100% 100%;
+              }
             }
           }
         }
