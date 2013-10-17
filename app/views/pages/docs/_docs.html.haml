@@ -27,7 +27,7 @@
   %h2
     Check your status:<br/>
     %strong GET
-    http://no-limit-code-em.com/api/players/PLAYER_KEY
+    http://nolimitcodeem.com/api/players/PLAYER_KEY
   .content
     %p Retrieves the current state of the game as seen by your player.
     Just pass your player key as part of the path. There are no querystring parameters for this request.
@@ -152,7 +152,7 @@
 
     .title Example request:
     %pre
-      GET http://no-limit-code-em.com/api/players/46e6b984-7166-4dd8-a763-52408278a852
+      GET http://nolimitcodeem.com/api/players/46e6b984-7166-4dd8-a763-52408278a852
 
     .title Example response:
     %pre
@@ -191,11 +191,11 @@
 
     .title Example request:
     %pre
-      POST http://no-limit-code-em.com/api/players/46e6b984-7166-4dd8-a763-52408278a852/action?action_name=bet&amount=20
+      POST http://nolimitcodeem.com/api/players/46e6b984-7166-4dd8-a763-52408278a852/action?action_name=bet&amount=20
     %p or, equivalently:
     %pre
       :preserve
-        POST http://no-limit-code-em.com/api/players/46e6b984-7166-4dd8-a763-52408278a852/action
+        POST http://nolimitcodeem.com/api/players/46e6b984-7166-4dd8-a763-52408278a852/action
         Headers:
           Content-type: application/json
         Body:

@@ -28,13 +28,13 @@
 %h3.api
   Check your status:<br>
   %strong GET 
-  http://no-limit-code-em.com/api/players/PLAYER_KEY 
+  http://nolimitcodeem.com/api/players/PLAYER_KEY 
 
 %p.lead Retrieves the current state of the game as seen by your player.<br> Just pass your player key as part of the path. There are no querystring parameters for this request.
 
 %h4.title Example request:
 %pre
-  GET http://no-limit-code-em.com/api/players/46e6b984-7166-4dd8-a763-52408278a852
+  GET http://nolimitcodeem.com/api/players/46e6b984-7166-4dd8-a763-52408278a852
 
 %br/
 
@@ -179,19 +179,19 @@
 %h3.api
   Take an action<br/>
   %strong POST 
-  http://no-limit-code-em.com/api/players/PLAYER_KEY/action
+  http://nolimitcodeem.com/api/players/PLAYER_KEY/action
 
 %p.lead When it's your bot's turn, this action lets you place your bet or fold your hand.
 
 %h4.title Example request:
 %pre
-  POST http://no-limit-code-em.com/api/players/46e6b984-7166-4dd8-a763-52408278a852/action?action_name=bet&amount=20
+  POST http://nolimitcodeem.com/api/players/46e6b984-7166-4dd8-a763-52408278a852/action?action_name=bet&amount=20
 
 %p or, equivalently:
 
 %pre
   :preserve
-    POST http://no-limit-code-em.com/api/players/46e6b984-7166-4dd8-a763-52408278a852/action
+    POST http://nolimitcodeem.com/api/players/46e6b984-7166-4dd8-a763-52408278a852/action
     Headers:
       Content-type: application/json
     Body:
