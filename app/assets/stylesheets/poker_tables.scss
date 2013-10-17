@@ -1,19 +1,25 @@
-#poker_tables {
+@mixin stretch-background {
+  background-size: 100% 100% !important;
+  -webkit-background-size: 100% 100% !important;
+  -moz-background-size: 100% 100% !important;
+  -o-background-size: 100% 100% !important;
+}
 
+#poker_tables {
   .poker_table {
     display: inline-block;
     position: relative;
     width: 50%;
     padding: 0 10px;
     margin-bottom: 30px;
-    background: image-url('table_large.png') no-repeat;
-    background-size: 98%;
-    min-height: 350px;
+    min-height: 260px;
     @include transition(all 0.3s linear);
 
     .players {
       width: 100%;
       padding: 0;
+      
+      .player { z-index: 100 }
 
       td { 
         text-align: center;
@@ -48,39 +54,50 @@
           }
         }
 
+        &.top {
+          .cards  { -webkit-transform: translateY(12px); }
+          .stack  { -webkit-transform: translateY(12px); }
 
-        &:first-child:not(.bottom) { 
-          .player {
-            -webkit-transform: rotate(-30deg);
-            position: relative;
-            left: -10px;
+          &:first-child { 
+            background: image-url('table_large__0_0.png');
+            width: 28%;
+
+            .player {
+              position: relative;
+              -webkit-transform: translateX(-15px) translateY(-5px) rotate(-30deg);
+              .cards  { -webkit-transform: translateX(5px) translateY(18px); }
+              .stack  { -webkit-transform: translateX(5px) translateY(18px); }
+            }
           }
-          .cards { position: absolute; top: 50px; left: 40px; }
-          .stack { position: absolute; top: 30px; left: 50px; }
-        }
 
-        &:last-child:not(.bottom) { 
-          .player {
-            -webkit-transform: rotate(30deg);
-            position: relative;
-            right: -10px;
-            top: -10px;
+          &:nth-child(2) {
+            background: image-url('table_large__0_1.png');
+
+            .player {
+              position: relative;
+              top: -25px;
+            }
           }
-          .cards { position: absolute; top: 50px; left: 30px; }
-          .stack { position: absolute; top: 30px; left: 40px; }
-        }
 
-        &:nth-child(2):not(.bottom) {
-          .player {
-            position: relative;
-            top: -10px;
+          &:nth-child(3) {
+            background: image-url('table_large__0_2.png');
+
+            .player {
+              position: relative;
+              top: -25px;
+            }
           }
-        }
 
-        &:nth-child(3):not(.bottom) {
-          .player {
-            position: relative;
-            top: -10px;
+          &:nth-child(4) { 
+            background: image-url('table_large__0_3.png');
+            width: 28%;
+
+            .player {
+              position: relative;
+              -webkit-transform: translateX(15px) translateY(-5px) rotate(30deg);
+              .cards  { -webkit-transform: translateX(-5px) translateY(18px); }
+              .stack  { -webkit-transform: translateX(-5px) translateY(18px); }
+            }
           }
         }
 
@@ -93,51 +110,57 @@
           }
 
           &:first-child {
-            .player {
-              -webkit-transform: rotate(50deg);
-              position: relative;
-              top: -30px;
-              left: -40px;
-            }
-            .cards { position: absolute; top: -75px; left: 25px; }
-            .stack { position: absolute; top: -30px; left: 35px; }
-          }
+            background: image-url('table_large__2_0.png');
 
-          &:last-child {
             .player {
-              -webkit-transform: rotate(-60deg);
               position: relative;
-              top: -60px;
-              right: -50px;
+              -webkit-transform: translateX(-35px) translateY(-10px) rotate(50deg);
+              .cards  { -webkit-transform: translateX(7px) translateY(-22px); }
+              .stack  { -webkit-transform: translateX(7px) translateY(-22px); }
             }
-            .cards { position: absolute; top: -75px; left: 30px; }
-            .stack { position: absolute; top: -30px; left: 40px; }
           }
 
           &:nth-child(2) {
+            background: image-url('table_large__2_1.png');
+
             .player {
-              -webkit-transform: rotate(10deg);
               position: relative;
-              left: -60px;
-              top: 5px;
+              -webkit-transform: translateX(-65px) translateY(31px) rotate(10deg);
+              .cards  { -webkit-transform: translateX(2px) translateY(-12px); }
+              .stack  { -webkit-transform: translateX(2px) translateY(-12px); }
             }
           }
 
           &:nth-child(3) {
+            background: image-url('table_large__2_2.png');
+
             .player {
-              -webkit-transform: rotate(-10deg);
               position: relative;
-              right: -80px;
-              top: 5px;
+              -webkit-transform: translateX(65px) translateY(31px) rotate(-10deg);
+              .cards  { -webkit-transform: translateX(-2px) translateY(-12px); }
+              .stack  { -webkit-transform: translateX(-2px) translateY(-12px); }
             }
           }
+
+          &:nth-child(4) {
+            background: image-url('table_large__2_3.png');
+
+            .player {
+              position: relative;
+              -webkit-transform: translateX(35px) translateY(-10px) rotate(-50deg);
+              .cards  { -webkit-transform: translateX(-7px) translateY(-22px); }
+              .stack  { -webkit-transform: translateX(-7px) translateY(-22px); }
+            }
+          }
+
         }
 
         &.pot_middle {
+          background: image-url('table_large__1_all.png');
           font-weight: bold;
           text-align: center;
           width: 100%;
-          padding: 40px 10px;
+          padding: 0px 0px;
           text-shadow: 0px 1px 0px rgba(0,0,0,0.7);
           color: #fff;
 
@@ -169,6 +192,8 @@
         &.bottom { 
           margin-bottom: 0px; 
         }
+
+        @include stretch-background;
       }
 
       td:not(.pot_middle) {
@@ -214,7 +239,7 @@
       color: rgba(255,255,255,0.4);
       position: absolute;
       font-size: 12px;
-      left: 34%;
+      left: 30%;
       bottom: 16%;
       span { display: block; }
       span:first-child { color: rgba(255,255,255,1); }
