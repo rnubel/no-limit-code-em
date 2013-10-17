@@ -1,0 +1,15 @@
+.page-header
+  %h1 Blind Progression
+
+%p.lead In order to keep the tournament moving and wrap things up, the blinds will increase as play goes on. Blind progression works as follows:
+
+%ul.list-group
+  %li.list-group-item The big blind will be a certain percentage of the average chipstack of all active players in the tournament.
+  %li.list-group-item 
+    That percentage is determined by the following equation (you probably don't need to worry about this, but just FYI):
+    %pre{:style => "margin-top: 5px;"}
+      p = (0.08 / (1 + 100 * (e ^ (-10 * n)))) + 0.02 
+    Where <strong>p</strong> is the percentage of the average chipstack, and <strong>n</strong> is the percentage of players knocked out.
+  %li.list-group-item As players are eliminated, this percentage will rise until only two players remain.
+  %li.list-group-item The big blind will be rounded to the nearest 10.
+  %li.list-group-item The small blind will be half of the big blind.

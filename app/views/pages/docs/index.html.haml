@@ -18,8 +18,8 @@
           %a{:href => "#ranking", :"data-toggle" => "tab"}
             Hand Rankings 
         %li
-          %a{:href => "#ante", :"data-toggle" => "tab"}
-            Ante Progression
+          %a{:href => "#blinds", :"data-toggle" => "tab"}
+            Blinds Progression
         %li
           %a{:href => "#example", :"data-toggle" => "tab"}
             Example Bot
@@ -44,8 +44,8 @@
           = render :partial => "pages/docs/player_actions"
         #tournament.tab-pane
           = render :partial => "pages/docs/tournament_seating"
-        #ante.tab-pane
-          = render :partial => "pages/docs/ante_progression"
+        #blinds.tab-pane
+          = render :partial => "pages/docs/blinds_progression"
         #example.tab-pane
           = render :partial => "pages/docs/texas_holdem_example_bot" 
         #sandbox.tab-pane
