@@ -23,10 +23,12 @@ class TournamentPresenter
       {
         :table_id => table.id,
         :community_cards => build_hand(table.current_round.community_cards),
-        :players => table.active_players.collect { |p| {:player_id => p.id, 
+        :players => table.active_players.collect { |p| {:player_id => p.id,
                                                         :name => p.name.first(14) + (p.name.length > 14 ? "..." : ""),
+                                                        :their_turn => p.my_turn?,
+                                                        :folded => p.folded?,
                                                         :initial_stack => p.current_player_state(:initial_stack),
-                                                        :stack => stack_display(p.current_player_state(:stack),false), 
+                                                        :stack => stack_display(p.current_player_state(:stack),false),
                                                         :hand => build_hand(p.current_player_state(:hand)),
                                                         :current_bet => p.current_player_state(:current_bet) }},
         :latest_winners => table.rounds
@@ -34,9 +36,9 @@ class TournamentPresenter
                                 .where(:playing => false)
                                 .last(3)
                                 .collect(&:winners) # At this point, list of hashes of winners
-                                .map { |winners_hash| 
-                                  winners_hash.collect { |(player, w) | 
-                                    { :name => player.name.first(14) + (player.name.length > 14 ? "..." : ""), :winnings => w } 
+                                .map { |winners_hash|
+                                  winners_hash.collect { |(player, w) |
+                                    { :name => player.name.first(14) + (player.name.length > 14 ? "..." : ""), :winnings => w }
                                   }
                                 }
                                 .flatten

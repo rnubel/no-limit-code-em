@@ -69,18 +69,20 @@ function table(hash, big) {
   for(var i = 0; i < 8; i++) {
     var hands = "",
         name  = "",
-        stack = "<span class='stack lost'></span>";
+        stack = "<span class='stack lost'></span>",
+        player_classes = [];
 
     if(i < superlength(players)) {
       hands = "<span class='cards'>" + players[i].hand + "</span>";
       name = "<span class='name'>" + players[i].name + "</span>";
       stack = "<span class='stack'>" + players[i].stack + "</span>";
+      if(players[i].folded)     { player_classes.push(" folded");  }
+      if(players[i].their_turn) { player_classes.push(" current"); }
     }
-
     c += 1;
 
     if(c <= 4) {
-      html += "<td class='top' height='80px'><div class='player'>" + name + stack + hands + "</div></td>";
+      html += "<td class='top' height='80px'><div class='player" + player_classes.join("") + "'>" + name + stack + hands + "</div></td>";
     }
 
     if(c == 4) { 

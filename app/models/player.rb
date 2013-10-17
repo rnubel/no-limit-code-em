@@ -118,6 +118,10 @@ class Player < ActiveRecord::Base
     !!(table && table.playing && table.current_player == self)
   end
 
+  def folded?
+    !!current_player_state(:folded)
+  end
+
   def idle_time
     return 0 unless r = round
     last_action_in_round = Action.where(:round_id => r.id).order("id ASC").last 
