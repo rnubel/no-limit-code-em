@@ -7,6 +7,7 @@ $(function() {
   var refresh = getURLParameter("refresh");
   var delay = (getURLParameter("delay") == "pete" ? 1000 : 10000);
   setInterval(function() { reload_tables(); }, delay);
+
   //setInterval(function() { reload_scoreboard(); }, 5000);
 })
 
@@ -79,7 +80,7 @@ function table(hash, big) {
     c += 1;
 
     if(c <= 4) {
-      html += "<td><div class='player'>" + name + stack + hands + "</div></td>";
+      html += "<td class='top' height='80px'><div class='player'>" + name + stack + hands + "</div></td>";
     }
 
     if(c == 4) { 
@@ -88,7 +89,7 @@ function table(hash, big) {
       }
       html += 
         "<tr>" +
-          "<td class='pot_middle' colspan='6'>" +
+          "<td class='pot_middle' colspan='4' height='40px'>" +
             "<span class='the_pot'>" + hash.pot + "</span>" +
             "<span class='community_cards'>" + hash.community_cards + "</span>" +
           "</td>" +
@@ -96,7 +97,7 @@ function table(hash, big) {
     }
 
     if(c > 4) {
-      html += "<td class='bottom'><div class='player'>" + hands + stack + name + "</div></td>";
+      html += "<td class='bottom' height='80px'><div class='player'>" + hands + stack + name + "</div></td>";
     }
   }
 
