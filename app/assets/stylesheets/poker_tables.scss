@@ -12,11 +12,11 @@
     width: 50%;
     padding: 0 15px;
     margin-bottom: 60px;
-    min-height: 260px;
     @include transition(all 0.3s linear);
 
     .players {
       width: 100%;
+      min-height: 275px;
       padding: 0;
       
       .player {

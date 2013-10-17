@@ -35,7 +35,6 @@ function reload_scoreboard() {
     url: '/tournaments/scoreboard',
     type: 'GET',
     success: function(e) {
-      $('tbody.score').html("");
       $.each(e, function() {
         $('tbody.score').append(scoreboard($(this)[0]))
       }); 
@@ -70,6 +69,7 @@ function table(hash, big) {
     var hands = "",
         name  = "",
         stack = "<span class='stack lost'></span>",
+        bet = "",
         player_classes = [],
         player_id      = (i < 4) ? i : 7 - (i - 4); // 4 => 7 - (0) => 7 // 5 => 7 - 1 = 6
 
