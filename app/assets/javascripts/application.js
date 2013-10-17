@@ -5,8 +5,8 @@ $(function() {
   reload_tables();
   reload_scoreboard();
   var refresh = getURLParameter("refresh");
-  var delay = (getURLParameter("delay") == "pete" ? 1000 : 10000);
-  setInterval(function() { reload_tables(); }, 300);
+  var delay = (getURLParameter("delay") == "pete" ? 300 : 10000);
+  setInterval(function() { reload_tables(); }, delay);
   setInterval(function() { reload_scoreboard(); }, 5000);
 })
 
@@ -49,6 +49,7 @@ function scoreboard(hash) {
       lost    = (hash.lost_at == null ? "" : " class='lost' " );
 
   html = "<tr" + lost + ">" + 
+            "<td>" + hash.rank + "</td>" +
             "<td>" + player + "</td>" +
             "<td class='chips'>" + stack + "</td>" +
           "</tr>";
@@ -76,13 +77,14 @@ function table(hash, big) {
       hands = "<span class='cards'>"  + players[player_id].hand + "</span>";
       name = "<span class='name'>"    + players[player_id].name + "</span>";
       stack = "<span class='stack'>"  + players[player_id].stack + "</span>";
+      bet = "<span class='bet'>$"  + players[player_id].current_bet + "</span>";
       if(players[player_id].folded)     { player_classes.push(" folded");  }
       if(players[player_id].their_turn) { player_classes.push(" current"); }
     }
     c += 1;
 
     if(c <= 4) {
-      html += "<td class='top' height='80px'><div class='player" + player_classes.join("") + "'>" + name + stack + hands + "</div></td>";
+      html += "<td class='top' height='80px'><div class='player" + player_classes.join("") + "'>" + name + stack + hands + bet + "</div></td>";
     }
 
     if(c == 4) {
@@ -99,7 +101,7 @@ function table(hash, big) {
     }
 
     if(c > 4) {
-      html += "<td class='bottom' height='80px'><div class='player" + player_classes.join("") + "'>" + hands + stack + name + "</div></td>";
+      html += "<td class='bottom' height='80px'><div class='player" + player_classes.join("") + "'>" + bet + hands + stack + name + "</div></td>";
     }
   }
 

@@ -11,7 +11,7 @@
     position: relative;
     width: 50%;
     padding: 0 15px;
-    margin-bottom: 30px;
+    margin-bottom: 60px;
     min-height: 260px;
     @include transition(all 0.3s linear);
 
@@ -46,6 +46,7 @@
             overflow: hidden;
             height: 18px;
             font-weight: bold;
+            -webkit-backface-visibility: hidden;
             display: inline-block;
             width: 85px;
             padding: 0px 5px;
@@ -54,10 +55,21 @@
             color: #fff; 
             font-weight: bold;
             text-shadow: 0px 1px 0px #000;
+            font-size: 13px;
 
             i:last-child {
               margin-right: 3px;
             }
+          }
+          &.bet {
+            font-size: 12px;
+            font-weight: bold;
+            text-shadow: 0px 1px 0px #000;
+            background: rgba(0,0,0,0.4);
+            display: inline-block;
+            padding: 0px 2px;
+            border-radius: 18px;
+            color: #fff;
           }
           &.cards {
             .card { margin-top: 5px; }
@@ -65,18 +77,21 @@
         }
 
         &.top {
-          .cards  { -webkit-transform: translateY(12px); }
-          .stack  { -webkit-transform: translateY(12px); }
+          .name   { -webkit-transform: translateY(6px); }
+          .cards  { -webkit-transform: translateY(6px); }
+          .stack  { -webkit-transform: translateY(9px); }
+          .bet    { -webkit-transform: translateY(5px); }
 
           &:first-child { 
             background: image-url('table_large__0_0.png');
             width: 28%;
 
             .player {
-              position: relative;
-              -webkit-transform: translateX(-15px) translateY(-5px) rotate(-30deg);
-              .cards  { -webkit-transform: translateX(5px) translateY(18px); }
-              .stack  { -webkit-transform: translateX(5px) translateY(18px); }
+              -webkit-transform: rotate(-30deg);
+              .cards { -webkit-transform: translateX(5px) translateY(7px); }
+              .stack { -webkit-transform: translateX(5px) translateY(10px); }
+              .bet   { -webkit-transform: translateX(5px) translateY(7px); }
+              .name  { -webkit-transform: translateY(-2px); }
             }
           }
 
@@ -104,9 +119,11 @@
 
             .player {
               position: relative;
-              -webkit-transform: translateX(15px) translateY(-5px) rotate(30deg);
-              .cards  { -webkit-transform: translateX(-5px) translateY(18px); }
-              .stack  { -webkit-transform: translateX(-5px) translateY(18px); }
+              -webkit-transform: rotate(30deg);
+              .cards { -webkit-transform: translateX(-5px) translateY(7px); }
+              .stack { -webkit-transform: translateX(-5px) translateY(10px); }
+              .bet   { -webkit-transform: translateX(-5px) translateY(7px); }
+              .name  { -webkit-transform: translateY(-2px); }
             }
           }
         }
@@ -125,9 +142,10 @@
             .player {
               position: relative;
               -webkit-transform: rotate(55deg) translateX(-40px) translateY(21px);
-              .cards  { -webkit-transform: translateX(7px) translateY(-22px); }
-              .stack  { -webkit-transform: translateX(7px) translateY(-22px); }
-              .name { -webkit-transform: translateX(7px) translateY(-15px) }
+              .cards  { -webkit-transform: translateX(5px) translateY(-18px); }
+              .stack  { -webkit-transform: translateX(7px) translateY(-21px); }
+              .name   { -webkit-transform: translateX(7px) translateY(-15px) }
+              .bet    { -webkit-transform: translateX(7px) translateY(-18px) }
             }
           }
 
@@ -137,9 +155,10 @@
             .player {
               position: relative;
               -webkit-transform: translateX(-70px) translateY(31px) rotate(10deg);
-              .cards  { -webkit-transform: translateX(2px) translateY(-12px); }
-              .stack  { -webkit-transform: translateX(2px) translateY(-12px); }
-              .name { -webkit-transform: translateY(-3px) }
+              .cards  { -webkit-transform: translateX(2px) translateY(-10px); }
+              .stack  { -webkit-transform: translateX(2px) translateY(-14px); }
+              .name   { -webkit-transform: translateY(-9px) }
+              .bet    { -webkit-transform: translateY(-8px) }
             }
           }
 
@@ -148,10 +167,11 @@
 
             .player {
               position: relative;
-              -webkit-transform: translateX(70px) translateY(31px) rotate(-10deg);
-              .cards  { -webkit-transform: translateX(-2px) translateY(-12px); }
-              .stack  { -webkit-transform: translateX(-2px) translateY(-12px); }
-              .name { -webkit-transform: translateY(-3px) }
+              -webkit-transform: translateX(75px) translateY(31px) rotate(-10deg);
+              .cards  { -webkit-transform: translateX(-2px) translateY(-10px); }
+              .stack  { -webkit-transform: translateX(-2px) translateY(-14px); }
+              .name   { -webkit-transform: translateY(-9px) }
+              .bet    { -webkit-transform: translateY(-8px) }
             }
           }
 
@@ -161,12 +181,12 @@
             .player {
               position: relative;
               -webkit-transform: rotate(-55deg) translateX(43px) translateY(21px);
-              .cards  { -webkit-transform: translateX(-7px) translateY(-22px); }
-              .stack  { -webkit-transform: translateX(-7px) translateY(-22px); }
-              .name { -webkit-transform: translateX(-8px) translateY(-15px) }
+              .cards  { -webkit-transform: translateX(-7px) translateY(-21px); }
+              .stack  { -webkit-transform: translateX(-7px) translateY(-24px); }
+              .name   { -webkit-transform: translateX(-8px) translateY(-15px) }
+              .bet    { -webkit-transform: translateX(-8px) translateY(-18px) }
             }
           }
-
         }
 
         &.pot_middle {
@@ -175,6 +195,7 @@
           text-align: center;
           width: 100%;
           padding: 0px 0px;
+          padding-top: 10px;
           text-shadow: 0px 1px 0px rgba(0,0,0,0.7);
           color: #fff;
 
@@ -195,6 +216,10 @@
             display: inline-block;
             .card {
               width: 35px;
+              &.blank {
+                background: image-url('card-red-big.gif') no-repeat;
+                background-size: 100% 100%;
+              }
             }
           }
         }
@@ -254,7 +279,7 @@
       position: absolute;
       font-size: 12px;
       left: 0%;
-      bottom: 16%;
+      bottom: 5%;
       width: 100%;
       span { display: block; }
       span:first-child { color: rgba(255,255,255,1); }

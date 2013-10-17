@@ -1,12 +1,16 @@
 #scoreboard {
+  width: 500px; 
+  margin: 0 auto;
   thead {
     tr { 
       th { border-left: 1px solid #ddd; }
-      th:first-child { width: 60% !important; border-left: none } 
+      th:nth-child(1) { width: 5% !important; border-left: none } 
+      th:nth-child(2) { width: 60% !important; border-left: none } 
     }
   }
   tbody {
     tr { 
+      td:first-child { text-align: center; } 
       &.lost { opacity: 0.5 }
       &.player {
         i.chip {

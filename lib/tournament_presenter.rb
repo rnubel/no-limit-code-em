@@ -16,6 +16,7 @@ class TournamentPresenter
         :real_stack => p.stack
       }
     }.sort_by { |p| [p[:real_stack], p[:lost_at]] }.reverse
+     .each_with_index.collect { |p, i| p.merge(rank: i+1) }
   end
 
   def tables
@@ -30,7 +31,7 @@ class TournamentPresenter
                                                         :initial_stack => p.current_player_state(:initial_stack),
                                                         :stack => stack_display(p.current_player_state(:stack),false),
                                                         :hand => build_hand(p.current_player_state(:hand)),
-                                                        :current_bet => p.current_player_state(:current_bet) }},
+                                                        :current_bet => p.current_player_state(:current_bet) || 0 }},
         :latest_winners => table.rounds
                                 .ordered
                                 .where(:playing => false)
