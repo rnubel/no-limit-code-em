@@ -163,7 +163,7 @@
 
             .player {
               position: relative;
-              -webkit-transform: translateX(70px) translateY(31px) rotate(-10deg);
+              -webkit-transform: translateX(75px) translateY(31px) rotate(-10deg);
               .cards  { -webkit-transform: translateX(-2px) translateY(-10px); }
               .stack  { -webkit-transform: translateX(-2px) translateY(-14px); }
               .name   { -webkit-transform: translateY(-3px) }
@@ -275,7 +275,7 @@
       position: absolute;
       font-size: 12px;
       left: 0%;
-      bottom: 13%;
+      bottom: 5%;
       width: 100%;
       span { display: block; }
       span:first-child { color: rgba(255,255,255,1); }
