@@ -46,6 +46,7 @@
             overflow: hidden;
             height: 18px;
             font-weight: bold;
+            -webkit-backface-visibility: hidden;
             display: inline-block;
             width: 85px;
             padding: 0px 5px;
@@ -76,6 +77,7 @@
         }
 
         &.top {
+          .name   { -webkit-transform: translateY(6px); }
           .cards  { -webkit-transform: translateY(6px); }
           .stack  { -webkit-transform: translateY(9px); }
           .bet    { -webkit-transform: translateY(5px); }
@@ -89,6 +91,7 @@
               .cards { -webkit-transform: translateX(5px) translateY(7px); }
               .stack { -webkit-transform: translateX(5px) translateY(10px); }
               .bet   { -webkit-transform: translateX(5px) translateY(7px); }
+              .name  { -webkit-transform: translateY(-2px); }
             }
           }
 
@@ -120,6 +123,7 @@
               .cards { -webkit-transform: translateX(-5px) translateY(7px); }
               .stack { -webkit-transform: translateX(-5px) translateY(10px); }
               .bet   { -webkit-transform: translateX(-5px) translateY(7px); }
+              .name  { -webkit-transform: translateY(-2px); }
             }
           }
         }
@@ -153,7 +157,7 @@
               -webkit-transform: translateX(-70px) translateY(31px) rotate(10deg);
               .cards  { -webkit-transform: translateX(2px) translateY(-10px); }
               .stack  { -webkit-transform: translateX(2px) translateY(-14px); }
-              .name   { -webkit-transform: translateY(-3px) }
+              .name   { -webkit-transform: translateY(-9px) }
               .bet    { -webkit-transform: translateY(-8px) }
             }
           }
@@ -166,7 +170,7 @@
               -webkit-transform: translateX(75px) translateY(31px) rotate(-10deg);
               .cards  { -webkit-transform: translateX(-2px) translateY(-10px); }
               .stack  { -webkit-transform: translateX(-2px) translateY(-14px); }
-              .name   { -webkit-transform: translateY(-3px) }
+              .name   { -webkit-transform: translateY(-9px) }
               .bet    { -webkit-transform: translateY(-8px) }
             }
           }
