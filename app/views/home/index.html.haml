@@ -3,3 +3,13 @@
     #poker_tables
   - else
     %h3 Hold your horses...
+
+- if nlce_active?
+  :javascript
+    $(function() {
+      reload_tables();
+      var refresh = getURLParameter("refresh");
+      var delay = (getURLParameter("delay") == "pete" ? 300 : 10000);
+      setInterval(function() { reload_tables(); }, delay);
+    });
+

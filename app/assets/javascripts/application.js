@@ -1,15 +1,6 @@
 //= require jquery
 //= require bootstrap 
 
-$(function() {
-  reload_tables();
-  reload_scoreboard();
-  var refresh = getURLParameter("refresh");
-  var delay = (getURLParameter("delay") == "pete" ? 300 : 10000);
-  setInterval(function() { reload_tables(); }, delay);
-  setInterval(function() { reload_scoreboard(); }, 5000);
-})
-
 function reload_tables() {
   $.ajax({
     url: '/tournaments/tables',
