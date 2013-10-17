@@ -70,14 +70,15 @@ function table(hash, big) {
     var hands = "",
         name  = "",
         stack = "<span class='stack lost'></span>",
-        player_classes = [];
+        player_classes = [],
+        player_id      = (i < 4) ? i : 7 - (i - 4); // 4 => 7 - (0) => 7 // 5 => 7 - 1 = 6
 
-    if(i < superlength(players)) {
-      hands = "<span class='cards'>" + players[i].hand + "</span>";
-      name = "<span class='name'>" + players[i].name + "</span>";
-      stack = "<span class='stack'>" + players[i].stack + "</span>";
-      if(players[i].folded)     { player_classes.push(" folded");  }
-      if(players[i].their_turn) { player_classes.push(" current"); }
+    if(player_id < superlength(players)) {
+      hands = "<span class='cards'>"  + players[player_id].hand + "</span>";
+      name = "<span class='name'>"    + players[player_id].name + "</span>";
+      stack = "<span class='stack'>"  + players[player_id].stack + "</span>";
+      if(players[player_id].folded)     { player_classes.push(" folded");  }
+      if(players[player_id].their_turn) { player_classes.push(" current"); }
     }
     c += 1;
 
@@ -85,11 +86,11 @@ function table(hash, big) {
       html += "<td class='top' height='80px'><div class='player" + player_classes.join("") + "'>" + name + stack + hands + "</div></td>";
     }
 
-    if(c == 4) { 
+    if(c == 4) {
       if(hash.community_cards == "") {
         hash.community_cards = '<div class="card blank"><div class="suit">#</div>#</div><div class="card blank"><div class="suit">#</div>#</div><div class="card blank"><div class="suit">#</div>#</div>'
       }
-      html += 
+      html +=
         "<tr>" +
           "<td class='pot_middle' colspan='4' height='40px'>" +
             "<span class='the_pot'>" + hash.pot + "</span>" +
@@ -108,7 +109,7 @@ function table(hash, big) {
   html += "<div class='last_winner'>"
   $.each(hash.latest_winners, function() {
     var winner = $(this)[0];
-    html += "<span>" + winner.name + " won $" + winner.winnings + "</span>";    
+    html += "<span>" + winner.name + " won $" + winner.winnings + "</span>";
   });
 
   return html;
