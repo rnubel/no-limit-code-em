@@ -35,6 +35,7 @@ function reload_scoreboard() {
     url: '/tournaments/scoreboard',
     type: 'GET',
     success: function(e) {
+      $('tbody.score').html("");
       $.each(e, function() {
         $('tbody.score').append(scoreboard($(this)[0]))
       }); 
