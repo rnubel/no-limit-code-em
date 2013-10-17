@@ -11,7 +11,7 @@ module CardHelper
       when "H"
         card << "<div class='suit red'>&hearts;</div>"
     end
-    card << (number == "T" ? "10" : number)
+    card << "<div class='number'>#{(number == "T" ? "10" : number)}</div>"
     card << "</div>"
     card
   end

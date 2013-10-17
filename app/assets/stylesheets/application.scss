@@ -90,6 +90,7 @@ i.chip {
   margin-right: 1px;
   border: 1px solid #444;
   color: #000;
+  width: 24px;
   font-size: 18px;
   text-align: center;
   letter-spacing: -1px;
@@ -102,12 +103,12 @@ i.chip {
    background-size: cover;
    margin-right: -30px;
    text-indent: -9999px;
-    border: 1px solid #000;
+   border: 1px solid #000;
    white-space: nowrap;
    .suit {
      text-indent: -9999px;
      white-space: nowrap;
-    }
+   }
   }
 }
 .suit {
@@ -119,6 +120,19 @@ i.chip {
 }
 .red {
   color: red;
+}
+
+.player.folded {
+  .card {
+    background: image-url('card-red.gif') no-repeat;
+    background-size: 100% 100%;
+    border: 1px solid #000;
+    text-indent: -9999px;
+    .suit {
+      text-indent: -9999px;
+      white-space: nowrap;
+    }
+  }
 }
 
 body.rounds, body.tournaments, body.players {

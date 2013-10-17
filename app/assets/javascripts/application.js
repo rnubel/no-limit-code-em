@@ -6,8 +6,8 @@ $(function() {
   reload_scoreboard();
   var refresh = getURLParameter("refresh");
   var delay = (getURLParameter("delay") == "pete" ? 1000 : 10000);
-  setInterval(function() { reload_tables(); }, delay);
-  setInterval(function() { reload_scoreboard(); }, 5000);
+  //setInterval(function() { reload_tables(); }, 300);
+  //setInterval(function() { reload_scoreboard(); }, 5000);
 })
 
 function reload_tables() {
@@ -99,7 +99,7 @@ function table(hash, big) {
     }
 
     if(c > 4) {
-      html += "<td class='bottom' height='80px'><div class='player'>" + hands + stack + name + "</div></td>";
+      html += "<td class='bottom' height='80px'><div class='player" + player_classes.join("") + "'>" + hands + stack + name + "</div></td>";
     }
   }
 

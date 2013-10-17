@@ -23,11 +23,11 @@
         z-index: 100;
 
         &.current {
-          span.name { background: white; }
+          span.name { background: red }
         }
 
         &.folded {
-          span.name { background: gray; }
+          span.name { @include opacity(0.2)}
         }
       }
 
@@ -127,6 +127,7 @@
               -webkit-transform: rotate(55deg) translateX(-40px) translateY(21px);
               .cards  { -webkit-transform: translateX(7px) translateY(-22px); }
               .stack  { -webkit-transform: translateX(7px) translateY(-22px); }
+              .name { -webkit-transform: translateX(7px) translateY(-15px) }
             }
           }
 
@@ -135,7 +136,7 @@
 
             .player {
               position: relative;
-              -webkit-transform: translateX(-65px) translateY(31px) rotate(10deg);
+              -webkit-transform: translateX(-70px) translateY(31px) rotate(10deg);
               .cards  { -webkit-transform: translateX(2px) translateY(-12px); }
               .stack  { -webkit-transform: translateX(2px) translateY(-12px); }
             }
@@ -146,7 +147,7 @@
 
             .player {
               position: relative;
-              -webkit-transform: translateX(65px) translateY(31px) rotate(-10deg);
+              -webkit-transform: translateX(70px) translateY(31px) rotate(-10deg);
               .cards  { -webkit-transform: translateX(-2px) translateY(-12px); }
               .stack  { -webkit-transform: translateX(-2px) translateY(-12px); }
             }
@@ -157,9 +158,10 @@
 
             .player {
               position: relative;
-              -webkit-transform: rotate(-70deg) translateX(25px) translateY(29px);
+              -webkit-transform: rotate(-55deg) translateX(43px) translateY(21px);
               .cards  { -webkit-transform: translateX(-7px) translateY(-22px); }
               .stack  { -webkit-transform: translateX(-7px) translateY(-22px); }
+              .name { -webkit-transform: translateX(-8px) translateY(-15px) }
             }
           }
 
