@@ -7,8 +7,7 @@ $(function() {
   var refresh = getURLParameter("refresh");
   var delay = (getURLParameter("delay") == "pete" ? 1000 : 10000);
   setInterval(function() { reload_tables(); }, delay);
-
-  //setInterval(function() { reload_scoreboard(); }, 5000);
+  setInterval(function() { reload_scoreboard(); }, 5000);
 })
 
 function reload_tables() {
@@ -88,7 +87,7 @@ function table(hash, big) {
 
     if(c == 4) {
       if(hash.community_cards == "") {
-        hash.community_cards = '<div class="card blank"><div class="suit">#</div>#</div><div class="card blank"><div class="suit">#</div>#</div><div class="card blank"><div class="suit">#</div>#</div>'
+        hash.community_cards = '<div class="card blank"><div class="suit">#</div>#</div><div class="card blank"><div class="suit">#</div>#</div><div class="card blank"><div class="suit">#</div>&nbsp;</div>'
       }
       html +=
         "<tr>" +

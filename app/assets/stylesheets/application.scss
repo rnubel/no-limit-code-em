@@ -98,10 +98,16 @@ i.chip {
 
   &.blank {
    height: 53px; 
-   background: #000;
+   background: image-url('card-red.gif') no-repeat;
+   background-size: cover;
    margin-right: -30px;
    text-indent: -9999px;
-   .suit { text-indent: -9999px; }
+    border: 1px solid #000;
+   white-space: nowrap;
+   .suit {
+     text-indent: -9999px;
+     white-space: nowrap;
+    }
   }
 }
 .suit {
