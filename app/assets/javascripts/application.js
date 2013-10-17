@@ -49,6 +49,7 @@ function scoreboard(hash) {
       lost    = (hash.lost_at == null ? "" : " class='lost' " );
 
   html = "<tr" + lost + ">" + 
+            "<td>" + hash.rank + "</td>" +
             "<td>" + player + "</td>" +
             "<td class='chips'>" + stack + "</td>" +
           "</tr>";

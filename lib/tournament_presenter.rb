@@ -16,6 +16,7 @@ class TournamentPresenter
         :real_stack => p.stack
       }
     }.sort_by { |p| [p[:real_stack], p[:lost_at]] }.reverse
+     .each_with_index.collect { |p, i| p.merge(rank: i+1) }
   end
 
   def tables
