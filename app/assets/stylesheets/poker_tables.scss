@@ -139,6 +139,7 @@
               -webkit-transform: translateX(-70px) translateY(31px) rotate(10deg);
               .cards  { -webkit-transform: translateX(2px) translateY(-12px); }
               .stack  { -webkit-transform: translateX(2px) translateY(-12px); }
+              .name { -webkit-transform: translateY(-3px) }
             }
           }
 
@@ -150,6 +151,7 @@
               -webkit-transform: translateX(70px) translateY(31px) rotate(-10deg);
               .cards  { -webkit-transform: translateX(-2px) translateY(-12px); }
               .stack  { -webkit-transform: translateX(-2px) translateY(-12px); }
+              .name { -webkit-transform: translateY(-3px) }
             }
           }
 
