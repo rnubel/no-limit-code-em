@@ -116,3 +116,7 @@ Given /^the deck favors player 1 and player 2$/ do
 
   @round.save!
 end
+
+When /I log player 1's status/ do
+  puts PlayerPresenter.new(@table.players[0]).to_json
+end

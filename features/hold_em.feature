@@ -66,3 +66,28 @@ Feature: Texas Hold'Em
     And player 3 checks
     And player 1 checks
     Then player 1 and player 2 split the pot
+
+  Scenario: Sandbox testing output
+    When 3 players are at a table
+    Given the deck favors player 1 and player 2
+    # 2 small blinds, 3 big blinds, 1 starts
+    When I log player 1's status
+    When player 1 bets 80
+    And player 2 calls
+    And player 3 calls
+    # 2 starts the flop
+    And player 2 checks
+    And player 3 checks
+    When I log player 1's status
+    And player 1 checks
+    # 2 starts the turn
+    And player 2 checks
+    And player 3 checks
+    When I log player 1's status
+    And player 1 checks
+    # 2 starts the river
+    And player 2 checks
+    And player 3 checks
+    When I log player 1's status
+    And player 1 checks
+    Then player 1 and player 2 split the pot
