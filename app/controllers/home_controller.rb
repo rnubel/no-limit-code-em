@@ -4,6 +4,11 @@ class HomeController < ApplicationController
   def index
     #@scoreboard = Status.get_leaderboard
     #@tables = Status.get_players_at_tables
+    redirect_to '/pages/docs/index.html' unless Tournament.last.playing?
+  end
+
+  def scoreboard
+    redirect_to '/pages/docs/index.html' unless Tournament.last.playing?
   end
 
   def update
