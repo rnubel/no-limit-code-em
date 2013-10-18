@@ -8,7 +8,6 @@ class HomeController < ApplicationController
   end
 
   def scoreboard
-    redirect_to '/pages/docs/index.html' unless Tournament.last.playing?
   end
 
   def update

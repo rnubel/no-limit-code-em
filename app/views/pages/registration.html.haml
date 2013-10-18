@@ -4,7 +4,7 @@
     = form_tag("/api/players", :method => :post) do
       - flash.each do |type, value|
         .row
-          .alert{:class => "alert-#{type.to_s}", :"data-dismiss" => "alert"}
+          .alert{:class => "alert-#{type.to_s}"}
             %i.icon.icon-exclamation-sign
             = value  
       .row
