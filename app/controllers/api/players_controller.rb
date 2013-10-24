@@ -16,7 +16,7 @@ module Api
           @player.save!
           message = { :name => @player.name,
                       :key =>  @player.key,
-                      :message => "Your player key is #{ @player.key }" }
+                      :message => @player.key }
         else
           message = { :message => "You must register with a valid and unique player name." }
         end

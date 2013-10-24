@@ -4,9 +4,10 @@
     = form_tag("/api/players", :method => :post) do
       - flash.each do |type, value|
         .row
-          .alert{:class => "alert-#{type.to_s}"}
-            %i.icon.icon-exclamation-sign
-            = value  
+          .alert{:class => "alert-success"}
+            Your player key is:
+            %br/
+            %span= value  
       .row
         Choose a unique name for your bot!
       .row
