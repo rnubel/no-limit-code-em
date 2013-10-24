@@ -10,6 +10,7 @@
   }
   tbody {
     tr { 
+      &.info td { background: transparent; }
       td:first-child { text-align: center; } 
       &.lost { opacity: 0.5 }
       &.player {
