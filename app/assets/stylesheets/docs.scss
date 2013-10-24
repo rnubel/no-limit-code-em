@@ -152,3 +152,16 @@ table.params td {
   background-color: #f0f7fd;
   border-color: #d0e3f0;
 }
+
+.list-group-item pre {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.panel-black {
+  border-color: #444;
+  .panel-heading {
+    background: #444;
+    color: #fff;
+  }
+}

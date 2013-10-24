@@ -5,41 +5,46 @@
 
 %h3 Testing requests and actions
 %p
-  To test your bot, point it towards the endpoint:
+  To test your bot, point it towards the endpoint,(notice the /sandbox/ instead of /api/):
   %pre
     http://nolimitcodeem.com/sandbox/players/SANDBOX_KEY
-  (notice the /sandbox/ instead of /api/). Then, your bot will receive a state based on the value of the sandbox key.
+  <code>SANDBOX_KEY</code> is invalid, replace that with a valid key below. Your bot will receive a state based on the value of the sandbox key.
 .well.highcontrast
   Note that these responses are all static, and will be the same for everybody no matter when you visit them. We generated them off of our test scenarios, so in the response "you" are called <strong>Bill16</strong>, and "your" opponents are <strong>Bill17</strong> and <strong>Bill18</strong>.
 %p
   To replicate each of the three main phases of a game, use each of these three keys.
 
+%h3 Using the keys
+%p
+  You can use these keys in two different ways - both GET and POST. A GET will show what the game will look like if you were to ask for the game state during that time. A POST will return the game state and two additional parameters called "sandbox_result" and "validity". These will give you clues to see what you sent our server, and if it is a valid move or not.
+%p
+  <strong>GETs</strong> are made to the following URL:
+  %pre
+    http://nolimitcodeem.com/sandbox/players/SANDBOX_KEY
+%p
+  <strong>POSTs</strong> are made to the following URL:
+  %pre
+    http://nolimitcodeem.com/sandbox/players/SANDBOX_KEY/action
+%h3 The test keys 
 %ul.list-group
   %li.list-group-item
     To simulate how the game would look after the initial deal, use
     %strong deal-phase-key
     as SANDBOX_KEY.
+    %pre http://nolimitcodeem.com/sandbox/players/deal-phase-key
   %li.list-group-item
     To simulate how the game would look after the flop, use
     %strong flop-phase-key
     as SANDBOX_KEY.
+    %pre http://nolimitcodeem.com/sandbox/players/flop-phase-key
   %li.list-group-item
     To simulate how the game would look in the turn phase, use
     %strong turn-phase-key
     as SANDBOX_KEY.
+    %pre http://nolimitcodeem.com/sandbox/players/turn-phase-key
   %li.list-group-item
     To simulate how the game would look in the final, river phase, use
     %strong river-phase-key
     as SANDBOX_KEY.
+    %pre http://nolimitcodeem.com/sandbox/players/river-phase-key
 
-%h3 Using the keys
-%p
-  You can use these keys in two different ways - both GET and POST. A GET will show what the game will look like if you were to ask for the game state during that time. A POST will return the game state and two additional parameters called "sandbox_result" and "validity". These will give you clues to see what you sent our server, and if it is a valid move or not.
-%p
-  GETs are made to the following URL:
-  %pre
-    http://nolimitcodeem.com/sandbox/players/SANDBOX_KEY
-%p
-  POSTs are made to the following URL:
-  %pre
-    http://nolimitcodeem.com/sandbox/players/SANDBOX_KEY/action
