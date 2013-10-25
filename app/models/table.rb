@@ -90,11 +90,8 @@ class Table < ActiveRecord::Base
 
   def dealer_for_new_round
     if r = current_round
-      if active_players.find { |p| p.id > r.dealer_id }
-        old_dealer = r.dealer_id
-        player_list = active_players.collect(&:id)
-        i = player_list.index(old_dealer)
-       return Player.find(player_list[i+1])
+      if new_dealer = active_players.find { |p| p.id > r.dealer_id }
+       return new_dealer
       else
        if active_players.first.id != r.dealer_id && active_players.count > 1
          return active_players.first
